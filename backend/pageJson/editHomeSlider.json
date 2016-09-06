@@ -1,0 +1,72 @@
+{
+    "title": "Edit Home Slider",
+    "jsonPage": "viewHomeSlider",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Movie",
+        "type": "selectFromTable",
+        "tableRef": "movie",
+        "model": "movie",
+        "placeholder": "Enter movie",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": "movie/find"
+    },{
+        "name": "Image",
+        "type": "image",
+        "tableRef": "image",
+        "model": "image",
+        "placeholder": "Enter image",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "1600 x 713px"
+    }, {
+        "name": "Image For Mobile",
+        "type": "image",
+        "tableRef": "mobileImage",
+        "model": "mobileImage",
+        "placeholder": "Enter mobileImage",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "705 x 1087px"
+    }, {
+        "name": "Order",
+        "type": "text",
+        "tableRef": "order",
+        "model": "order",
+        "placeholder": "Enter order",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Url",
+        "type": "text",
+        "tableRef": "url",
+        "model": "url",
+        "placeholder": "Enter url",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitUser"
+    }, {
+        "name": "cancel",
+        "action": "cancelUser",
+        "stateName": "page({jsonName:'viewHomeSlider'})"
+    }],
+    "apiCall": {
+        "url": "homeslider/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "homeslider/getOne",
+        "params": "_id"
+    }
+
+}

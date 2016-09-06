@@ -1,0 +1,56 @@
+{
+    "title": "All Users",
+    "desciption": "",
+    "pageType": "view",
+    "fields": [{
+            "name": "Name",
+            "isSort": "",
+            "tableRef": "name"
+        }],
+    "action": [{
+        "name": "edit",
+        "icon": "mode_edit",
+        "color": "#f37021",
+        "action": "redirect",
+        "jsonPage": "editUser",
+        "fieldsToSend": ["_id"],
+        "callFindOne": "user/getone"
+    }, {
+        "name": "delete",
+        "icon": "delete",
+        "color": "red",
+        "action": "apiCallConfirm",
+        "title": "Delete User",
+        "content": "Are you sure you want to delete user?",
+        "api": "user/delete",
+        "fieldsToSend": [{
+            "name": "_id",
+            "value": "_id"
+        }]
+    }],
+    "button": [{
+        "name": "excelexport",
+        "icon": "print",
+        "color": "#f37021",
+        "action": "excelexport"
+    }, {
+        "name": "uploadcsv",
+        "icon": "delete",
+        "color": "red",
+        "action": "uploadcsv"
+    }],
+    "filter": [{
+        "name": "category",
+        "url": "http://chaitalee.com/user/getAll"
+    }, {
+        "name": "uploadcsv",
+        "icon": "delete",
+        "color": "red",
+        "action": "uploadcsv"
+    }],
+    "apiCall": {
+        "url": "user/findLimited",
+        "params": ""
+    },
+    "createButtonState": "page({jsonName:'createUser'})"
+}

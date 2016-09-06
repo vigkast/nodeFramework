@@ -1,0 +1,196 @@
+{
+    "title": "Create Movie",
+    "jsonPage": "viewMovie",
+    "desciption": "",
+    "pageType": "create",
+    "fields": [{
+        "name": "Order",
+        "type": "text",
+        "tableRef": "order",
+        "placeholder": "Enter order",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },
+    {
+        "name": "Status",
+        "type": "select",
+        "tableRef": "status",
+        "placeholder": "Enter status",
+        "id": "input3",
+        "validation": ["required", "trim", "unique"],
+        "url": [{
+            "value": true,
+            "name": "Enable"
+        }, {
+            "value": false,
+            "name": "Disable"
+        }]
+    },{
+        "name": "Name of the movie",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter name",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Year",
+        "type": "text",
+        "tableRef": "year",
+        "placeholder": "Enter year",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Month",
+        "type": "text",
+        "tableRef": "month",
+        "placeholder": "Enter month",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Release Type",
+        "type": "select",
+        "tableRef": "releaseType",
+        "id": "input3",
+        "validation": ["required", "trim", "unique"],
+        "url": [{
+            "value": "Upcoming",
+            "name": "Upcoming"
+        }, {
+            "value": "Recent",
+            "name": "Recent"
+        }, {
+            "value": "Past",
+            "name": "Past"
+        }]
+    }, {
+        "name": "Upcoming Order",
+        "type": "text",
+        "tableRef": "upcomingOrder",
+        "placeholder": "Enter Upcoming Order",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Synopsis Text Box",
+        "type": "textarea",
+        "tableRef": "synopsis",
+        "placeholder": "Enter synopsis",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Genre",
+        "type": "textarea",
+        "tableRef": "note",
+        "placeholder": "Enter note",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Movie Inside Main Background Image",
+        "type": "image",
+        "tableRef": "backgroundImage",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "1920 x 2823px"
+    }, {
+        "name": "Upcoming Release Image (Big)",
+        "type": "image",
+        "tableRef": "bigImage",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "1105 X 520px"
+    }, {
+        "name": "Upcoming Release Image (Small)",
+        "type": "image",
+        "tableRef": "upcomingSmall",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "280 X 380px"
+    }, {
+        "name": "Recent Release Image (Big)",
+        "type": "image",
+        "model": "mediumImage",
+        "tableRef": "mediumImage",
+        "id": "input6",
+        "validation": ["required", "trim", "unique"],
+        "size": "715 x 405px",
+        "url": ""
+    }, {
+        "name": "Recent Release Image (Small)",
+        "type": "image",
+        "model": "recentSmall",
+        "tableRef": "recentSmall",
+        "id": "input6",
+        "validation": ["required", "trim", "unique"],
+        "size": "280 X 380px",
+        "url": ""
+    }, {
+        "name": "Past Release Image",
+        "type": "image",
+        "model": "smallImage",
+        "tableRef": "smallImage",
+        "id": "input5",
+        "validation": ["required", "trim", "unique"],
+        "size": "280 x 380px",
+        "url": ""
+    }, {
+        "name": "Movie Inside Background Image",
+        "type": "image",
+        "model": "cutImage",
+        "tableRef": "cutImage",
+        "id": "input7",
+        "validation": ["required", "trim", "unique"],
+        "size": "790 x 535px",
+        "url": ""
+    }, {
+        "name": "Movie Inside Background Image For Synopsis",
+        "type": "image",
+        "model": "cutImage2",
+        "tableRef": "cutImage2",
+        "id": "input7",
+        "validation": ["required", "trim", "unique"],
+        "size": "790 x 535px",
+        "url": ""
+    }, {
+        "name": "Youtube Link Provision",
+        "type": "text",
+        "tableRef": "theatricalTrailerUrl",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Theatrical trailer",
+        "type": "image",
+        "tableRef": "theatricalTrailerImage",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "1644 x 636px"
+    },{
+        "name": "Release Date",
+        "type": "date",
+        "tableRef": "releaseDate",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitUser"
+    }, {
+        "name": "cancel",
+        "stateName": "page({jsonName:'viewMovie'})"
+    }],
+
+    "apiCall": {
+        "url": "movie/save"
+    }
+}

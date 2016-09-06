@@ -1,0 +1,447 @@
+
+$main-text: #7f8c97; // main text
+$link: #acb7c0; // anchor tags
+$background: #fff; // body background color
+
+$color-1: #303e49; // blue dark
+$color-2: #c03b44; // red
+$color-3: #ffffff; // white
+$color-4: #75ce66; // green
+$color-5: #f0ca45; // yellow
+
+// breakpoints
+
+$S:     320px;
+$M:     768px;
+$L:     1170px;
+
+// media queries
+
+@mixin MQ($canvas) {
+  @if $canvas == S {
+   @media only screen and (min-width: $S) { @content; }
+  }
+  @else if $canvas == M {
+   @media only screen and (min-width: $M) { @content; }
+  }
+  @else if $canvas == L {
+   @media only screen and (min-width: $L) { @content; }
+  }
+}
+
+// rem fallback - credits: http://zerosixthree.se/
+
+@function calculateRem($size) {
+  $remSize: $size / 16px;
+  @return $remSize * 1rem;
+}
+
+@mixin font-size($size) {
+  font-size: $size;
+  font-size: calculateRem($size);
+}
+
+// border radius
+
+@mixin border-radius($radius:.25em) {
+  border-radius: $radius;
+}
+
+
+/* --------------------------------
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+
+.cd-container { /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
+	width: 80%;
+	max-width: $L; // breakpoints inside partials > _layout.scss
+	margin: 0 auto;
+
+	&::after { /* clearfix */
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+/* --------------------------------
+
+Main components
+
+-------------------------------- */
+
+#cd-timeline {
+	position: relative;
+	padding: 5em 0;
+	margin: {
+		top: 0em;
+		bottom: 2em;
+	}
+
+	&::before {
+		/* this is the vertical line */
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 18px;
+		height: 100%;
+		width: 4px;
+		background: darken($background, 5%);
+	}
+
+	@include MQ(L) {
+		margin: {
+			top: 0em;
+			bottom: 0;
+		}
+
+		&::before {
+			left: 50%;
+			margin-left: -2px;
+		}
+	}
+}
+
+.cd-timeline-block {
+	position: relative;
+	@include clearfix;
+
+	&:first-child {
+		margin-top: 0;
+	}
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	@include MQ(L) {
+
+		&:first-child {
+			margin-top: 0;
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.cd-timeline-img {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	border:1px solid #f67321;
+      transform: translateY(-50%) !important;
+
+	img {
+		display: block;
+		width: 10px;
+		height: 10px;
+		position: relative;
+		left: 50%;
+		top: 50%;
+		margin-left: -12px;
+		margin-top: -12px;
+	}
+
+	&.cd-picture {
+		background: $background;
+	}
+
+	&.cd-movie {
+		background:$background;
+	}
+
+	&.cd-location {
+		background: $background;
+	}
+
+	@include MQ(L) {
+		width: 10px;
+		height: 10px;
+		left: 50%;
+		margin-left: -5px;
+
+		/* Force Hardware Acceleration in WebKit */
+		-webkit-transform: translateZ(0);
+		-webkit-backface-visibility: hidden;
+
+		.cssanimations &.is-hidden {
+			visibility: hidden;
+		}
+
+		.cssanimations &.bounce-in {
+			visibility: visible;
+			@include animation(cd-bounce-1 .6s);
+		}
+	}
+}
+
+@include keyframes(cd-bounce-1) {
+	0% {
+		opacity: 0;
+		@include transform(scale(.5));
+	}
+
+	60% {
+		opacity: 1;
+		@include transform(scale(1.2));
+	}
+
+	100% {
+		@include transform(scale(1));
+	}
+}
+
+.cd-timeline-content {
+	position: relative;
+	margin-left: 120px;
+	background: $color-3;
+	@include border-radius;
+	@include clearfix;
+
+	p {
+    font-size: 16px;
+    font-weight: 700;
+	}
+span{
+  font-size: 18px;
+color: #848484;
+margin-top: 25px;
+display: block;
+
+}
+	.cd-read-more {
+		float: right;
+		padding: .8em 1em;
+		background: $link;
+		color: $color-3;
+		@include border-radius;
+
+		.no-touch &:hover {
+			background-color: lighten($link, 5%);
+		}
+	}
+
+	.cd-date {
+		float: left;
+		padding: .8em 0;
+		opacity: .7;
+	}
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 16px;
+		right: 100%;
+		height: 0;
+		width: 0;
+		border: 7px solid transparent;
+		border-right: 7px solid $color-3;
+	}
+
+
+	@include MQ(L) {
+		padding: 0em;
+		width: 35%;
+    min-height: 100px;
+      max-height: 180px;
+    overflow: hidden;
+		&::before {
+			top: 50%;
+			left: 100%;
+			border-color: transparent;
+			border-left-color: $color-3;
+          transform: translateY(-50%)
+		}
+
+
+		.cd-timeline-block:nth-child(even) & {
+			float: right;
+margin-right: 120px;
+			&::before {
+				top: 50%;
+				left: auto;
+				right: 100%;
+				border-color: transparent;
+				border-right-color: $color-3;
+			}
+
+			.cd-read-more {
+				float: right;
+			}
+
+			.cd-date {
+				left: auto;
+				right: 122%;
+				text-align: right;
+			}
+		}
+
+		.cssanimations &.is-hidden {
+			visibility: hidden;
+		}
+
+		.cssanimations &.bounce-in {
+			visibility: visible;
+			@include animation(cd-bounce-2 .6s);
+		}
+    .img-timline-box {
+      height: 180px;
+      overflow: hidden;
+      width: auto;
+      display: block;
+      img{
+        min-height: 180px;
+        width: auto;
+      }
+  }
+    .img-timline-box2 {
+      height: 180px;
+      overflow: hidden;
+      width: auto;
+      display: block;
+      img{
+        min-height: 180px;
+        width: auto;
+      }
+  }
+  .cd-timeline-content p {
+    font-size: 16px;
+}
+	}
+}
+
+@include MQ(L) {
+	/* inverse bounce effect on even content blocks */
+	.cssanimations .cd-timeline-block:nth-child(even) .cd-timeline-content.bounce-in {
+		@include animation(cd-bounce-2-inverse .6s);
+	}
+}
+
+@include keyframes(cd-bounce-2) {
+	0% {
+		opacity: 0;
+		@include transform(translateX(-100px));
+	}
+
+	60% {
+		opacity: 1;
+		@include transform(translateX(20px));
+	}
+
+	100% {
+		@include transform(translateX(0));
+	}
+}
+
+@include keyframes(cd-bounce-2-inverse) {
+	0% {
+		opacity: 0;
+		@include transform(translateX(100px));
+	}
+
+	60% {
+		opacity: 1;
+		@include transform(translateX(-20px));
+	}
+
+	100% {
+		@include transform(translateX(0));
+	}
+}
+.img-timline-box{
+  img{
+    border-top-left-radius: 0.25em;
+border-bottom-left-radius: 0.25em;
+  }
+}
+.img-timline-box2{
+  img{
+    border-top-right-radius: 0.25em;
+border-bottom-right-radius: 0.25em;
+  }
+}
+.contents {
+      padding: 18px 20px 12px 20px;
+}
+
+.cd-timeline-block:nth-child(even){
+    top:-100px;
+}
+.side-wall{
+  &:before{
+    content: '';
+position: fixed;
+
+right:35px;
+height: 35%;
+width: 4px;
+    background: rgba(242, 242, 242, 0.58);
+  }
+}
+.date-list {
+    position: fixed;
+    right: 27px;
+    h4 {
+    color: #fff;
+    margin: 0;
+    display: inline-block;
+        padding-right: 5px;
+}
+}
+.dot-big {
+    height: 20px;
+    width: 20px;
+    background: #fff;
+    border-radius: 100%;
+    display: inline-block;
+    vertical-align: bottom;
+}
+.dot-small {
+    background: rgba(255, 255, 255, 0.87);
+    height: 13px;
+    width: 13px;
+    border-radius: 100%;
+    position: fixed;;
+    right: 30px;
+      margin-top: 50px;
+    border: 2px solid #f56d1f;
+    cursor: pointer;
+}
+.dot-small2{
+  @extend .dot-small;
+margin-top: 90px;
+}
+.dot-small3{
+  @extend .dot-small;
+    margin-top: 130px;
+}
+.dot-small4{
+  @extend .dot-small;
+    margin-top: 170px;
+}
+.dot-small5{
+  @extend .dot-small;
+    margin-top: 210px;
+}
+.dot-small6{
+  @extend .dot-small;
+    margin-top: 250px;
+}
+.dot-small7{
+  @extend .dot-small;
+      margin-top: 290px;
+}
+.border-btm {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.74);
+    position: fixed;
+    right: 29px;
+    width: 15px;
+      margin-top: 330px;
+}

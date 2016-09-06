@@ -1,0 +1,35 @@
+<div class="white-orange-bg">
+  <div class="closure" ng-click="$dismiss()"><i class="fa fa-close"></i></div>
+    <form name="formName" ng-submit="saveYou(formData)" ng-if="!questionSubmit">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>NAME:</label>
+                    <input type="text" name="name" ng-model="formData.user" class="form-control" required>
+                    <div class="error-msg" ng-show="formName.user.$invalid && formName.user.$touched">Please enter your name</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>EMAIL ID:</label>
+                    <input type="email" name="email" ng-model="formData.email" class="form-control" required>
+                    <div class="error-msg" ng-show="formName.email.$invalid && formName.email.$touched">Please enter your email</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>ASK YOUR QUESTION HERE:</label>
+            <textarea name="question" ng-model="formData.question" class="form-control" required></textarea>
+            <div class="error-msg" ng-show="formName.question.$invalid && formName.question.$touched">Please enter your Question</div>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-primary" type="submit" ng-disabled="formName.$invalid">SUBMIT</button>
+        </div>
+    </form>
+    <div class="brand-primary text-upper text-center" ng-if="questionSubmit">
+      <h3 class="font-hammersmith">Thank you for submitting your question.
+        <br> we will keep you posted!
+      </h3>
+      <button class="btn btn-primary btn-outline text-upper font-hammersmith" ng-click="$dismiss()">Continue to Site</button>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+{
+    "title": "Create Dharma Insta",
+    "jsonPage": "viewDharmaInsta",
+    "desciption": "",
+    "pageType": "create",
+    "fields": [{
+        "name": "Video",
+        "type": "text",
+        "tableRef": "video",
+        "placeholder": "Enter video",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },
+    {
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Insta Id",
+        "type": "text",
+        "tableRef": "instaId",
+        "placeholder": "Enter Name",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Content",
+        "type": "textarea",
+        "tableRef": "content",
+        "placeholder": "Enter Content",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Dharma Insta Image",
+        "type": "image",
+        "tableRef": "image",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "50px x 50px"
+    },{
+        "name": "Dharma Insta Thumbnail",
+        "type": "image",
+        "tableRef": "thumbnail",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "360 x 360px"
+    },{
+        "name": "Status",
+        "type": "select",
+        "tableRef": "status",
+        "placeholder": "Enter status",
+        "id": "input3",
+        "validation": ["required", "trim", "unique"],
+        "url": [{
+            "value": true,
+            "name": "Enable"
+        }, {
+            "value": false,
+            "name": "Disable"
+        }]
+    }
+  ],
+    "action": [{
+        "name": "submit",
+        "action": "submitDharmaInsta"
+    }, {
+        "name": "cancel",
+        "stateName": "page({jsonName:'viewDharmaInsta'})"
+    }],
+
+    "apiCall": {
+        "url": "DharmaInsta/save"
+    }
+}

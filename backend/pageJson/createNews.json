@@ -1,0 +1,76 @@
+{
+    "title": "Create News",
+    "jsonPage": "viewNews",
+    "desciption": "",
+    "pageType": "create",
+    "fields": [{
+        "name": "Movie",
+        "type": "selectFromTable",
+        "tableRef": "movie",
+        "placeholder": "Enter movie",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": "movie/find"
+    }, {
+        "name": "Title",
+        "type": "text",
+        "tableRef": "title",
+        "placeholder": "Enter title",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Image",
+        "type": "image",
+        "tableRef": "image",
+        "placeholder": "Enter image",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "405 x 302px"
+    }, {
+        "name": "Image For News Inside",
+        "type": "image",
+        "tableRef": "banner",
+        "placeholder": "Enter image",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "1321 x 690px"
+    }, {
+        "name": "Description",
+        "type": "tinymce",
+        "tableRef": "text",
+        "placeholder": "Enter text",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Date",
+        "type": "date",
+        "tableRef": "date",
+        "placeholder": "Enter date",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Order",
+        "type": "text",
+        "tableRef": "order",
+        "placeholder": "Enter order",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitUser"
+    }, {
+        "name": "cancel",
+        "stateName": "page({jsonName:'viewNews'})"
+    }],
+
+    "apiCall": {
+        "url": "news/save"
+    }
+}

@@ -1,0 +1,52 @@
+{
+    "title": "Edit Crew",
+    "jsonPage": "viewMovie",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Title",
+        "type": "text",
+        "tableRef": "title",
+        "model": "title",
+        "placeholder": "Enter title",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "model": "name",
+        "placeholder": "Enter name",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Order",
+        "type": "text",
+        "tableRef": "order",
+        "model": "order",
+        "placeholder": "Enter order",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitUser"
+    }, {
+      "name": "cancel",
+      "sideMenuRedirect":true,
+      "stateName": "page({jsonName:'viewMovie'})"
+    }],
+    "apiCall": {
+        "url": "movie/saveCrew",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "movie/findOneCrew",
+        "params": "_id"
+    }
+
+}

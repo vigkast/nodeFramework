@@ -1,0 +1,40 @@
+<div class="main-sec">
+  <img src="img/SRK.jpg" alt="" class="img-responsive w100" >
+  <section class="pos-abs">
+    <div class="login">
+      <md-card>
+        <div layout="column">
+          <md-card-title md-theme-watch>
+            <md-card-title-text>
+              <div class="main-img">
+                <img src="img/Dharma-png.png" alt="" class="img-responsive w200">
+              </div>
+              <span class="md-headline">LOGIN</span>
+            </md-card-title-text>
+          </md-card-title>
+          {{successmsg}}
+          <form ng-submit="submitLogin(user)">
+            <md-input-container class="md-block md-input-invalid">
+              <label>Email</label>
+              <input ng-model="user.email" type="email" required>
+            </md-input-container>
+            <md-input-container class="md-block md-input-invalid">
+              <label>Password</label>
+              <input ng-model="user.password" type="password" required>
+            </md-input-container>
+            <md-card-actions class="layout-align-center layout-row">
+              <md-button class="md-raised md-primary" type="submit">LOGIN</md-button>
+            </md-card-actions>
+          </form>
+          <md-divider></md-divider>
+          <!-- <md-card-actions class="layout-align-center layout-row">
+          <md-button class="md-raised md-icon-button"><i class="fa fa-facebook"></i></md-button>
+          <md-button class="md-raised md-icon-button"><i class="fa fa-twitter"></i></md-button>
+          <md-button class="md-raised md-icon-button"><i class="fa fa-google-plus"></i></md-button>
+        </md-card-actions> -->
+        </div>
+      </md-card>
+    </div>
+  </section>
+
+</div>

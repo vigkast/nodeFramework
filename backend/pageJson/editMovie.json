@@ -1,0 +1,271 @@
+{
+    "title": "Edit Movie",
+    "jsonPage": "viewMovie",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Order",
+        "type": "text",
+        "tableRef": "order",
+        "model": "order",
+        "placeholder": "Enter order",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Status",
+        "type": "select",
+        "tableRef": "status",
+        "placeholder": "Enter status",
+        "id": "input3",
+        "model": "status",
+        "validation": ["required", "trim", "unique"],
+        "url": [{
+            "value": true,
+            "name": "Enable"
+        }, {
+            "value": false,
+            "name": "Disable"
+        }]
+    }, {
+        "name": "Id",
+        "type": "hidden",
+        "tableRef": "_id",
+        "placeholder": "Enter First Name",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "model": "_id"
+    }, {
+        "name": "Name of the movie",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter name",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "model": "name"
+    }, {
+        "name": "Year",
+        "type": "text",
+        "tableRef": "year",
+        "model": "year",
+        "placeholder": "Enter year",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Month",
+        "type": "text",
+        "tableRef": "month",
+        "placeholder": "Enter month",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "model": "month"
+    }, {
+        "name": "Release Type",
+        "type": "select",
+        "tableRef": "releaseType",
+        "model": "releaseType",
+        "id": "input3",
+        "model": "releaseType",
+        "validation": ["required", "trim", "unique"],
+        "url": [{
+            "value": "Upcoming",
+            "name": "Upcoming"
+        }, {
+            "value": "Recent",
+            "name": "Recent"
+        }, {
+            "value": "Past",
+            "name": "Past"
+        }]
+    }, {
+        "name": "Upcoming Order",
+        "type": "text",
+        "tableRef": "upcomingOrder",
+        "placeholder": "Enter Upcoming Order",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "model": "upcomingOrder"
+    }, {
+        "name": "Synopsis Text Box",
+        "type": "tinymce",
+        "tableRef": "synopsis",
+        "placeholder": "Enter name",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "model": "synopsis"
+    }, {
+        "name": "Genre",
+        "type": "textarea",
+        "tableRef": "note",
+        "model": "note",
+        "placeholder": "Enter note",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Movie Inside Main Background Image",
+        "type": "image",
+        "tableRef": "backgroundImage",
+        "model": "backgroundImage",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "1920 x 2823px"
+    }, {
+        "name": "Upcoming Release Image (Big)",
+        "type": "image",
+        "tableRef": "bigImage",
+        "model": "bigImage",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "1105 X 520px"
+    }, {
+        "name": "Upcoming Release Image (Small)",
+        "type": "image",
+        "tableRef": "upcomingSmall",
+        "model": "upcomingSmall",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "280 X 380px"
+    }, {
+        "name": "Recent Release Image (Big)",
+        "type": "image",
+        "model": "mediumImage",
+        "tableRef": "mediumImage",
+        "id": "input6",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "715 x 405px"
+    }, {
+        "name": "Recent Release Image (Small)",
+        "type": "image",
+        "model": "recentSmall",
+        "tableRef": "recentSmall",
+        "id": "input6",
+        "validation": ["required", "trim", "unique"],
+        "size": "280 X 380px",
+        "url": ""
+    }, {
+        "name": "Past Release Image",
+        "type": "image",
+        "model": "smallImage",
+        "tableRef": "smallImage",
+        "id": "input5",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "280 x 380px"
+    }, {
+        "name": "Movie Inside Background Image",
+        "type": "image",
+        "model": "cutImage",
+        "tableRef": "cutImage",
+        "id": "input7",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "790 x 535px"
+    }, {
+        "name": "Movie Inside Background Image For Synopsis",
+        "type": "image",
+        "model": "cutImage2",
+        "tableRef": "cutImage2",
+        "id": "input7",
+        "validation": ["required", "trim", "unique"],
+        "size": "790 x 535px",
+        "url": ""
+    }, {
+        "name": "Youtube Link Provision",
+        "type": "text",
+        "tableRef": "theatricalTrailerUrl",
+        "model": "theatricalTrailerUrl",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Theatrical trailer",
+        "type": "image",
+        "tableRef": "theatricalTrailerImage",
+        "model": "theatricalTrailerImage",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "1644 x 636px"
+    },{
+        "name": "Release Date",
+        "type": "date",
+        "tableRef": "releaseDate",
+        "model": "releaseDate",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitUser"
+    }, {
+        "name": "cancel",
+        "action": "cancelUser",
+        "stateName": "page({jsonName:'viewMovie'})"
+    }],
+    "apiCall": {
+        "url": "movie/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "movie/findOne",
+        "params": "_id"
+    },
+
+    "sidemenu": [{
+        "name": "Movie Details",
+        "action": "sidemenuRedirect",
+        "jsonPage": "editMovie",
+        "fieldsToSend": [1],
+        "callFindOne": "movie/findOne"
+    }, {
+        "name": "Cast",
+        "action": "sidemenuRedirect",
+        "jsonPage": "viewCast",
+        "fieldsToSend": [1],
+        "callFindOne": "movie/findCast"
+    }, {
+        "name": "Crew",
+        "action": "sidemenuRedirect",
+        "jsonPage": "viewCrew",
+        "fieldsToSend": [1],
+        "callFindOne": "movie/findCrew"
+    }, {
+        "name": "Gallery",
+        "action": "sidemenuRedirect",
+        "jsonPage": "viewGallery",
+        "fieldsToSend": [1],
+        "callFindOne": "movie/findGallery"
+    }, {
+        "name": "Videos",
+        "action": "sidemenuRedirect",
+        "jsonPage": "viewVideos",
+        "fieldsToSend": [1],
+        "callFindOne": "movie/findVideos"
+    }, {
+        "name": "Wallpaper",
+        "action": "sidemenuRedirect",
+        "jsonPage": "viewWallpaper",
+        "fieldsToSend": [1],
+        "callFindOne": "movie/findWallpaper"
+    }, {
+        "name": "Behind The Scenes",
+        "action": "sidemenuRedirect",
+        "jsonPage": "viewBehind",
+        "fieldsToSend": [1],
+        "callFindOne": "movie/findBehindTheScenes"
+    }]
+
+}

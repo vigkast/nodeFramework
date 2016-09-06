@@ -1,0 +1,73 @@
+{
+    "title": "Edit Videos",
+    "jsonPage": "viewMovie",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Title Text",
+        "type": "text",
+        "model": "name",
+        "tableRef": "name",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Youtube Link",
+        "type": "text",
+        "tableRef": "url",
+        "model": "url",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Order",
+        "type": "text",
+        "tableRef": "order",
+        "model": "order",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Thumbnail",
+        "type": "image",
+        "tableRef": "thumbnail",
+        "model": "thumbnail",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "470 x 330px"
+    },{
+        "name": "Is banner",
+        "type": "select",
+        "tableRef": "isbanner",
+        "model": "isbanner",
+        "placeholder": "Enter isbanner",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": [{
+            "value": "true",
+            "name": "Yes"
+        }, {
+            "value": "false",
+            "name": "No"
+        }]
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitUser"
+    }, {
+      "name": "cancel",
+      "sideMenuRedirect":true,
+      "stateName": "page({jsonName:'viewMovie'})"
+    }],
+    "apiCall": {
+        "url": "movie/saveVideos",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "movie/findOneVideos",
+        "params": "_id"
+    }
+
+}

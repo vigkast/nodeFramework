@@ -1,0 +1,100 @@
+<header class="home" ng-controller="headerctrl">
+   <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid mob-pad0">
+      <div class="head-bg dh-relative">
+        <div class="row">
+          <div class="col-md-2 text-center col-sm-2">
+            <div class="logo">
+              <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse" aria-expanded="false">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </button>
+                  <a class="" ui-sref="home"><img src="frontend/img/logo.png" alt="Dharma Productions" class="img-responsive logo-img"></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8 col-sm-8">
+            <div class="collapse navbar-collapse text-center" id="nav-collapse">
+                   <div ng-include="template.menu" class="template menu"></div>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-2 hidden-xs main-pad0">
+            <div class="head-social dh-list pull-right mt15 m24-mob fl-main">
+              <ul class="padding0 margin0">
+                <li>
+                  <a href="https://www.facebook.com/DharmaProductions/?fref=ts" target="_blank"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li>
+                  <a href="https://www.instagram.com/dharmamovies/?hl=en" target="_blank"><i class="fa fa-instagram"></i></a>
+                </li>
+                <li>
+                  <a href="https://www.youtube.com/c/dharmamovies" target="_blank"><i class="fa fa-youtube"></i></a>
+                </li>
+                <li ng-click="getHeaderSearch();">
+                  <a href=""><button type="button" name="button" class="my-main-btn"><img src="frontend/img/search-light.png" alt="" class="w15"></button></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+<div class="head-curve">
+</div>
+<div class="search-movie search-movie-mar my-search" ng-if="headerSearch">
+    <div class="search-img">
+        <img src="frontend/img/search-grey.png" alt="Dharma Productions" class="doneLoading">
+    </div>
+    <div class="movie-search-pg">
+      <ui-select ng-model="movie.selected" ng-change="DoSearch(movie.selected.name,movie.selected._id)" style="width: 100%;" title="Search Movie" class="search-drop">
+          <ui-select-match placeholder="Search for movie">{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat="movie in allMovieName | filter: {name:$select.search}">
+              <div class="movi-src-rslt">
+                  <div class="display-inline w60">
+                      <!-- <img src="frontend/img/movie-search.png" alt=""> -->
+                      <img ng-src="{{movie.smallImage|uploadpath}}" alt="" ng-if="movie.releaseType=='Past'">
+                      <img ng-src="{{movie.recentSmall|uploadpath}}" alt="" ng-if="movie.releaseType=='Recent'">
+                      <img ng-src="{{movie.upcomingSmall|uploadpath}}" alt="" ng-if="movie.releaseType=='Upcoming'">
+                  </div>
+                  <div class="display-inline ml15">
+                      <span ng-bind-html="movie.name | highlight: $select.search"></span>
+                      <span ng-if="movie.year">({{movie.year}})</span>
+                  </div>
+              </div>
+          </ui-select-choices>
+      </ui-select>
+        <!-- <ui-select ng-model="movie.selected" ng-change="DoSearch(movie.selected.name,movie.selected._id)" style="width: 100%;" title="Search Movie" class="search-drop">
+            <ui-select-match placeholder="Search">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="movie in allMovieName | filter: $select.search">
+                <div class="movi-src-rslt">
+                    <div class="display-inline w60">
+
+                        <img ng-src="{{movie.smallImage|uploadpath}}" alt="" ng-if="movie.releaseType=='Past'">
+                        <img ng-src="{{movie.recentSmall|uploadpath}}" alt="" ng-if="movie.releaseType=='Recent'">
+                        <img ng-src="{{movie.upcomingSmall|uploadpath}}" alt="" ng-if="movie.releaseType=='Upcoming'">
+                    </div>
+                    <div class="display-inline ml15">
+                        <span ng-bind-html="movie.name | highlight: $select.search"></span>
+                        <span ng-if="movie.year">({{movie.year| highlight: $select.search}})</span>
+                    </div>
+                </div>
+            </ui-select-choices>
+        </ui-select> -->
+    </div>
+    <div class="search-img2" ng-click="closeCross();">
+        <img src="frontend/img/error-2.png" alt="Dharma Productions">
+    </div>
+</div>
+
+    </div>
+</nav>
+</header>
+
+
+<div class="loaderHeader" ng-show="template.isLoader">
+  <img src="frontend/img/loadingdharma.gif" alt="" />
+</div>

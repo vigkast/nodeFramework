@@ -1,0 +1,78 @@
+{
+    "title": "All Award",
+    "desciption": "",
+    "pageType": "view",
+    "sendIdWithCreate": true,
+      "urlFields": ["_id"],
+    "fields": [{
+            "name": "Title",
+            "isSort": "",
+            "tableRef": "awardname"
+        }, {
+            "name": "Winner",
+            "isSort": "",
+            "tableRef": "winner"
+        }
+
+    ],
+    "action": [{
+        "name": "edit",
+        "icon": "mode_edit",
+        "color": "#f37021",
+        "action": "redirect",
+        "jsonPage": "editAward",
+        "fieldsToSend": ["_id"],
+        "callFindOne": "newaward/findOneAward"
+    }, {
+        "name": "delete",
+        "icon": "delete",
+        "color": "red",
+        "action": "apiCallConfirm",
+        "title": "Delete Award",
+        "content": "Are you sure you want to delete award?",
+        "api": "newaward/deleteAward",
+        "fieldsToSend": [{
+            "name": "_id",
+            "value": "_id"
+        }]
+    }],
+    "button": [{
+        "name": "excelexport",
+        "icon": "print",
+        "color": "#f37021",
+        "action": "excelexport"
+    }, {
+        "name": "uploadcsv",
+        "icon": "delete",
+        "color": "red",
+        "action": "uploadcsv"
+    }],
+    "filter": [{
+        "name": "category",
+        "url": "http://chaitalee.com/expertuser/getAll"
+    }, {
+        "name": "uploadcsv",
+        "icon": "delete",
+        "color": "red",
+        "action": "uploadcsv"
+    }],
+    "apiCall": {
+        "url": "newaward/findAward",
+        "params": "_id"
+    },
+    "createButtonState": "page({jsonName:'createAward'})",
+    "sidemenu": [{
+      "name":"Award Details",
+      "action":"sidemenuRedirect",
+      "jsonPage":"editNewAward",
+      "fieldsToSend":[1],
+      "callFindOne":"newaward/findOne"
+    },
+    {
+      "name":"Awards",
+      "action":"sidemenuRedirect",
+      "jsonPage":"viewAward",
+      "fieldsToSend":[1],
+      "callFindOne":"newaward/findAward"
+    }]
+}

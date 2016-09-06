@@ -1,0 +1,95 @@
+{
+    "title": "Edit Dharmatv",
+    "jsonPage": "viewDharmatv",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Movie",
+        "type": "selectFromTable",
+        "tableRef": "movie",
+        "model": "movie",
+        "placeholder": "Enter movie",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": "movie/find"
+    }, {
+        "name": "Title",
+        "type": "text",
+        "tableRef": "title",
+        "model": "title",
+        "placeholder": "Enter title",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Youtube link",
+        "type": "text",
+        "tableRef": "url",
+        "model": "url",
+        "placeholder": "Enter url",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Tag",
+        "type": "chips",
+        "tableRef": "tag",
+        "model": "tag",
+        "placeholder": "Enter tag",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Order",
+        "type": "text",
+        "tableRef": "order",
+        "model": "order",
+        "placeholder": "Enter order",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Thumbnail",
+        "type": "image",
+        "tableRef": "thumbnail",
+        "model": "thumbnail",
+        "placeholder": "Enter thumbnail",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "400 x 225px"
+    }, {
+        "name": "Is banner",
+        "type": "select",
+        "tableRef": "isbanner",
+        "model": "isbanner",
+        "placeholder": "Enter isbanner",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": [{
+            "value": "true",
+            "name": "Yes"
+        }, {
+            "value": "false",
+            "name": "No"
+        }]
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitUser"
+    }, {
+        "name": "cancel",
+        "action": "cancelUser",
+        "stateName": "page({jsonName:'viewDharmatv'})"
+    }],
+    "apiCall": {
+        "url": "dharmatv/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "dharmatv/getOne",
+        "params": "_id"
+    }
+
+}

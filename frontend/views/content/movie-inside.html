@@ -1,0 +1,571 @@
+<section class="movie-inside-bg" ng-style="{'background':'url('+moviefindOne.backgroundImage+')'}">
+    <!-- <section ng-style="{'background-image':'url({{myBackgroundUrl}})';}"> -->
+
+    <div class="container-fluid pd4">
+
+        <div class="movie-inside-curve" id="top-scroll"></div>
+        <div class="movie-inner-bg">
+            <div class="row">
+
+                <div class="movie-inside-date">
+                    <div class="text-center">
+                        <div class="m-title">
+                            <h1 class="color-primary font-hammersmith text-up">Theatrical Trailer</h1>
+                        </div>
+                        <div class="movie-trailor dh-relative">
+                            <!-- <img src="frontend/img/movie-trailor.jpg" alt="Dharma Productions" class="img-responsive margin-auto width100"> -->
+
+
+                            <a class="various fancybox.iframe" fancybox rel="gallery1" href="http://www.youtube.com/embed/{{moviefindOne.theatricalTrailerUrl}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1" data-fancybox-type="iframe">
+                                <img ng-src="{{moviefindOne.theatricalTrailerImage|uploadpath}}" alt="Dharma Productions" class="img-responsive margin-auto width100" ng-if="(moviefindOne.theatricalTrailerImage || moviefindOne.theatricalTrailerImage != '')">
+                                <img ng-src="{{moviefindOne.theatricalTrailerUrl|youtubethumb}}" alt="Dharma Productions" class="img-responsive width100" ng-if="!(moviefindOne.theatricalTrailerImage || moviefindOne.theatricalTrailerImage != '')">
+                                <div class="dh-absulate middle">
+                                    <img src="frontend/img/play-small-btn.jpg" alt="Dharma Productions">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="movie-tabs">
+              <!-- FOR WEBSITE -->
+                <div class="all-tabs hidden-xs">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn {{classa}}" ng-click="tabchange('synopsis',1,myid)" ng-class="{'my-disable':movieSynopsisAndNote.synopsis.length<=0}" ng-disabled="movieSynopsisAndNote.synopsis.length<=0" ui-sref= "movie-insideTab({id:myid,tab:'synopsis'})">Synopsis </button>
+
+                        <button type="button" class="btn {{classb}}" ng-click="tabchange('cast',2,myid)" ng-class="{'my-disable': movieCast.length<=0}" ng-disabled="movieCast.length<=0" ui-sref= "movie-insideTab({id:myid,tab:'cast'})"> CAST & CREDITS</button>
+
+                        <button type="button" class="btn {{classc}}" ng-click="tabchange('news',3,myid)" ng-class="{'my-disable': movieNews.length<=0}" ng-hide="movieNews.length<=0" ui-sref= "movie-insideTab({id:myid,tab:'news'})"> News</button>
+
+                        <button type="button" class="btn {{classd}}" ng-class="{'my-disable': MovieGal.length<=0}" ng-click="tabchange('gallery',4,myid)" ng-disabled="MovieGal.length<=0" ui-sref= "movie-insideTab({id:myid,tab:'gallery'})">Gallery</button>
+
+                        <button type="button" class="btn {{classe}}" ng-click="tabchange('scene',5,myid)" ng-class="{'my-disable': movieBehindTheScenes.length<=0}" ng-disabled="movieBehindTheScenes.length<=0" ui-sref= "movie-insideTab({id:myid,tab:'scene'})">behind the scenes</button>
+
+                        <button type="button" class="btn {{classf}}" ng-click="tabchange('video',6,myid)" ng-class="{'my-disable': movieVideo10.length<=0}" ng-disabled="movieVideo10.length<=0" ui-sref= "movie-insideTab({id:myid,tab:'video'})"> VIDEOS </button>
+
+                        <button type="button" class="btn {{classg}}" ng-click="tabchange('wallpapper',7,myid)" ng-class="{'my-disable': movieWallpaper.length<=0}" ng-disabled="movieWallpaper.length<=0" ui-sref= "movie-insideTab({id:myid,tab:'wallpapper'})">WALLPAPERS </button>
+
+                        <button type="button" class="btn {{classh}}" ng-click="tabchange('awards',8,myid)" ng-class="{'my-disable': MovieAwards.length  == 0}" ng-hide="MovieAwards.length  == 0" ui-sref= "movie-insideTab({id:myid,tab:'awards'})"> AWARDS </button>
+                    </div>
+                </div>
+                <div class="mob-slider hidden-md hidden-sm hidden-lg visible-xs">
+                    <div class="all-tabs">
+
+                        <div class="btn-group" role="group" aria-label="...">
+                            <flex-slider flex-slide="item in tabing track by $index" animation="slide" item-width="120" item-margin="10" animationloop="true" move="2">
+
+                                <li class="text-center mobileMovieTabs">
+                                    <button type="button" class="btn {{item.class}}" ng-click="tabchangeMob(item.tab,$index)" ng-class="{'my-disable': {{item.ngclass}},'active-list':item.activemob}" ng-disabled="{{item.ngdisabled}}" ui-sref= "movie-insideTab({id:myid,tab:item.tab})" ng-hide="{{item.nghide}}">{{item.name}}</button>
+                                </li>
+
+                                <!-- ng-disabled="item.ngdisabled" ng-class="{'my-disable': item.ngclass}" -->
+
+                            </flex-slider>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="synopsis" ng-if="tab=='synopsis'">
+                    <!-- <div class="movie-inside-date bg-synopsis"> -->
+                    <div class="movie-inside-date bg-synopsis mob-bg" ng-style="{'background':'url('+moviefindOne.cutImage2+') no-repeat ','background-size':'contain','background-position':'right bottom','padding-top':'20px','padding-bottom':'30px'}">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="data-content scroll-over">
+                                    <p ng-bind-html="getOneMovie.movie.synopsis">
+
+                                    </p>
+                                    <!-- <p>
+                              Yeh Jawaani Hai Deewani is the story of the relationship between two characters, Bunny (Ranbir Kapoor) & Naina (Deepika Padukone), at two separate but defining times in their lives... first, when they are just out of college and standing on the crossroads
+                              of multiple decisions that will shape who and what they become... and then later on, in their late-twenties when they meet again, holding on to certain fulfilled and certain unfulfilled dreams, at a crossroads of another
+                              nature this time... how these two characters affect, change, befriend and eventually fall in love with each other is the journey the film aspires to take us on...
+                           </p> -->
+                                    <h4 class="mt30" ng-if="movieSynopsisAndNote.note && movieSynopsisAndNote.note.length>0">DIRECTOR'S NOTE:</h4>
+                                    <p>{{getOneMovie.movie.note}}</p>
+                                    <!-- <p>The journey from a 21-year old to a 30-year old has had shades of all kinds. As the rest of life will too, undoubtedly. But there is something about one's first tryst with adulthood which is particularly powerful… a kind of
+                              rawness, a lack of lived experience, no way of truly knowing what lies at the end of the road one is walking on, a constant seeking in the dark for the moments where life is full of light.</p>
+                           <p>Yeh Jawaani Hai Deewani is a cocktail of all these encounters and obsessions… It is a story of the exhilarating and terrifying journey of four characters as they navigate through their youth; from their carefree laughter as
+                              they set off on a holiday together in their college days, until their bittersweet tears as they watch the first of their bunch get married.</p> -->
+                                </div>
+                            </div>
+                            <div class="col-md-offset-1 col-md-2">
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="" ng-if="tab=='cast'">
+                    <div class="movie-inside-date bg-cast cast-credit mob-bg" ng-style="{'background':'url('+moviefindOne.cutImage+') no-repeat ','background-size':'contain','background-position':'right bottom','padding-top':'20px','padding-bottom':'30px'}">
+                        <!-- <div class="movie-inside-date bg-cast cast-credit"> -->
+                        <div class="box-pad">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    <div class="cast cast-mob">
+                                        <h1 class="font-hammersmith color-black">CAST</h1>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-6 movie-col col-xs-12" ng-repeat="item in movieCast track by $index" ng-if="item.type=='Cast'">
+                                            <div class="all-cast text-center">
+                                                <div class="cast-box">
+                                                    <img ng-src="{{item.image|uploadpath}}" alt="Dharma Productions" class="img-responsive">
+                                                </div>
+                                                <div class="cast-name mt18">
+                                                    <span class="color-dark text-cap">{{item.actor}}</span>
+                                                </div>
+                                                <div class="role-name">
+                                                    <span class="color-primary text-up font-bold f18">{{item.name}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- //viewmore -->
+                                    <div class="row mt30" ng-if="subCast">
+                                        <div class="other-cast">
+                                            <ul class=" margin0">
+                                                <li ng-repeat="item in movieCast track by $index" ng-if="item.type=='Sub-cast'">
+                                                    <div class="first-cast">
+                                                        <span class="color-dark f18 text-cap">{{item.actor}}</span>
+                                                        <br>
+                                                        <span class="color-primary text-up font-bold">{{item.name}}</span>
+                                                    </div>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- //viewmore -->
+                                    <div class="text-center mt60">
+                                        <div class="btn-view-more ">
+                                            <a class="btn-1 font-hammersmith btn color-primary display-inline" ng-click="viewAllCast();">
+                                                <svg>
+                                                    <rect x="0" y="0" fill="none" width="100%" height="100%" />
+                                                </svg>
+                                                {{viewCastText}} ALL
+                                            </a>
+                                            <!-- <button type="button" name="button" class="btn-primary-outline font-hammersmith btn-enter"></button> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 col-sm-2 col-xs-2 hidden-xs">
+                                    <div class="social-share pull-right">
+                                        <span class="font-karla font-bold color-light-grey f18">share</span>
+                                        <ul class="padding0">
+                                            <li>
+                                                <a ng-href="https://www.facebook.com/sharer/sharer.php?u={{myUrl|urlEncode}}" target="_blank"><i class="fa fa-facebook"></i></a>
+                                            </li>
+                                            <li>
+                                                <a ng-href="https://twitter.com/intent/tweet?url={{myUrl|urlEncode}}" target="_blank"><i class="fa fa-twitter"></i></a>
+                                            </li>
+                                            <li>
+                                                <a ng-href="https://plus.google.com/share?url={{myUrl|urlEncode}}" target="_blank"><i class="fa fa-google-plus"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt50">
+                            <div class="row">
+                                <div class="bg-bottom-right ">
+                                    <div class="col-md-2 col-sm-2 col-xs-12">
+                                        <div class="cast cast-mob">
+                                            <h1 class="font-hammersmith color-black margin0">CREW</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10 col-sm-10 col-xs-12">
+                                        <div class="row" ng-repeat="data in movieCrew">
+                                            <div class="col-md-5 col-sm-6 col-xs-6">
+                                                <div class="all-cast">
+                                                    <ul class="padding0">
+                                                        <li>{{data.title}}</li>
+                                                        <!-- <li>Produced By</li>
+                                          <li>Co-Producer</li>
+                                          <li>Director Of Photography</li>
+                                          <li>Music</li>
+                                          <li>Lyrics</li>
+                                          <li>Executive Producer</li>
+                                          <li>Production Design</li>
+                                          <li>Editor</li>
+                                          <li>Sound Design</li>
+                                          <li>Dialogues</li>
+                                          <li>Costume Design</li>
+                                          <li>Casting Director</li> -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5 col-sm-6 col-xs-6">
+                                                <div class="all-cast">
+                                                    <ul class="padding0">
+                                                        <li>{{data.name}}</li>
+                                                        <!-- <li>... Hiroo Yash Johar & Karan Johar</li>
+                                          <li>... Apoorva Mehta</li>
+                                          <li>... V. Manikandan</li>
+                                          <li>... Pritam</li>
+                                          <li>... Amitabh Bhattacharya</li>
+                                          <li>... Marijke deSouza</li>
+                                          <li>... Amrita Mahal Nakai, Rajnish Hedao</li>
+                                          <li>... Akiv Ali</li>
+                                          <li>... Nakul Kamte</li>
+                                          <li>... Hussain Dalal</li>
+                                          <li>... Manish Malhotra, Samidha Wangnoo</li>
+                                          <li>... Nandini Shrikent</li> -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="news" ng-if="tab=='news'">
+                    <div class="movie-inside-date bg-cast cast-credit" ng-style="{'background':'url('+moviefindOne.cutImage+') no-repeat ','background-size':'contain','background-position':'right bottom','padding-top':'20px','padding-bottom':'30px'}">
+                        <div class="row">
+                            <div class="col-md-11 col-sm-10 col-xs-12">
+                                <div class="all-movies">
+                                    <div masonry preserve-order>
+                                        <div class="masonry-brick" ng-repeat="item in movieNews track by $index">
+                                          <a target="_blank" ui-sref="news-detail({id:item._id})">
+                                            <div class="masonry-box padd20">
+                                                <img ng-src="{{item.image|uploadpath}}" alt="Dharma Production">
+                                                <div class="news-title mt10">
+                                                    <h4 class="margin0 color-black font-karla">{{item.title|shorten : 50}}</h4>
+                                                </div>
+                                                <div class="news-date">
+                                                    <span class="color-black f12 font-karla">{{item.date|date:'d MMM y'}}</span>
+                                                </div>
+
+
+                                            </div>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-3 hidden-xs">
+                                <div class="social-share float-right">
+                                    <span class="font-karla font-bold color-light-grey f18">share</span>
+                                    <ul class="padding0">
+
+                                      <li>
+                                          <a ng-href="https://www.facebook.com/sharer/sharer.php?u={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-facebook"></i></a>
+                                      </li>
+                                      <li>
+                                          <a ng-href="https://twitter.com/intent/tweet?url={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-twitter"></i></a>
+                                      </li>
+                                      <li>
+                                          <a ng-href="https://plus.google.com/share?url={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-google-plus"></i></a>
+                                      </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="tab=='gallery'" >
+                    <div class="movie-inside-date bg-cast cast-credit" ng-style="{'background':'url('+moviefindOne.cutImage+') no-repeat ','background-size':'contain','background-position':'right bottom','padding-top':'20px','padding-bottom':'30px'}">
+                        <div class="row">
+                            <div class="col-md-11 col-sm-11 col-xs-12">
+                                <div class="all-movies masonry-width">
+                                    <div masonry preserve-order masonry-options="{ fitWidth: 'true'}" class="margin-auto">
+                                        <div class="masonry-brick" ng-repeat="item in MovieGal track by $index" ng-show="item.image!='' || item.image">
+                                            <div class="masonry-box">
+                                                <a href="{{item.image|uploadpath}}" class="fancybox-thumb" rel="fancybox-thumb"> <img ng-src="{{item.image|uploadpath:400}}" alt="Dharma Production"></a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-xs-3 hidden-xs">
+                                <div class="social-share float-right">
+                                    <span class="font-karla font-bold color-light-grey f18">share</span>
+                                    <ul class="padding0">
+                                        <li>
+                                            <a ng-href="https://www.facebook.com/sharer/sharer.php?u={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-facebook"></i></a>
+                                        </li>
+                                        <li>
+                                            <a ng-href="https://twitter.com/intent/tweet?url={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-twitter"></i></a>
+                                        </li>
+                                        <li>
+                                            <a ng-href="https://plus.google.com/share?url={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-google-plus"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="gallery" ng-if="tab=='scene'">
+                    <div class="movie-inside-date bg-cast cast-credit" ng-style="{'background':'url('+moviefindOne.cutImage+') no-repeat ','background-size':'contain','background-position':'right bottom','padding-top':'20px','padding-bottom':'30px'}">
+                        <div class="row">
+                            <div class="col-md-11 col-sm-11 col-xs-12">
+                                <div class="all-movies masonry-width">
+                                    <div masonry preserve-order masonry-options="{ fitWidth: 'true'}" class="margin-auto">
+                                        <div class="masonry-brick" ng-repeat="item in movieBehindTheScenes track by $index">
+                                            <div class="masonry-box">
+                                                <a href="{{item.image|uploadpath}}" class="fancybox-thumb" rel="fancybox-thumb"> <img ng-src="{{item.image|uploadpath:400}}" alt="Dharma Production"></a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-xs-3 hidden-xs">
+                                <div class="social-share float-right">
+                                    <span class="font-karla font-bold color-light-grey f18">share</span>
+                                    <ul class="padding0">
+
+                                      <li>
+                                          <a ng-href="https://www.facebook.com/sharer/sharer.php?u={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-facebook"></i></a>
+                                      </li>
+                                      <li>
+                                          <a ng-href="https://twitter.com/intent/tweet?url={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-twitter"></i></a>
+                                      </li>
+                                      <li>
+                                          <a ng-href="https://plus.google.com/share?url={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-google-plus"></i></a>
+                                      </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video" ng-if="tab=='video' && !getAllvideo">
+                    <div class="movie-inside-date bg-cast cast-credit" ng-style="{'background':'url('+moviefindOne.cutImage+') no-repeat ','background-size':'contain','background-position':'right bottom','padding-top':'20px','padding-bottom':'30px'}">
+                        <div class="row">
+                            <div class="col-md-11 col-sm-10 col-xs-12">
+                                <div class="row">
+                                    <div class="col-md-4 pad5 col-sm-4 col-xs-12" ng-repeat="item in movieVideo track by $index">
+                                        <div class="video-play-box dh-relative">
+                                            <a class="fancybox.iframe fancybox-thumb" fancybox rel="fancybox-thumb" href="http://www.youtube.com/embed/{{item.url}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+
+                                                <img ng-src="{{item.thumbnail|uploadpath}}" alt="Dharma Productions" class="img-responsive width100" ng-if="(item.thumbnail || item.thumbnail != '')">
+                                                <img ng-src="{{item.url|youtubethumb}}" alt="Dharma Productions" class="img-responsive width100" ng-if="!(item.thumbnail || item.thumbnail != '')">
+
+                                                <div class="overlay dh-absulate">
+                                                    <div class="pos-middle">
+                                                        <span class="color-white font-hammersmith">{{item.name}}</span>
+                                                    </div>
+
+                                                    <div class="bottom-right dh-absulate ply-post">
+                                                        <img src="frontend/img/play-small-btn.jpg" alt="Dharma Productions">
+                                            </div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-1 col-sm-2 col-xs-3 hidden-xs">
+                                <div class="social-share pull-right">
+                                    <span class="font-karla font-bold color-light-grey f18">share</span>
+                                    <ul class="padding0">
+                                        <li>
+                                            <a ng-href="https://www.facebook.com/sharer/sharer.php?u={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-facebook"></i></a>
+                                        </li>
+                                        <li>
+                                            <a ng-href="https://twitter.com/intent/tweet?url={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-twitter"></i></a>
+                                        </li>
+                                        <li>
+                                            <a ng-href="https://plus.google.com/share?url={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-google-plus"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt30">
+                            <div class="btn-outline">
+                                <button type="button" name="button" class="btn-primary-outline font-hammersmith btn-enter" ui-sref="tv-inside({id:myid})">VIEW MORE</button>
+                                <!-- <button type="button" name="button" class="btn-primary-outline font-hammersmith btn-enter" ng-click="moreVideo();">VIEW MORE</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+                <div class="wallpapper" ng-if="tab=='wallpapper'">
+                    <div class="movie-inside-date bg-cast cast-credit" ng-style="{'background':'url('+moviefindOne.cutImage+') no-repeat ','background-size':'contain','background-position':'right bottom','padding-top':'20px','padding-bottom':'30px'}">
+                        <div class="row">
+                            .
+                            <div class="btn-group custom-tabs" role="group" aria-label="...">
+                                <button type="button" class="btn {{classp}} font-hammersmith f18" ng-click="tabchanges('desktop',1)">Desktop</button>
+                                <button type="button" class="btn {{classv}} font-hammersmith f18" ng-click="tabchanges('mobile',2)">Mobile</button>
+
+                            </div>
+                        </div>
+                        <div class="desktop mt15" ng-if="tabs=='desktop'">
+                            <div class="row">
+                                <div class="col-md-11 col-sm-10 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-md-4 pad5 col-sm-6 col-xs-12" ng-repeat="item in movieWallpaper track by $index" ng-if="item.type=='Desktop'" ng-show="item.image || item.image!= ''">
+                                            <div class="all-wall">
+                                                <div class="desktop dh-relative">
+                                                    <img ng-src="{{item.image|uploadpath:400}}" alt="Dharma productions" class="img-responsive width100">
+                                                    <div class="download dh-absulate">
+                                                        <a href="{{item.image|uploadpath}}" download><img src="frontend/img/download.png" alt="Dharma productions"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 col-sm-2 col-xs-3 hidden-xs">
+                                    <div class="social-share pull-right">
+                                        <span class="font-karla font-bold color-light-grey f18">share</span>
+                                        <ul class="padding0">
+                                            <li>
+                                                <a ng-href="https://www.facebook.com/sharer/sharer.php?u={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-facebook"></i></a>
+                                            </li>
+                                            <li>
+                                                <a ng-href="https://twitter.com/intent/tweet?url={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-twitter"></i></a>
+                                            </li>
+                                            <li>
+                                                <a ng-href="https://plus.google.com/share?url={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-google-plus"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="desktop mt15" ng-if="tabs=='mobile'">
+                            <div class="row">
+                                <div class="col-md-11 col-sm-10 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-md-3 pad5 col-sm-3 col-xs-12" ng-repeat="item in movieWallpaper track by $index" ng-if="item.type=='Mobile'">
+                                            <div class="all-wall">
+                                                <div class="desktop dh-relative mob-height">
+                                                    <img ng-src="{{item.image|uploadpath:400}}" alt="Dharma productions" class="img-responsive width100">
+                                                    <div class="download dh-absulate">
+                                                        <a href="{{item.image|wallpaperpath}}" download><img ng-src="frontend/img/download.png" alt="Dharma productions"></a>
+                                                        <!-- <a href="{{item.image|uploadpath}}" download><img ng-src="{{item.image|uploadpath}}" alt="Dharma productions"></a>{{item.image|uploadpath}}abcd -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 col-sm-2 col-xs-3 hidden-xs">
+                                    <div class="social-share pull-right">
+                                        <span class="font-karla font-bold color-light-grey f18">share</span>
+                                        <ul class="padding0">
+                                            <li>
+                                                <a ng-href="https://www.facebook.com/sharer/sharer.php?u={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-facebook"></i></a>
+                                            </li>
+                                            <li>
+                                                <a ng-href="https://twitter.com/intent/tweet?url={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-twitter"></i></a>
+                                            </li>
+                                            <li>
+                                                <a ng-href="https://plus.google.com/share?url={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-google-plus"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="awards" ng-if="tab=='awards'">
+                    <div class="movie-inside-date bg-cast cast-credit"ng-style="{'background':'url('+moviefindOne.cutImage+') no-repeat ','background-size':'contain','background-position':'right bottom','padding-top':'20px','padding-bottom':'30px'}">
+                        <div class="row">
+                            <div class="col-md-11 col-sm-10 col-xs-12">
+                                <div class="movie-award">
+                                    <uib-accordion close-others="true">
+
+                                        <uib-accordion-group is-open="accordian[$index].isFirstOpen" ng-repeat="data in MovieAwards">
+                                            <uib-accordion-heading class="mob-font">
+                                                <!-- <h4>Zee Cine Awards</h4> <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i> -->
+                                                <div class="row">
+                                                    <div class="col-md-7 col-sm-6 col-xs-7">
+                                                        <h3 class="dark-black text-up font-karla font-bold margin0">{{data.name}}</h3>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-5 col-xs-3">
+                                                        <h3 class="dark-black text-up font-karla font-bold margin0">{{data.year}}</h3>
+                                                    </div>
+                                                    <div class="col-md-1 col-sm-1 col-xs-2">
+                                                        <i class="pull-right fa" ng-class="{'fa fa-minus': accordian[$index].isFirstOpen, 'fa fa-plus': !accordian[$index].isFirstOpen}"></i>
+                                                    </div>
+                                                </div>
+                                            </uib-accordion-heading>
+                                            <div class="row">
+                                                <div class="title-acc">
+                                                    <h1 class="font-karla color-primary pl10">Won</h1>
+                                                </div>
+                                                <div ng-repeat="data1 in data.award">
+                                                    <div class="col-md-7 col-sm-7 col-xs-6">
+                                                        <div class="awards-name">
+                                                            <ul class="padding0 list-none color-black">
+                                                                <li><span>{{data1.awardname}}</span></li>
+                                                                <!-- <li><span>Best Background Score</span></li>
+                                             <li><span>Best Screenplay</span></li>
+                                             <li><span>Best Choreography</span></li> -->
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-4 col-xs-6">
+                                                        <div class="awards-name">
+                                                            <ul class="padding0 list-none color-primary">
+                                                                <li><span>{{data1.winner}}</span></li>
+                                                                <!-- <li><span>Pritam Chakraborty</span></li>
+                                             <li><span>Ayan Mukherjee</span> </li>
+                                             <li><span>Remo</span> -->
+                                                                <p class="color-black f12 line0">{{data1.note}}</p>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </uib-accordion-group>
+                                    </uib-accordion>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-2 hidden-xs">
+                                <div class="social-share float-right">
+                                    <span class="font-karla font-bold color-light-grey f18">share</span>
+                                    <ul class="padding0">
+                                        <li>
+                                            <a ng-href="https://www.facebook.com/sharer/sharer.php?u={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-facebook"></i></a>
+                                        </li>
+                                        <li>
+                                            <a ng-href="https://twitter.com/intent/tweet?url={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-twitter"></i></a>
+                                        </li>
+                                        <li>
+                                            <a ng-href="https://plus.google.com/share?url={{myUrl | urlEncode}}" target="_blank"><i class="fa fa-google-plus"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <div class="back-to-top pull-right" scroll-to-item scroll-to="#top-scroll"> <img src="frontend/img/top-scroll.png" alt="Dharma Productions">
+        </div>
+</section>

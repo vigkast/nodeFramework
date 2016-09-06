@@ -1,0 +1,124 @@
+<section>
+    <div class="dharma-journey-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <div class="head-title news-search">
+                            <h1 class="color-white f120 text-up font-hammersmith margin0">DHARMA JOURNEY</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <div class="head-title">
+                            <p class="color-white">From once upon a time to happily ever after, here's a timeline of Dharma Productions, doing what they do best. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <section  ng-repeat="year in journeys">
+            <div class="dh-relative">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <div class="timline-head">
+                                    <div class="dh-absulate middle">
+                                        <h1 class="color-white f120 text-up font-hammersmith margin0">{{year[0].year}}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-section">
+                    <!-- <div class="side-wall">
+                        <div class="date-list">
+                            <h4>2016</h4>
+                            <div class="dot-big"></div>
+                        </div>
+                        <div class="dot-small"></div>
+                        <div class="dot-small2"></div>
+                        <div class="dot-small3"></div>
+                        <div class="dot-small4"></div>
+                        <div class="dot-small5"></div>
+                        <div class="dot-small6"></div>
+                        <div class="dot-small7"></div>
+                        <div class="border-btm"></div>
+                    </div> -->
+                    <div class="top-circle">
+                        <div class="dot"></div>
+                    </div>
+                    <section id="cd-timeline" class="cd-container">
+                        <div class="timline-grp">
+                            <div class="cd-timeline-block" ng-repeat="journey in year">
+                                <div class="cd-timeline-img cd-picture">
+
+                                </div>
+                                <!-- cd-timeline-img -->
+
+                                <div class="cd-timeline-content" ng-if="journey.image!=''">
+                                    <div class="row">
+                                        <div class="col-md-6 pr0 col-sm-6 col-xs-12">
+                                            <div class="img-timline-box">
+                                                <img ng-src="{{journey.image|uploadpath}}" alt="Dharma Productions" class="img-responsive">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 pl0 col-sm-6 col-xs-12">
+                                            <div class="contents">
+                                                <p ng-bind="journey.title">
+                                                </p>
+                                                <!-- <span>{{journey.dateShow}}</span> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="cd-timeline-content"  ng-if="journey.image==''">
+                                    <div class="row">
+
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <div class="contents">
+                                                <p ng-bind="journey.title"></p>
+                                                <!-- <span>{{journey.dateShow}}</span> -->
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- cd-timeline-content -->
+                            </div>
+                            <!-- cd-timeline-block -->
+
+                            <div class="cd-timeline-block" >
+                                <div class="cd-timeline-img cd-picture">
+
+                                </div>
+                                <!-- cd-timeline-img -->
+
+
+                                <!-- cd-timeline-content -->
+                            </div>
+
+
+
+
+                        </div>
+                    </section>
+                    <div class="top-circle">
+                        <div class="dot dot2"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- cd-timeline -->
+        </section>
+      </div>
+</section>

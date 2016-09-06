@@ -1,0 +1,70 @@
+{
+    "title": "Edit Config",
+    "jsonPage": "viewDharma140",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Id",
+        "type": "hidden",
+        "tableRef": "_id",
+        "placeholder": "Enter name",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "model": "_id"
+    }, {
+        "name": "Title",
+        "type": "text",
+        "tableRef": "title",
+        "placeholder": "Enter Title",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "model": "title"
+    }, {
+        "name": "Description",
+        "type": "tinymce",
+        "tableRef": "description",
+        "placeholder": "Enter Description",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "model": "description"
+    }, {
+        "name": "Video Url",
+        "type": "text",
+        "tableRef": "url",
+        "placeholder": "Enter Video Url",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "model": "url"
+    },{
+        "name": " Video Thumbnail",
+        "type": "image",
+        "tableRef": "thumbnail",
+        "model": "thumbnail",
+        "placeholder": "Enter  Video Thumbnail",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "400 x 225px"
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitConfig"
+    }, {
+        "name": "cancel",
+        "action": "cancelConfig",
+        "stateName": "page({jsonName:'viewConfig'})"
+    }],
+    "apiCall": {
+        "url": "NewConfig/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "NewConfig/getOne",
+        "params": "_id"
+    }
+}

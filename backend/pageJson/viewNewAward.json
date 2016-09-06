@@ -1,0 +1,71 @@
+{
+    "title": "All Awards",
+      "addSearch": true,
+      "showSearch": true,
+    "desciption": "",
+    "pageType": "view",
+    "fields": [{
+            "name": "Award Name",
+            "isSort": "",
+            "tableRef": "name"
+        }, {
+            "name": "Movie",
+            "isSort": "",
+            "tableRef": "movie.name"
+        }, {
+            "name": "Year",
+            "isSort": "",
+            "tableRef": "year"
+        }
+
+    ],
+    "action": [{
+        "name": "edit",
+        "icon": "mode_edit",
+        "color": "#f37021",
+        "action": "redirect",
+        "jsonPage": "editNewAward",
+        "fieldsToSend": ["_id"],
+        "callFindOne": "newaward/findOne"
+    }, {
+        "name": "delete",
+        "icon": "delete",
+        "color": "red",
+        "action": "apiCallConfirm",
+        "title": "Delete ",
+        "content": "Are you sure you want to delete crew?",
+        "api": "newaward/delete",
+        "fieldsToSend": [{
+            "name": "_id",
+            "value": "_id"
+        }]
+    }],
+    "button": [{
+        "name": "excelexport",
+        "icon": "print",
+        "color": "#f37021",
+        "action": "excelexport"
+    }, {
+        "name": "uploadcsv",
+        "icon": "delete",
+        "color": "red",
+        "action": "uploadcsv"
+    }],
+    "filter": [{
+        "name": "category",
+        "url": "http://chaitalee.com/expertuser/getAll"
+    }, {
+        "name": "uploadcsv",
+        "icon": "delete",
+        "color": "red",
+        "action": "uploadcsv"
+    }],
+    "apiCall": {
+        "url": "newaward/findLimited",
+        "params": "_id"
+    },
+    "apiCallForSearch": {
+        "url": "movie/find"
+    },
+    "createButtonState": "page({jsonName:'createNewAward'})"
+}

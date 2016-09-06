@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="row">
+    <ks-swiper-container override-parameters="{'effect':'coverflow', 'centeredSlides': true, 'slidesPerView': 'auto'}">
+      <ks-swiper-slide class="swiper-slide" loop="true" autoplay="3000" ng-repeat="s in gallery">
+          <img ng-src="{{s}}">
+      </ks-swiper-slide>
+  </ks-swiper-container>
+  </div>
+</div>

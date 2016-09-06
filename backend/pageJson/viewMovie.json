@@ -1,0 +1,85 @@
+{
+    "title": "All Movies",
+    "desciption": "",
+    "pageType": "view",
+    "fields": [{
+            "name": "Order",
+            "isSort": "",
+            "tableRef": "order"
+        }, {
+            "name": "Name",
+            "isSort": "",
+            "tableRef": "name"
+        }, {
+            "name": "Upcoming Release",
+            "isSort": "",
+            "tableRef": "upcomingSmall",
+            "type": "image"
+        }, {
+            "name": "Recent Release",
+            "isSort": "",
+            "tableRef": "recentSmall",
+            "type": "image"
+        }, {
+            "name": "Past Release",
+            "isSort": "",
+            "tableRef": "smallImage",
+            "type": "image"
+        }, {
+            "name": "Month",
+            "isSort": "",
+            "tableRef": "month"
+        }, {
+            "name": "Year",
+            "isSort": "",
+            "tableRef": "year"
+        }
+
+    ],
+    "action": [{
+        "name": "edit",
+        "icon": "mode_edit",
+        "color": "#f37021",
+        "action": "redirect",
+        "jsonPage": "editMovie",
+        "fieldsToSend": ["_id"],
+        "callFindOne": "movie/getOne"
+    }, {
+        "name": "delete",
+        "icon": "delete",
+        "color": "red",
+        "action": "apiCallConfirm",
+        "title": "Delete User",
+        "content": "Are you sure you want to delete movie?",
+        "api": "movie/delete",
+        "fieldsToSend": [{
+            "name": "_id",
+            "value": "_id"
+        }]
+    }],
+    "button": [{
+        "name": "excelexport",
+        "icon": "print",
+        "color": "#f37021",
+        "action": "excelexport"
+    }, {
+        "name": "uploadcsv",
+        "icon": "delete",
+        "color": "red",
+        "action": "uploadcsv"
+    }],
+    "filter": [{
+        "name": "category",
+        "url": "http://chaitalee.com/expertuser/getAll"
+    }, {
+        "name": "uploadcsv",
+        "icon": "delete",
+        "color": "red",
+        "action": "uploadcsv"
+    }],
+    "apiCall": {
+        "url": "movie/findLimited",
+        "params": ""
+    },
+    "createButtonState": "page({jsonName:'createMovie'})"
+}

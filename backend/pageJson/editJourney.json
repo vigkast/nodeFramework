@@ -1,0 +1,62 @@
+{
+    "title": "Edit Journey",
+    "jsonPage": "viewJourney",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Title",
+        "type": "text",
+        "tableRef": "title",
+        "model": "title",
+        "placeholder": "Enter title",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Year",
+        "type": "text",
+        "tableRef": "year",
+        "model": "year",
+        "placeholder": "Enter year",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Image",
+        "type": "image",
+        "tableRef": "image",
+        "model": "image",
+        "placeholder": "Enter image",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "373 x 394px"
+    }, {
+        "name": "Date",
+        "type": "date",
+        "tableRef": "date",
+        "model": "date",
+        "placeholder": "Enter date",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitUser"
+    }, {
+        "name": "cancel",
+        "action": "cancelUser",
+        "stateName": "page({jsonName:'viewJourney'})"
+    }],
+    "apiCall": {
+        "url": "journey/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "journey/getOne",
+        "params": "_id"
+    }
+
+}

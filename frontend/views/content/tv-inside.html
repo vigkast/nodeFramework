@@ -1,0 +1,163 @@
+<section>
+    <div class="dharma-top-bg">
+        <div class="container">
+            <div class="row">
+                <div class="text-center">
+                    <div class="head-title mt45">
+                        <h1 class="color-white f120 text-up font-hammersmith">DhARMA TV</h1>
+                    </div>
+                    <div class="search-rslt mt15" ng-if="searchdata.search!=''">
+                        <h3 class="color-primary margin0">Displaying Result For '{{searchdata.search}}'</h3>
+                    </div>
+                    <div class="search-movie dh-relative search-movie-mar">
+                        <div class="search-img">
+                            <img src="frontend/img/search.png" alt="Dharma Productions">
+                        </div>
+                        <input type="search" name="name" value="" class="search-in" placeholder="Search for your favourite movie or actor" ng-model="searchdata.search">
+                        <div class="search-img2" ng-if="searchdata.search!=''" ng-click="viewSearch();">
+                            <img src="frontend/img/error.png" alt="Dharma Productions">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section>
+            <div class="container" ng-if="allvideos.length > 0">
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-xs-7">
+                        <div class="tv-inside mt60">
+                            <div class="title hidden-xs" ng-if="searchdata.search==''">
+                                <h1 class="ml-7 color-primary font-hammersmith line45 f55 text-up">{{allvideos[0].movie.name}}</h1>
+                            </div>
+                            <div class="title hidden-md hidden-sm hiiden-lg visible-xs" ng-if="searchdata.search==''">
+                                <h1 class="ml-7 color-primary font-hammersmith line45 f55 text-up">{{allvideos[0].movie.name | shorten : 10}}</h1>
+                            </div>
+
+                        </div>
+                        <div class="text-shadow">
+                            <div class="row">
+                                <div class="col-md-4 padding0 col-sm-4 col-sx-12" ng-repeat="item in allvideos | filter:searchdata.search">
+                                    <div class="tv-box ">
+
+                                        <a class="various fancybox.iframe" fancybox rel="gallery1" href="http://www.youtube.com/embed/{{item.url}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1" rel="movies" data-fancybox-type="iframe">
+                                            <div class="img-inside-box em-box">
+
+                                                <img ng-src="{{item.thumbnail|uploadpath}}" alt="Dharma Productions" class="img-responsive width100" ng-if="item.thumbnail || item.thumbnail != ''">
+
+                                                <img ng-src="{{item.url|youtubethumb}}" alt="Dharma Productions" class="img-responsive width100" ng-if="!(item.thumbnail || item.thumbnail != '')">
+
+                                                <!-- <img ng-src="{{item.url | youtubethumb:false}}" alt="Dharma Productions" class="img-responsive"> -->
+                                                <!-- <i class="fa fa-play"></i> -->
+                                                <!-- <a class="various fancybox.iframe" fancybox rel="gallery1" href="http://www.youtube.com/embed/xnJ4RTodr3g?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"><img ng-src="{{item.thumbnail|uploadpath}}" alt="Dharma Productions" class="img-responsive"></a> -->
+                                            </div>
+                                            <div class="video-names mt10">
+                                                <span class="color-white text-cap m-font12">{{item.title|shorten : 60}}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 col-xs-5">
+                        <div class="border-left">
+                            <h3 class="color-primary">OTHER MOVIES</h3>
+                            <ul class="list-none color-white padding0">
+                                <li ng-repeat="name in allMovieName">
+                                  <!-- <a ng-click="goToMovie(name._id,name.name)">{{name.name}}</a> -->
+                                    <a ui-sref="tv-inside({id:name._id})">{{name.name}}</a>
+                                </li>
+                                <!-- <li><a href="">Brothers</a></li>
+            <li><a href="">Hasee Toh Phasee</a></li>
+            <li><a href="">Ungli</a></li>
+            <li><a href="">Humpty Sharma Ki Dulhania</a></li>
+            <li><a href="">Gori Tere Pyaar Mein!</a></li>
+            <li><a href="">Student of the Year</a></li>
+            <li><a href="">Agneepath</a></li>
+            <li><a href="">Gippi</a></li>
+            <li><a href="">Kal Ho Naa Ho</a></li>
+            <li><a href="">Kuch Kuch Hota Hai</a></li>
+            <li><a href="">Kabhi Alvida Naa Kehna</a></li>
+            <li><a href="">Kabhi Khushi Kabhie Gham</a></li>
+            <li><a href="">Duplicate</a></li>
+            <li><a href="">Dostana</a></li> -->
+
+                            </ul>
+                            <a class="color-grey">
+                                <h4 ng-click="seeMoreMovieName();" ng-if="seeMore">See More</h4>
+                                <h4 ng-click="seeLessMovieName();" ng-if="seeLess && !seeMore">See Less</h4>
+                            </a>
+                            <h3 class="color-primary mt30">POPULAR TAGS</h3>
+                            <ul class="list-none color-white padding0">
+                                <li ng-repeat="name in getAllTags">
+                                    <a ui-sref="dharma-tvsearch({search:name.name})">{{name.name}}</a>
+                                </li>
+                                <!-- <li><a href="">Brothers</a></li>
+                                <li><a href="">Hasee Toh Phasee</a></li>
+                                <li><a href="">Ungli</a></li>
+                                <li><a href="">Humpty Sharma Ki Dulhania</a></li>
+                                <li><a href="">Gori Tere Pyaar Mein!</a></li>
+                                <li><a href="">Student of the Year</a></li>
+                                <li><a href="">Agneepath</a></li>
+                                <li><a href="">Gippi</a></li>
+                                <li><a href="">Kal Ho Naa Ho</a></li>
+                                <li><a href="">Kuch Kuch Hota Hai</a></li>
+                                <li><a href="">Kabhi Alvida Naa Kehna</a></li>
+                                <li><a href="">Kabhi Khushi Kabhie Gham</a></li>
+                                <li><a href="">Duplicate</a></li>
+                                <li><a href="">Dostana</a></li> -->
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    <div class="container" ng-if="allvideos.length == 0">
+      <div class="row">
+        <div class="col-md-8 col-sm-8 col-xs-7">
+            <div class="tv-inside mt60">
+                <div class="title hidden-xs" >
+                    <h1 class="ml-7 color-primary font-hammersmith f55 text-up" style="line-height: 56%">{{currentMovie}}</h1>
+                </div>
+
+
+            </div>
+            <div class="text-shadow">
+              <div class="row">
+              <div class="col-md-8">
+                  <h2 class="color-white">No Videos Yet</h2>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-5">
+              <div class="border-left">
+                  <h3 class="color-primary">OTHER MOVIES</h3>
+                  <ul class="list-none color-white padding0">
+                      <li ng-repeat="name in allMovieName">
+                          <a ng-click="goToMovie(name._id,name.name)">{{name.name}}</a>
+                      </li>
+
+                  </ul>
+                  <a class="color-grey">
+                      <h4 ng-click="seeMoreMovieName();" ng-if="seeMore">See More</h4>
+                      <h4 ng-click="seeLessMovieName();" ng-if="seeLess && !seeMore">See Less</h4>
+                  </a>
+                  <h3 class="color-primary mt30">POPULAR TAGS</h3>
+                  <ul class="list-none color-white padding0">
+                      <li ng-repeat="name in getAllTags">
+                          <a ui-sref="dharma-tvsearch({search:name.name})">{{name.name}}</a>
+                      </li>
+
+                  </ul>
+              </div>
+          </div>
+      </div>
+    </div>
+        </section>
+
+    </div>
+</section>

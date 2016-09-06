@@ -1,0 +1,57 @@
+<div class="dark-bg padder-up">
+    <div class="container">
+        <div class="text-center white-color">
+            <h1 class="super-big font-hammersmith">Dharma@140</h1>
+            <p class="descriptive">The best of the Twitterverse -  from Producers, Directors, Stars and the entire Production Unit find
+                <br>
+                out what’s trending in the Dharma World.</p>
+        </div>
+        <div class="dharma140">
+            <div class="relative">
+                <button class="btn btn-clear pull-right">
+                    <i class="fa fa-3x fa-angle-right"></i>
+                </button>
+                <button class="btn btn-clear pull-left">
+                    <i class="fa fa-3x fa-angle-left"></i>
+                </button>
+                <ul class="handlers">
+                    <li ng-repeat="h in getAllTwitterTag">
+                        <div class="hashtagged font-hammersmith" ng-click="selectOneHashTag(h._id);" ui-sref="dharma140({id:h._id})" ng-class="{'activeLink': h.isMatch}">{{h.hashTags}}
+                            <!-- <span>{{isMatch}}</span> -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="masonry-king">
+                <div masonry>
+                    <div class="masonry-brick" ng-repeat="t in getOneHashTag">
+                        <a href="https://twitter.com/{{t.user.screen_name}}/status/{{t.id_str}}" target="_blank">
+                            <div class="tweet-holder">
+                                <div class="tweet-img" ng-if="t.entities.media[0].media_url && t.entities.media[0].type=='photo'">
+                                    <img ng-src="{{t.entities.media[0].media_url}}">
+                                </div>
+                                <div class="item-avatar">
+                                    <div class="imaged"><img ng-src="{{t.user.profile_image_url}}" alt=""></div>
+                                    <h3>
+                                        <span class="text-upper primary-color">{{t.user.name}}</span>@{{t.user.screen_name}}</h3>
+                                    <span>{{t.created_at|date:'MMM d'}}
+                                        |
+                                        {{t.created_at|date:'h:mm a'}}</span>
+                                </div>
+                                <div class="post-holder" ng-bind-html="t.text"></div>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+                <div ng-if="getOneHashTag.length==0" style="min-height:400px;" class="mt25">
+                    <h3 class="color-white text-cap color-primary text-center">Sorry, No Data Found</h3>
+                </div>
+  <!-- <div ng-if="getOneHashTag.length==0">No Data Found</div> -->
+            </div>
+
+
+        </div>
+    </div>
+</div>

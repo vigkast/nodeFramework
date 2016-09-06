@@ -1,0 +1,34 @@
+{
+    "title": "Create Dharma 140",
+    "jsonPage": "viewDharma140",
+    "desciption": "",
+    "pageType": "create",
+    "fields": [{
+        "name": "HashTag",
+        "type": "text",
+        "tableRef": "hashTags",
+        "placeholder": "Enter HashTag",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "User",
+        "type": "chips",
+        "tableRef": "user",
+        "placeholder": "Enter category",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitUser"
+    }, {
+        "name": "cancel",
+        "stateName": "page({jsonName:'viewDharma140'})"
+    }],
+
+    "apiCall": {
+        "url": "Dharma140/save"
+    }
+}

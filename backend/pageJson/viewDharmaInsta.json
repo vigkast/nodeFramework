@@ -1,0 +1,70 @@
+{
+    "title": "Dharma Insta",
+    "desciption": "",
+    "pageType": "view",
+
+    "fields": [ {
+        "name": "Name",
+        "isSort": "",
+        "tableRef": "name"
+    }, {
+        "name": "Insta Id",
+        "isSort": "",
+        "tableRef": "instaId"
+    }, {
+        "name": "Image",
+        "isSort": "",
+        "tableRef": "image",
+        "type": "image"
+    }, {
+      "name": "Status",
+    "isSort": "",
+    "tableRef": "status"
+      }],
+    "action": [{
+        "name": "edit",
+        "icon": "mode_edit",
+        "color": "#f37021",
+        "action": "redirect",
+        "jsonPage": "editDharmaInsta",
+        "fieldsToSend": ["_id"],
+        "callFindOne": "DharmaInsta/getOne"
+    }, {
+        "name": "delete",
+        "icon": "delete",
+        "color": "red",
+        "action": "apiCallConfirm",
+        "title": "Delete ",
+        "content": "Are you sure you want to delete DharmaInsta?",
+        "api": "DharmaInsta/delete",
+        "fieldsToSend": [{
+            "name": "_id",
+            "value": "_id"
+        }]
+    }],
+    "button": [{
+        "name": "excelexport",
+        "icon": "print",
+        "color": "#f37021",
+        "action": "excelexport"
+    }, {
+        "name": "uploadcsv",
+        "icon": "delete",
+        "color": "red",
+        "action": "uploadcsv"
+    }],
+    "filter": [{
+        "name": "category",
+        "url": "http://chaitalee.com/expertuser/getAll"
+    }, {
+        "name": "uploadcsv",
+        "icon": "delete",
+        "color": "red",
+        "action": "uploadcsv"
+    }],
+    "apiCall": {
+        "url": "DharmaInsta/findLimited",
+        "params": "_id"
+    },
+    "createButtonState": "page({jsonName:'createDharmaInsta'})"
+}

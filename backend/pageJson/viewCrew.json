@@ -1,0 +1,111 @@
+{
+    "title": "All Crew",
+    "desciption": "",
+    "pageType": "view",
+    "sendIdWithCreate": true,
+    "urlFields": ["_id"],
+    "fields": [{
+            "name": "Order",
+            "isSort": "",
+            "tableRef": "order"
+        },{
+            "name": "Title",
+            "isSort": "",
+            "tableRef": "title"
+        }, {
+            "name": "Name",
+            "isSort": "",
+            "tableRef": "name"
+        }
+
+    ],
+    "action": [{
+        "name": "edit",
+        "icon": "mode_edit",
+        "color": "#f37021",
+        "action": "redirect",
+        "jsonPage": "editCrew",
+        "fieldsToSend": ["_id"],
+        "callFindOne": "movie/findOneCrew"
+    }, {
+        "name": "delete",
+        "icon": "delete",
+        "color": "red",
+        "action": "apiCallConfirm",
+        "title": "Delete Crew",
+        "content": "Are you sure you want to delete crew?",
+        "api": "movie/deleteCrew",
+        "fieldsToSend": [{
+            "name": "_id",
+            "value": "_id"
+        }]
+    }],
+    "button": [{
+        "name": "excelexport",
+        "icon": "print",
+        "color": "#f37021",
+        "action": "excelexport"
+    }, {
+        "name": "uploadcsv",
+        "icon": "delete",
+        "color": "red",
+        "action": "uploadcsv"
+    }],
+    "filter": [{
+        "name": "category",
+        "url": "http://chaitalee.com/expertuser/getAll"
+    }, {
+        "name": "uploadcsv",
+        "icon": "delete",
+        "color": "red",
+        "action": "uploadcsv"
+    }],
+    "apiCall": {
+        "url": "movie/findCrew",
+        "params": "_id"
+    },
+    "createButtonState": "page({jsonName:'createCrew'})",
+    "sidemenu": [{
+        "name": "Movie Details",
+        "action": "sidemenuRedirect",
+        "jsonPage": "editMovie",
+        "fieldsToSend": [1],
+        "callFindOne": "movie/findOne"
+    }, {
+        "name": "Cast",
+        "action": "sidemenuRedirect",
+        "jsonPage": "viewCast",
+        "fieldsToSend": [1],
+        "callFindOne": "movie/findCast"
+    }, {
+        "name": "Crew",
+        "action": "sidemenuRedirect",
+        "jsonPage": "viewCrew",
+        "fieldsToSend": [1],
+        "callFindOne": "movie/findCrew"
+    }, {
+        "name": "Gallery",
+        "action": "sidemenuRedirect",
+        "jsonPage": "viewGallery",
+        "fieldsToSend": [1],
+        "callFindOne": "movie/findGallery"
+    }, {
+        "name": "Videos",
+        "action": "sidemenuRedirect",
+        "jsonPage": "viewVideos",
+        "fieldsToSend": [1],
+        "callFindOne": "movie/findVideos"
+    }, {
+        "name": "Wallpaper",
+        "action": "sidemenuRedirect",
+        "jsonPage": "viewWallpaper",
+        "fieldsToSend": [1],
+        "callFindOne": "movie/findWallpaper"
+    },  {
+        "name": "Behind The Scenes",
+        "action": "sidemenuRedirect",
+        "jsonPage": "viewBehind",
+        "fieldsToSend": [1],
+        "callFindOne": "movie/findBehindTheScenes"
+    }]
+}

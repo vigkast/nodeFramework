@@ -1,0 +1,44 @@
+{
+    "title": "Create Crew",
+    "jsonPage": "viewMovie",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["movie"],
+    "fields": [{
+        "name": "Title",
+        "type": "text",
+        "tableRef": "title",
+        "placeholder": "Enter title",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter name",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Order",
+        "type": "text",
+        "tableRef": "order",
+        "placeholder": "Enter order",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitUser"
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": "page({jsonName:'viewMovie'})"
+    }],
+
+    "apiCall": {
+        "url": "movie/saveCrew"
+    }
+}

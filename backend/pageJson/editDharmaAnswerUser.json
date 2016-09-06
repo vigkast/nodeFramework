@@ -1,0 +1,53 @@
+{
+    "title": "Edit Dharma AnswerUser",
+    "jsonPage": "viewDharmaAnswerUser",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Id",
+        "type": "hidden",
+        "tableRef": "_id",
+        "placeholder": "Enter name",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "model": "_id"
+    }, {
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "model": "name"
+    },{
+        "name": "Answer User Image",
+        "type": "image",
+        "tableRef": "image",
+        "model": "image",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "382px X 295px"
+    }
+  ],
+    "action": [{
+        "name": "submit",
+        "action": "submitDharmaAnswerUser"
+    }, {
+        "name": "cancel",
+        "action": "cancelDharmaAnswerUser",
+        "stateName": "page({jsonName:'viewDharmaAnswerUser'})"
+    }],
+    "apiCall": {
+        "url": "DharmaAnswerUser/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "DharmaAnswerUser/getOne",
+        "params": "_id"
+    }
+
+}

@@ -1,0 +1,66 @@
+{
+    "title": "Edit Cast",
+    "jsonPage": "viewMovie",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Actor",
+        "type": "text",
+        "tableRef": "actor",
+        "model": "actor",
+        "placeholder": "Enter actor",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    },{
+        "name": "Type (Cast | Sub-Cast)",
+        "type": "select",
+        "tableRef": "type",
+        "model": "type",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": [{
+              "value":"Cast",
+                "name": "Cast"
+            }, {
+              "value":"Sub-cast",
+                "name": "Sub-cast"
+            }]
+    },{
+        "name": "Character Name",
+        "type": "text",
+        "tableRef": "name",
+        "model": "name",
+        "placeholder": "Enter name",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Image",
+        "type": "image",
+        "tableRef": "image",
+        "model": "image",
+        "id": "input4",
+        "validation": ["required", "trim", "unique"],
+        "url": "",
+        "size": "150 x 150px"
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitUser"
+    }, {
+      "name": "cancel",
+      "sideMenuRedirect":true,
+      "stateName": "page({jsonName:'viewMovie'})"
+    }],
+    "apiCall": {
+        "url": "movie/saveCast",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "movie/findOneCast",
+        "params": "_id"
+    }
+
+}

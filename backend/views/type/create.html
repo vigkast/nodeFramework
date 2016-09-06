@@ -1,0 +1,88 @@
+<section class="md-whiteframe-z1 users">
+    <md-list ng-cloak>
+        <md-subheader class="md-no-sticky">{{json.title}}</md-subheader>
+        <md-divider></md-divider>
+    </md-list>
+
+    <form name="plan" class="padlr16">
+        <md-input-container class="md-block" ng-repeat="field in json.fields">
+            <div ng-if="field.type=='hidden'">
+                <input ng-model="field.model" type="{{field.type}}" name="{{field.name}}" id="{{field.id}}">
+            </div>
+            <div ng-if="field.type=='text' || field.type=='email'">
+                <label>{{field.name}}</label>
+                <input ng-model="field.model" type="{{field.type}}" name="{{field.name}}" id="{{field.id}}">
+                <!-- <div ng-messages="name.$error">
+        <div ng-message="required">This is required.</div>
+        <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+      </div> -->
+            </div>
+            <div ng-if="field.type=='readonly'">
+                <label>{{field.name}}</label>
+                <input ng-model="json.editData[field.model]" type="text" readonly="true" name="{{field.name}}" id="{{field.id}}">
+            </div>
+            <!-- <div ng-if="field.type=='select'">
+                    <label>{{field.name}}</label>
+                    <md-select ng-model="json.editData[field.model]">
+                        <md-option ng-repeat="item in field.url" value="{{item._id}}">{{item.name}}</md-option>
+                    </md-select>
+                </div> -->
+
+            <div ng-if="field.type=='select'">
+                <label>{{field.name}}</label>
+                <md-select ng-model="field.model">
+                    <md-option ng-repeat="item in field.url" value="{{item.value}}">{{item.name}}</md-option>
+                </md-select>
+            </div>
+            <div ng-if="field.type=='selectFromTable'">
+                <label for="{{field.id}}">{{field.name}} </label>
+                <br>
+                <select ng-model="field.model">
+                    <option value="">SELECT</option>
+
+                    <option ng-repeat="item in field.dropdownvalues track by $index" value="{{item._id}}">
+                        {{item.name}}
+                    </option>
+                </select>
+                <br>
+            </div>
+            <div ng-if="field.type=='textarea'">
+                <label>{{field.name}}</label>
+                <textarea style="height:100px;" ng-model="field.model" name="{{field.name}}" id="{{field.id}}"></textarea>
+            </div>
+            <div ng-if="field.type=='tinymce'">
+                <label>{{field.name}}</label>
+                <textarea ui-tinymce ng-model="field.model"></textarea>
+            </div>
+            <div ng-if="field.type=='date'">
+                <label>Date</label>
+                <!-- <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker> -->
+                <input ng-model="field.model" type="date" name="{{field.name}}" id="{{field.id}}">
+                <!-- <md-datepicker ng-model="" md-placeholder="Enter date"></md-datepicker> -->
+
+            </div>
+            <div ng-if="field.type=='image'">
+                <label for="">{{field.name}}</label>
+                <!-- <img ng-src="{{field.image|uploadpath}}"> -->
+                <span style="float: right;">{{field.size}}</span>
+                <upload-image ng-model="field.model" no-view></upload-image>
+                <div class="img-holder-big">
+                    <img ng-src="{{field.model | uploadpath:250:250:'fill'}}" ng-if="field.model" />
+                </div>
+            </div>
+            <div ng-if="field.type=='chips'" ng-init="field.model=[]">
+                <label for="">{{field.name}}</label>
+                <md-chips ng-model="field.model" placeholder="Enter a tag"></md-chips>
+                <br/>
+            </div>
+        </md-input-container>
+
+        <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+            <!-- <md-button class="md-raised md-primary" ng-if="json.needTag==true" ng-click="saveWithTag(abc)" ng-class="{'disabled' : !plan.$valid }">Save</md-button> -->
+            <md-button class="md-raised md-primary" ng-click="makeReadyForApi()" ng-class="{'disabled' : !plan.$valid }">Save</md-button>
+            <md-button class="md-raised md-warn" ng-if="!json.action[1].sideMenuRedirect" ui-sref="{{json.action[1].stateName}}">Cancel</md-button>
+            <md-button class="md-raised md-warn" ng-if="json.action[1].sideMenuRedirect" ng-click="back()">Cancel</md-button>
+        </section>
+
+    </form>
+</section>

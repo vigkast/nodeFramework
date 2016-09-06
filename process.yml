@@ -1,0 +1,5 @@
+apps:
+  - script: "app.js"
+    name: "Dharma Production"
+    watch: true
+    args: "--prod"

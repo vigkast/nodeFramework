@@ -1,0 +1,43 @@
+<ul class="nav navbar-nav mt18 custom-menu" ng-controller="headerctrl">
+  <li ng-repeat="menu in navigation" class="{{menu.classis}} hidden-xs">
+    <a ng-if="menu.anchor" ng-if="menu.anchor" ui-sref="{{menu.anchor}}" class="text-up color-white font-hammersmith">{{menu.name}}</a>
+    <!-- <a class="text-up color-white font-hammersmith">{{menu.name}}</a> -->
+    <a href="{{menu.link}}" ng-if="menu.link">{{menu.name}}</a>
+    <ul class="dropdown-menu" ng-if="menu.subnav!='';">
+      <li ng-repeat="submenu in menu.subnav">
+        <a ui-sref="{{submenu.anchor}}" ng-if="submenu.anchor && submenu.isId=='no'">{{submenu.name}}</a>
+        <a ui-sref="dharma140({id:getFirstId})" ng-if="submenu.anchor && submenu.isId=='yes'">{{submenu.name}}</a>
+        <a href="{{submenu.link}}" ng-if="submenu.link">{{submenu.name}}</a>
+      </li>
+    </ul>
+  </li>
+  <li ng-repeat="menu in navigation" class="hidden-md hidden-lg hidden-sm dh-relative">
+    <a class="text-up color-white font-hammersmith dh-relative" ng-if="menu.anchor" ui-sref="{{menu.anchor}}" ng-click="showSub(menu)">{{menu.name}}  <span><i class="{{menu.class}}" ></i></span></a>
+    <a href="{{menu.link}}" ng-if="menu.link">{{menu.name}} <i class="{{menu.class}}" ></i></a>
+    <ul ng-show="menu.show" class="list-none mob-mn padding0 ">
+      <li ng-repeat="submenu in menu.subnav" class="min-f-tp">
+        <a ui-sref="{{submenu.anchor}}" ng-if="submenu.anchor">{{submenu.name}}</a>
+        <a href="{{submenu.link}}" ng-if="submenu.link">{{submenu.name}}</a>
+      </li>
+    </ul>
+  </li>
+
+  <li class="hidden-md hidden-lg hidden-sm">
+    <div class="head-social dh-list pull-right mt15">
+      <ul class="padding0 main-m-marg">
+        <li>
+          <a href=""><i class="fa fa-facebook"></i></a>
+        </li>
+        <li>
+          <a href=""><i class="fa fa-twitter"></i></a>
+        </li>
+        <li>
+          <a href=""><i class="fa fa-youtube"></i></a>
+        </li>
+        <!-- <li>
+          <a href=""><button type="button" name="button" class="my-main-btn"><img src="frontend/img/search-light.png" alt="" class=""></button></a>
+        </li> -->
+      </ul>
+    </div>
+  </li>
+</ul>
