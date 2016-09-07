@@ -38,18 +38,6 @@ module.exports.routes = {
         skipAssets: true,
         skipRegex: /api|backend/i
     },
-    'GET /movie/*': {
-        controller: "WebController",
-        action: "movie",
-        skipAssets: true,
-        skipRegex: /api|backend/i
-    },
-    'GET /tv/*': {
-        controller: "WebController",
-        action: "movie",
-        skipAssets: true,
-        skipRegex: /api|backend/i
-    },
     'GET /gitPull/:data': {
         controller: "WebController",
         action: "gitPull",
