@@ -1,4 +1,7 @@
 var exec = require('child_process').exec;
+var htmlToText = require('html-to-text');
+
+
 module.exports = {
     index: function(req, res) {
         res.metaView();
@@ -15,10 +18,17 @@ module.exports = {
                     res.callback(err, data);
                 } else {
                     var movie = data.movie;
+                    var text = htmlToText.fromString(movie.synopsis, {
+                        wordwrap: 500
+                    });
+                    text = _.trunc(_.trim(text), {
+                        'length': 190,
+                        'separator': ' '
+                    });
                     res.metaView({
                         title: movie.name + " - " + movie.year,
                         keywords: movie.keywords,
-                        description: movie.desciption,
+                        description: text,
                         image: movie.theatricalTrailerImage
                     });
                 }
@@ -52,21 +62,17 @@ module.exports = {
         }
     },
     download: function(req, res) {
+        
         Config.readUploaded(req.param("filename"), null, null, null, res);
     },
     backend: function(req, res) {
-        if (!sails.config.host) {
-            sails.config.host = "http://localhost";
-        }
-        if (sails.config.environment == "production") {
-            sails.config.host = "http://104.154.89.21";
-        }
+        var env = require("../../config/env/" + sails.config.environment + ".js");
         res.view("backend", {
             jsFiles: jsFilesBackend,
             title: "Dharma Production Backend",
             description: "Dharma Production Backend",
             keywords: "Dharma Production Backend",
-            adminurl: sails.config.host + ":" + sails.config.port + "/api/",
+            adminurl: env.realHost + "/api/",
         });
     },
     gitPull: function(req, res) {

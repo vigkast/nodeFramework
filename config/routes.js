@@ -65,7 +65,7 @@ module.exports.routes = {
 
 
 
-    "GET /api/download/:filename": {
+    "/api/download/:filename": {
         controller: "WebController",
         action: "download"
     },

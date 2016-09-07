@@ -5,20 +5,14 @@ module.exports = function(data, options) {
     if (!data) {
         data = {};
     }
-    if (!sails.config.host) {
-        sails.config.host = "http://localhost";
-    }
-    if (sails.config.environment == "production") {
-        sails.config.host = "http://104.154.89.21";
-    }
+    var env = require("../../config/env/"+sails.config.environment+".js");
     res.view(sails.config.environment, {
         jsFiles: jsFiles,
         title: data.title,
         description: data.description,
         keywords: data.keywords,
-        adminurl: sails.config.host + ":" + sails.config.port + "/api/",
-        image: sails.config.host + ":" + sails.config.port + "/api/upload/readFile?file=" + data.image,
-        url: sails.config.host + ":" + sails.config.port + req.path,
-
+        adminurl: env.realHost + "/api/",
+        image: env.realHost + "/api/download/" + data.image,
+        url: env.realHost + req.path,
     });
 };

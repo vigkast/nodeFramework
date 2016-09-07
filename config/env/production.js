@@ -26,8 +26,9 @@ module.exports = {
    ***************************************************************************/
 
   port: 85,
-  // host: "104.154.89.21",
-  realHost: "104.154.89.21"
+  realHost: "http://dharma.tingdom.in",
+
+
 
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *
