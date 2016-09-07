@@ -70,6 +70,7 @@ global["monguurl"] = require('monguurl');
 require('mongoose-middleware').initialize(mongoose);
 global["moment"] = require("moment");
 global["exec"] = require('child_process').exec;
+global["Schema"] = mongoose.Schema;
 
 global["jsFiles"] = require("../frontend/files.js");
 global["jsFilesBackend"] = require("../backend/files.js");

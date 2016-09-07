@@ -50,9 +50,6 @@ module.exports.routes = {
         skipAssets: true,
         skipRegex: /api|backend/i
     },
-
-
-
     "/api/download/:filename": {
         controller: "WebController",
         action: "download"
