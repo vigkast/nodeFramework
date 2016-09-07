@@ -37,38 +37,85 @@ var client = new Twitter({
 module.exports = mongoose.model('Config', schema);
 
 var models = {
-    getTweets: function(hashtag, users, callback) {
+    maxRow: 10,
+    getForeignKeys: function(schema) {
+        var arr = [];
+        _.each(schema.tree, function(n, name) {
+            if (n.key) {
+                arr.push({
+                    name: name,
+                    ref: n.ref,
+                    key: n.key
+                });
+            }
+        });
+        return arr;
+    },
+    checkRestrictedDelete: function(Model, schema, data, callback) {
 
-        var string = "from:";
-        _.each(users, function(n) {
-            string += n + " OR from:";
+        var values = schema.tree;
+        var arr = [];
+        var ret = true;
+        _.each(values, function(n, key) {
+            if (n.restrictedDelete) {
+                arr.push(key);
+            }
         });
 
-        string = string.substr(0, string.length - 9) + " " + hashtag;
-
-        console.log(string);
-        var params = {
-            q: string,
-            count: 100
-        };
-        client.get('search/tweets', params, function(error, tweets, response) {
-
-            callback(error, tweets);
+        Model.findOne({
+            "_id": data._id
+        }, function(err, data2) {
+            if (err) {
+                callback(err, null);
+            } else if (data2) {
+                _.each(arr, function(n) {
+                    if (data2[n].length !== 0) {
+                        ret = false;
+                    }
+                });
+                callback(null, ret);
+            } else {
+                callback("No Data Found", null);
+            }
         });
     },
-    GlobalCallback: function(err, data, res) {
-        if (err) {
-            res.json({
-                error: err,
-                value: false
-            });
-        } else {
-            res.json({
-                data: data,
-                value: true
-            });
-        }
+    manageArrayObject: function(Model, id, data, key, action, callback) {
+        Model.findOne({
+            "_id": id
+        }, function(err, data2) {
+            if (err) {
+                callback(err, null);
+            } else if (data2) {
+                switch (action) {
+                    case "create":
+                        {
+                            data2[key].push(data);
+                            data2[key] = _.unique(data2[key]);
+                            console.log(data2[key]);
+                            data2.update(data2, {
+                                w: 1
+                            }, callback);
+                        }
+                        break;
+                    case "delete":
+                        {
+                            _.remove(data2[key], function(n) {
+                                return (n + "") == (data + "");
+                            });
+                            data2.update(data2, {
+                                w: 1
+                            }, callback);
+                        }
+                        break;
+                }
+            } else {
+                callback("No Data Found for the ID", null);
+            }
+        });
+
+
     },
+
     uploadFile: function(filename, callback) {
         var id = mongoose.Types.ObjectId();
         var extension = filename.split(".").pop();
@@ -162,6 +209,40 @@ var models = {
             });
             fs.unlink(filename);
         });
+    },
+    generateExcel: function(name, found, res) {
+        name = _.kebabCase(name);
+        var excelData = [];
+        _.each(found, function(singleData) {
+            var singleExcel = {};
+            _.each(singleData, function(n, key) {
+                if (key != "__v" && key != "createdAt" && key != "updatedAt") {
+                    singleExcel[_.capitalize(key)] = n;
+                }
+            });
+            excelData.push(singleExcel);
+        });
+        var xls = sails.json2xls(excelData);
+        var folder = "./.tmp/";
+        var path = name + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
+        var finalPath = folder + path;
+        sails.fs.writeFile(finalPath, xls, 'binary', function(err) {
+            if (err) {
+                res.callback(err, null);
+            } else {
+                fs.readFile(finalPath, function(err, excel) {
+                    if (err) {
+                        res.callback(err, null);
+                    } else {
+                        res.set('Content-Type', "application/octet-stream");
+                        res.set('Content-Disposition', "attachment;filename=" + path);
+                        res.send(excel);
+                        sails.fs.unlink(finalPath);
+                    }
+                });
+            }
+        });
+
     },
     readUploaded: function(filename, width, height, style, res) {
 

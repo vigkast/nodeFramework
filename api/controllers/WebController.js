@@ -12,9 +12,9 @@ module.exports = {
         var env = require("../../config/env/" + sails.config.environment + ".js");
         res.view("backend", {
             jsFiles: jsFilesBackend,
-            title: "Dharma Production Backend",
-            description: "Dharma Production Backend",
-            keywords: "Dharma Production Backend",
+            title: "Backend",
+            description: "Backend",
+            keywords: "Backend",
             adminurl: env.realHost + "/api/",
         });
     },
