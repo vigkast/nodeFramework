@@ -23,7 +23,7 @@ var schema = new Schema({
     name: String,
     content: String,
 });
-// 
+//
 // var client = new Twitter({
 //     consumer_key: 'w0Mizb3YKniG8GfZmhQJbMvER',
 //     consumer_secret: '6wnwpnm6a475ROm3aY8aOy8YXynQxQgZkcoJ05Y8D9EvL0Duov',
@@ -259,7 +259,7 @@ var models = {
             bufs.push(chunk);
         });
         readstream.on('end', function() { // done
-            if (!(width && height)) {
+            if (!(width || height)) {
                 var fbuf = Buffer.concat(bufs);
                 res.set('Cache-Control', 'public, max-age=31536000');
                 res.set("Content-Type", "image/jpeg");
