@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     grunt.config.set('http', {
         deploy: {
             options: {
-                url: production.realHost + "/api/gitPull/" + moment().unix(),
+                url: production.realHost + "/gitPull/" + moment().unix(),
                 callback: function(err, response, data) {
                     console.log(data);
                 }

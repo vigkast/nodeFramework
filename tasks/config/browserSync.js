@@ -5,7 +5,7 @@ module.exports = function(grunt) {
             src: ['.tmp/public/frontend/css/*.css', '.tmp/public/frontend/js/**/*.js', '.tmp/public/frontend/img/**/*.png', '.tmp/public/frontend/img/**/*.jpg', '.tmp/public/frontend/img/**/*.gif', '.tmp/public/frontend/views/**']
         },
         options: {
-            // open: false,
+            open: false,
             watchTask: true,
             proxy: "localhost:1337"
         }

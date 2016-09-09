@@ -23,13 +23,13 @@ var schema = new Schema({
     name: String,
     content: String,
 });
-
-var client = new Twitter({
-    consumer_key: 'w0Mizb3YKniG8GfZmhQJbMvER',
-    consumer_secret: '6wnwpnm6a475ROm3aY8aOy8YXynQxQgZkcoJ05Y8D9EvL0Duov',
-    access_token_key: '121427044-PJTEM2zmqwcRu4K0FBotK9jtTibsNOiomyVlkSo0',
-    access_token_secret: 'TvMPCXaXpJOvpu8hCGc61kzp5EpIPbrAgOT7u6lDnastg'
-});
+// 
+// var client = new Twitter({
+//     consumer_key: 'w0Mizb3YKniG8GfZmhQJbMvER',
+//     consumer_secret: '6wnwpnm6a475ROm3aY8aOy8YXynQxQgZkcoJ05Y8D9EvL0Duov',
+//     access_token_key: '121427044-PJTEM2zmqwcRu4K0FBotK9jtTibsNOiomyVlkSo0',
+//     access_token_secret: 'TvMPCXaXpJOvpu8hCGc61kzp5EpIPbrAgOT7u6lDnastg'
+// });
 
 module.exports = mongoose.model('Config', schema);
 
