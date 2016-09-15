@@ -18,7 +18,7 @@ module.exports.globals = {
      *                                                                           *
      ****************************************************************************/
 
-    // _: true,
+    _: false,
 
     /****************************************************************************
      *                                                                           *
@@ -71,6 +71,7 @@ require('mongoose-middleware').initialize(mongoose);
 global["moment"] = require("moment");
 global["exec"] = require('child_process').exec;
 global["Schema"] = mongoose.Schema;
+global["_"] = require('lodash');
 
 global["jsFiles"] = require("../frontend/files.js");
 global["jsFilesBackend"] = require("../backend/files.js");
