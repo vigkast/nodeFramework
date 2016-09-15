@@ -1,75 +1,61 @@
 var schema = new Schema({
     name: {
         type: String,
-        required: true,
-        unique: true,
-        uniqueCaseInsensitive: true
+        required: true
     },
     email: {
         type: String,
-        required: true,
-        unique: true,
-        uniqueCaseInsensitive: true
+        validate: validators.isEmail()
     },
     photo: {
         type: String,
-        required: true,
-        unique: true,
-        uniqueCaseInsensitive: true
+        default: ""
     },
     password: {
         type: String,
-        required: true,
-        unique: true,
-        uniqueCaseInsensitive: true
+        default: ""
     },
     forgotPassword: {
         type: String,
-        required: true,
-        unique: true,
-        uniqueCaseInsensitive: true
+        default: ""
+    },
+    mobile: {
+        type: String,
+        default: ""
     },
     otp: {
         type: String,
-        required: true,
-        unique: true,
-        uniqueCaseInsensitive: true
+        default: ""
     },
     accessToken: {
-        type: String,
-        required: true,
-        unique: true,
-        uniqueCaseInsensitive: true
+        type: [String],
+        index: true
     },
     googleID: {
         type: String,
-        required: true,
-        unique: true,
-        uniqueCaseInsensitive: true
+        default: ""
     },
     twitterID: {
         type: String,
-        required: true,
-        unique: true,
-        uniqueCaseInsensitive: true
+        default: ""
     },
     facebookID: {
         type: String,
-        required: true,
-        unique: true,
-        uniqueCaseInsensitive: true
+        default: ""
+    },
+    accessLevel: {
+        type: String,
+        default: "User",
+        enum: ['User', 'Admin']
     }
 });
 
 schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
+
 module.exports = mongoose.model('User', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
-var model = {
-
-
-
-};
+var model = {};
 module.exports = _.assign(module.exports, exports, model);
