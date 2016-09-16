@@ -76,13 +76,14 @@ global["Schema"] = mongoose.Schema;
 global["moment"] = require("moment");
 global["exec"] = require('child_process').exec;
 global["_"] = require('lodash');
+global["chalk"] = require('chalk');
 
-// Passport Globals
+// passport Globals
 global["passport"] = require('passport');
 global["LocalStrategy"] = require('passport-local').Strategy;
 global["FacebookStrategy"] = require('passport-facebook').Strategy;
 global["TwitterStrategy"] = require('passport-twitter').Strategy;
-global["GoogleStrategy"] = require('passport-google-oauth').Strategy;
+global["GoogleStrategy"] = require('passport-google-oauth20').Strategy;
 
 // Files to Import
 global["jsFiles"] = require("../frontend/files.js");

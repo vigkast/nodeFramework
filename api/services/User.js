@@ -31,17 +31,12 @@ var schema = new Schema({
         type: [String],
         index: true
     },
-    googleID: {
-        type: String,
-        default: ""
-    },
-    twitterID: {
-        type: String,
-        default: ""
-    },
-    facebookID: {
-        type: String,
-        default: ""
+    oauthLogin: {
+        type: [{
+            socialId: String,
+            socialProvider: String
+        }],
+        index: true
     },
     accessLevel: {
         type: String,

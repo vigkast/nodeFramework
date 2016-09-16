@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="firstapp">
 
-  <head ng-controller="HeaderCtrl">
+<head ng-controller="HeaderCtrl">
     <meta charset="utf-8">
     <base href="/backend/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,12 +27,14 @@
     <link rel="stylesheet" type="text/css" href="css/main.css" />
 
     <script>
-        var adminurl = "<%= ((typeof adminurl) == "undefined") ? "" : adminurl  %>";
+        var adminurl = "<%= ((typeof adminurl) == "
+        undefined ") ? "
+        " : adminurl  %>";
         var isproduction = false;
     </script>
     <% _.each(jsFiles,function(file) {  %>
         <script src="js/<%= file %>"></script>
-    <% }); %>
+        <% }); %>
 </body>
 
 </html>
