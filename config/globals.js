@@ -89,3 +89,17 @@ global["GoogleStrategy"] = require('passport-google-oauth20').Strategy;
 // Files to Import
 global["jsFiles"] = require("../frontend/files.js");
 global["jsFilesBackend"] = require("../backend/files.js");
+
+//colored console
+global["blue"] = function(data) {
+    console.log(chalk.blue(data));
+};
+global["red"] = function(data) {
+    console.log(chalk.red(data));
+};
+global["green"] = function(data) {
+    console.log(chalk.green(data));
+};
+global["log"] = function(data) {
+    console.log(data);
+};

@@ -1,0 +1,103 @@
+{
+    "title": "Edit Award",
+    "jsonPage": "viewUser",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "model": "name",
+        "placeholder": "Enter name",
+        "id": "input1",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Email",
+        "type": "email",
+        "model": "email",
+        "tableRef": "email",
+        "placeholder": "Enter email",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Photo",
+        "type": "image",
+        "tableRef": "photo",
+        "model": "photo",
+        "placeholder": "Upload photo",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Password",
+        "type": "password",
+        "model": "password",
+        "tableRef": "password",
+        "placeholder": "Enter password",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Forgot Password",
+        "type": "password",
+        "tableRef": "forgotPassword",
+        "model": "forgotPassword",
+        "placeholder": "Enter forgot password",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Mobile",
+        "type": "text",
+        "model": "mobile",
+        "tableRef": "mobile",
+        "placeholder": "Enter mobile",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "OTP",
+        "type": "text",
+        "tableRef": "otp",
+        "model": "otp",
+        "placeholder": "Enter Otp",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Access Level",
+        "type": "select",
+        "model": "accessLevel",
+        "tableRef": "accessLevel",
+        "placeholder": "Enter access level",
+        "id": "input2",
+        "validation": ["required", "trim", "unique"],
+        "url": [{
+            "value": "User",
+            "name": "User"
+        }, {
+            "value": "Admin",
+            "name": "Admin"
+        }]
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitUser"
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": "page({jsonName:'viewUser'})"
+    }],
+    "apiCall": {
+        "url": "User/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "User/getOne",
+        "params": "_id"
+    }
+
+}

@@ -21,6 +21,6 @@ module.exports = {
   //   connection: 'someMongodbServer'
   // }
   port: 1337,
-  realHost: "http://dharma.tingdom.in",
+  realHost: "http://wohlig.io",
 
 };

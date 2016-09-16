@@ -1,6 +1,6 @@
 {
-    "title": "Edit Award",
-    "jsonPage": "viewMovie",
+    "title": "Edit User",
+    "jsonPage": "viewUser",
     "desciption": "",
     "pageType": "edit",
     "urlFields": ["_id"],
@@ -22,7 +22,7 @@
         "id": "input2",
         "validation": ["required", "trim", "unique"],
         "url": ""
-    },  {
+    }, {
         "name": "Sub-Note",
         "type": "text",
         "tableRef": "note",
@@ -36,16 +36,16 @@
         "name": "submit",
         "action": "submitUser"
     }, {
-      "name": "cancel",
-      "sideMenuRedirect":true,
-      "stateName": "page({jsonName:'viewMovie'})"
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": "page({jsonName:'viewUser'})"
     }],
     "apiCall": {
-        "url": "newaward/saveAward",
+        "url": "User/save",
         "params": "_id"
     },
     "preApi": {
-        "url": "newaward/findOneAward",
+        "url": "User/getOne",
         "params": "_id"
     }
 

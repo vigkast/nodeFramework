@@ -242,7 +242,6 @@ var models = {
 
     },
     readUploaded: function(filename, width, height, style, res) {
-
         var readstream = gfs.createReadStream({
             filename: filename
         });
@@ -253,20 +252,6 @@ var models = {
             });
         });
 
-        var bufs = [];
-
-        readstream.on('data', function(chunk) {
-            bufs.push(chunk);
-        });
-        readstream.on('end', function() { // done
-            if (!(width || height)) {
-                var fbuf = Buffer.concat(bufs);
-                res.set('Cache-Control', 'public, max-age=31536000');
-                res.set("Content-Type", "image/jpeg");
-                res.send(fbuf);
-            }
-        });
-
         function writer2(filename, gridFSFilename, metaValue) {
             var writestream2 = gfs.createWriteStream({
                 filename: gridFSFilename,
@@ -275,25 +260,8 @@ var models = {
             writestream2.on('finish', function() {
                 fs.unlink(filename);
             });
-            var readstream2 = fs.createReadStream(filename).pipe(writestream2);
-            readstream2.on('error', function(err) {
-                res.json({
-                    value: false,
-                    error: err
-                });
-            });
-
-            var bufs = [];
-
-            readstream2.on('data', function(chunk) {
-                bufs.push(chunk);
-            });
-            readstream2.on('end', function() { // done
-                var fbuf = Buffer.concat(bufs);
-                res.set('Cache-Control', 'public, max-age=31536000');
-                res.set("Content-Type", "image/jpeg");
-                res.send(fbuf);
-            });
+            fs.createReadStream(filename).pipe(res);
+            fs.createReadStream(filename).pipe(writestream2);
         }
 
         function read2(filename2) {
@@ -306,16 +274,7 @@ var models = {
                     error: err
                 });
             });
-            var bufs = [];
-            readstream2.on('data', function(chunk) {
-                bufs.push(chunk);
-            });
-            readstream2.on('end', function() { // done
-                var fbuf = Buffer.concat(bufs);
-                res.set('Cache-Control', 'public, max-age=31536000');
-                res.set("Content-Type", "image/jpeg");
-                res.send(fbuf);
-            });
+            readstream2.pipe(res);
         }
         var onlyName = filename.split(".")[0];
         var extension = filename.split(".").pop();
@@ -350,99 +309,61 @@ var models = {
                 if (found) {
                     read2(newNameExtire);
                 } else {
-
                     var imageStream = fs.createWriteStream('./.tmp/uploads/' + filename);
-
                     readstream.pipe(imageStream);
-
                     imageStream.on("finish", function() {
-
-                        fs.exists('./.tmp/uploads/' + filename, function(exists) {
-
-                            if (exists) {
-                                lwip.open('./.tmp/uploads/' + filename, function(err, image) {
-                                    ImageWidth = image.width();
-                                    ImageHeight = image.height();
-                                    var newWidth = 0;
-                                    var newHeight = 0;
-                                    var pRatio = width / height;
-                                    var iRatio = ImageWidth / ImageHeight;
-                                    if (width && height) {
-                                        newWidth = width;
-                                        newHeight = height;
-                                        switch (style) {
-                                            case "fill":
-                                                if (pRatio > iRatio) {
-                                                    newHeight = height;
-                                                    newWidth = height * (ImageWidth / ImageHeight);
-                                                } else {
-                                                    newWidth = width;
-                                                    newHeight = width / (ImageWidth / ImageHeight);
-                                                }
-                                                break;
-                                            case "cover":
-                                                if (pRatio < iRatio) {
-                                                    newHeight = height;
-                                                    newWidth = height * (ImageWidth / ImageHeight);
-                                                } else {
-                                                    newWidth = width;
-                                                    newHeight = width / (ImageWidth / ImageHeight);
-                                                }
-                                                break;
-                                        }
-                                    } else if (width) {
-                                        newWidth = width;
-                                        newHeight = width / (ImageWidth / ImageHeight);
-                                    } else if (height) {
-                                        newWidth = height * (ImageWidth / ImageHeight);
-                                        newHeight = height;
-                                    }
-                                    image.resize(parseInt(newWidth), parseInt(newHeight), function(err, image2) {
-
-                                        if (style == "cover") {
-
-                                            image2.crop(parseInt(width), parseInt(height), function(err, image3) {
-                                                if (err) {
-
-                                                } else {
-
-                                                    image3.writeFile('./.tmp/uploads/' + filename, function(err) {
-                                                        writer2('./.tmp/uploads/' + filename, newNameExtire, {
-                                                            width: newWidth,
-                                                            height: newHeight
-                                                        });
-                                                    });
-                                                }
-                                            });
-
-
-
+                        lwip.open('./.tmp/uploads/' + filename, function(err, image) {
+                            ImageWidth = image.width();
+                            ImageHeight = image.height();
+                            var newWidth = 0;
+                            var newHeight = 0;
+                            var pRatio = width / height;
+                            var iRatio = ImageWidth / ImageHeight;
+                            if (width && height) {
+                                newWidth = width;
+                                newHeight = height;
+                                switch (style) {
+                                    case "fill":
+                                        if (pRatio > iRatio) {
+                                            newHeight = height;
+                                            newWidth = height * (ImageWidth / ImageHeight);
                                         } else {
-                                            image2.writeFile('./.tmp/uploads/' + filename, function(err) {
-                                                writer2('./.tmp/uploads/' + filename, newNameExtire, {
-                                                    width: newWidth,
-                                                    height: newHeight
-                                                });
-                                            });
+                                            newWidth = width;
+                                            newHeight = width / (ImageWidth / ImageHeight);
                                         }
+                                        break;
+                                    case "cover":
+                                        if (pRatio < iRatio) {
+                                            newHeight = height;
+                                            newWidth = height * (ImageWidth / ImageHeight);
+                                        } else {
+                                            newWidth = width;
+                                            newHeight = width / (ImageWidth / ImageHeight);
+                                        }
+                                        break;
+                                }
+                            } else if (width) {
+                                newWidth = width;
+                                newHeight = width / (ImageWidth / ImageHeight);
+                            } else if (height) {
+                                newWidth = height * (ImageWidth / ImageHeight);
+                                newHeight = height;
+                            }
+                            image.resize(parseInt(newWidth), parseInt(newHeight), function(err, image2) {
+                                image2.writeFile('./.tmp/uploads/' + filename, function(err) {
+                                    writer2('./.tmp/uploads/' + filename, newNameExtire, {
+                                        width: newWidth,
+                                        height: newHeight
                                     });
                                 });
-
-                            } else {
-                                res.json({
-                                    error: "file does not exists",
-                                    value: false
-                                });
-                            }
+                            });
                         });
-
-
                     });
                 }
             });
             //else create a resized image and serve
         } else {
-            // readstream.pipe(res);
+            readstream.pipe(res);
         }
         //error handling, e.g. file does not exist
     }

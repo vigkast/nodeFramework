@@ -1,6 +1,6 @@
 var adminURL = "http://wohlig.io:81/";
 var mockURL = adminURL + "callApi/";
-var search='';
+var search = '';
 
 angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ngSanitize', 'ngMaterial', 'ngMdIcons', 'ui.sortable', 'angular-clipboard', 'imageupload', 'ui.bootstrap', 'ui.tinymce'])
 
@@ -45,19 +45,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         window.history.back();
     };
     $scope.totalItems = 64;
- $scope.currentPage = 4;
+    $scope.currentPage = 4;
 
- $scope.setPage = function (pageNo) {
-   $scope.currentPage = pageNo;
- };
+    $scope.setPage = function(pageNo) {
+        $scope.currentPage = pageNo;
+    };
 
- $scope.pageChanged = function() {
-   $log.log('Page changed to: ' + $scope.currentPage);
- };
+    $scope.pageChanged = function() {
+        $log.log('Page changed to: ' + $scope.currentPage);
+    };
 
- $scope.maxSize = 5;
- $scope.bigTotalItems = 175;
- $scope.bigCurrentPage = 1;
+    $scope.maxSize = 5;
+    $scope.bigTotalItems = 175;
+    $scope.bigCurrentPage = 1;
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("users");
     $scope.menutitle = NavigationService.makeactive("Users");
@@ -85,18 +85,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     // console.log(jsonArr);
 
     var urlid1 = ($location.absUrl().split('%C2%A2')[1]);
-    if(urlid1)
-    {
-      urlid1= ($location.absUrl().split('%C2%A2')[1]).split("/")[0];
+    if (urlid1) {
+        urlid1 = ($location.absUrl().split('%C2%A2')[1]).split("/")[0];
     }
     var urlid2 = $location.absUrl().split('%C2%A2')[2];
-    if(urlid2)
-    {
-      urlid2= ($location.absUrl().split('%C2%A2')[2]).split("/")[0];
+    if (urlid2) {
+        urlid2 = ($location.absUrl().split('%C2%A2')[2]).split("/")[0];
     }
 
-    $scope.removeImage = function(page, image,field) {
-      field.model = "";
+    $scope.removeImage = function(page, image, field) {
+        field.model = "";
         $scope.json.editData[image] = "";
     };
 
@@ -117,12 +115,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
         });
     };
-    $scope.search='';
-    $scope.searchClick=function(search){
-      $scope.search=search;
-      console.log($scope.search);
-      search=$scope.search;
-      $scope.getMoreResults(undefined,$scope.search);
+    $scope.search = '';
+    $scope.searchClick = function(search) {
+        $scope.search = search;
+        console.log($scope.search);
+        search = $scope.search;
+        $scope.getMoreResults(undefined, $scope.search);
     };
     $http.get("./pageJson/" + jsonName + ".json").success(function(data) {
         _.each(data.urlFields, function(n, key) {
@@ -178,8 +176,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     });
                 }
             });
-        } else if (data.pageType == "edit" || data.pageType == "tableview")
-        {
+        } else if (data.pageType == "edit" || data.pageType == "tableview") {
 
             console.log(urlParams);
             NavigationService.findOneProject($scope.json.preApi.url, urlParams, function(data) {
@@ -223,8 +220,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 }
             });
 
-        }
-         else if (data.pageType == "view") {
+        } else if (data.pageType == "view") {
 
 
             // call api for view data
@@ -232,12 +228,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
             var pageno = 1;
             console.log($stateParams.no);
-            if($stateParams.no)
-            {
+            if ($stateParams.no) {
                 pageno = parseInt($stateParams.no);
             }
-            if($stateParams.search)
-            {
+            if ($stateParams.search) {
                 $scope.search = $stateParams.search;
                 console.log($scope.search);
             }
@@ -268,50 +262,52 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
             // call api for view data
             $scope.apiName = $scope.json.apiCall.url;
-            $scope.pageInfo = {totalitems:5000};
-            $scope.getMoreResults = function(value,search) {
-              $scope.search=search;
-              $scope.value=value;
-                if(value)
-                {
-                      console.log($scope.search);
-                      if($scope.search===undefined){
-                            $scope.search = $stateParams.search;
-                            console.log($scope.search);
-                      }
-                  $state.go("pageno",{no:$scope.pagination.pagenumber,jsonName:$stateParams.jsonName,search:$scope.search});
-                }
-                else {
-                  if($scope.search){
-                    $scope.pagination.search=$scope.search;
-                  }
-                  else if($scope.pagination.search){
-                        $scope.pagination.search=$scope.pagination.search;
-                  }
-                  else{
-                    $scope.pagination.search='';
-                  }
-                  console.log($scope.pagination);
-                  NavigationService.findProjects($scope.apiName, $scope.pagination, function(findData) {
-                      console.log(findData);
-                      if (findData.value !== false) {
-                          if (findData.data && findData.data.data && findData.data.data.length > 0) {
-                              $scope.pageInfo.lastpage = findData.data.totalpages;
-                              $scope.pageInfo.pagenumber = findData.data.pagenumber;
-                              $scope.pageInfo.totalitems = $scope.pagination.pagesize * findData.data.totalpages;
-                              $scope.json.tableData = findData.data.data;
-                          } else {
-                              $scope.json.tableData = [];
+            $scope.pageInfo = {
+                totalitems: 5000
+            };
+            $scope.getMoreResults = function(value, search) {
+                $scope.search = search;
+                $scope.value = value;
+                if (value) {
+                    console.log($scope.search);
+                    if ($scope.search === undefined) {
+                        $scope.search = $stateParams.search;
+                        console.log($scope.search);
+                    }
+                    $state.go("pageno", {
+                        no: $scope.pagination.pagenumber,
+                        jsonName: $stateParams.jsonName,
+                        search: $scope.search
+                    });
+                } else {
+                    if ($scope.search) {
+                        $scope.pagination.search = $scope.search;
+                    } else if ($scope.pagination.search) {
+                        $scope.pagination.search = $scope.pagination.search;
+                    } else {
+                        $scope.pagination.search = '';
+                    }
+                    console.log($scope.pagination);
+                    NavigationService.findProjects($scope.apiName, $scope.pagination, function(findData) {
+                        console.log(findData);
+                        if (findData.value !== false) {
+                            if (findData.data && findData.data.results && findData.data.results.length > 0) {
+                                $scope.pageInfo.lastpage = findData.data.totalpages;
+                                $scope.pageInfo.pagenumber = findData.data.pagenumber;
+                                $scope.pageInfo.totalitems = $scope.pagination.pagesize * findData.data.totalpages;
+                                $scope.json.tableData = findData.data.results;
+                            } else {
+                                $scope.json.tableData = [];
                                 $scope.pageInfo.totalitems = 0;
-                          }
-                      } else {
-                          $scope.json.tableData = [];
-                          $scope.pageInfo.totalitems = 0;
-                      }
-                      console.log($scope.pagination);
-                  }, function() {
-                      console.log("Fail");
-                  });
+                            }
+                        } else {
+                            $scope.json.tableData = [];
+                            $scope.pageInfo.totalitems = 0;
+                        }
+                        console.log($scope.pagination);
+                    }, function() {
+                        console.log("Fail");
+                    });
                 }
 
             };
@@ -320,52 +316,54 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             //SEARCH DROP dropDownName
 
             // get select fields dropdown
-                if ($scope.json.apiCallForSearch) {
-                    NavigationService.getDropDown($scope.json.apiCallForSearch.url, function(data) {
+            if ($scope.json.apiCallForSearch) {
+                NavigationService.getDropDown($scope.json.apiCallForSearch.url, function(data) {
 
-                        dropdownvalues = [];
-                        if (data) {
-                            for (var i = 0; i < data.data.length; i++) {
-                                var dropdown = {};
-                                dropdown._id = data.data[i]._id;
-                                    dropdown.name = data.data[i].name;
-                                dropdownvalues.push(dropdown);
-                            }
+                    dropdownvalues = [];
+                    if (data) {
+                        for (var i = 0; i < data.data.length; i++) {
+                            var dropdown = {};
+                            dropdown._id = data.data[i]._id;
+                            dropdown.name = data.data[i].name;
+                            dropdownvalues.push(dropdown);
                         }
-                        $scope.dropdownvalues=dropdownvalues;
-                        console.log(dropdownvalues);
-                    }, function() {
-                        console.log("Fail");
-                    });
-                }
+                    }
+                    $scope.dropdownvalues = dropdownvalues;
+                    console.log(dropdownvalues);
+                }, function() {
+                    console.log("Fail");
+                });
+            }
 
-                $scope.getAwardByMovie=function(movieid){
-                    //
-                    $scope.pagination._id=movieid;
-                    $scope.apiName = $scope.json.apiCall.url;
-                    $scope.pageInfo = {totalitems:5000};
-                          NavigationService.findProjects($scope.apiName, $scope.pagination, function(findData) {
-                              console.log(findData);
-                              if (findData.value !== false) {
-                                  if (findData.data && findData.data.data && findData.data.data.length > 0) {
-                                      $scope.pageInfo.lastpage = findData.data.totalpages;
-                                      $scope.pageInfo.pagenumber = findData.data.pagenumber;
-                                      $scope.pageInfo.totalitems = $scope.pagination.pagesize * findData.data.totalpages;
-                                      $scope.json.tableData = findData.data.data;
-                                  } else {
-                                      $scope.json.tableData = [];
-                                        $scope.pageInfo.totalitems = 0;
-                                  }
-                              } else {
-                                  $scope.json.tableData = [];
-                                  $scope.pageInfo.totalitems = 0;
-                              }
-                              console.log($scope.pagination);
-                          }, function() {
-                              console.log("Fail");
-                          });
-
+            $scope.getAwardByMovie = function(movieid) {
+                //
+                $scope.pagination._id = movieid;
+                $scope.apiName = $scope.json.apiCall.url;
+                $scope.pageInfo = {
+                    totalitems: 5000
                 };
+                NavigationService.findProjects($scope.apiName, $scope.pagination, function(findData) {
+                    console.log(findData);
+                    if (findData.value !== false) {
+                        if (findData.data && findData.data.data && findData.data.data.length > 0) {
+                            $scope.pageInfo.lastpage = findData.data.totalpages;
+                            $scope.pageInfo.pagenumber = findData.data.pagenumber;
+                            $scope.pageInfo.totalitems = $scope.pagination.pagesize * findData.data.totalpages;
+                            $scope.json.tableData = findData.data.data;
+                        } else {
+                            $scope.json.tableData = [];
+                            $scope.pageInfo.totalitems = 0;
+                        }
+                    } else {
+                        $scope.json.tableData = [];
+                        $scope.pageInfo.totalitems = 0;
+                    }
+                    console.log($scope.pagination);
+                }, function() {
+                    console.log("Fail");
+                });
+
+            };
         }
         $scope.template = TemplateService.jsonType(data.pageType);
     });
@@ -758,8 +756,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
         $(window).scrollTop(0);
     });
-    if ($.jStorage.get("user") === null) {
-        $state.go("login");
-    }
+    // if ($.jStorage.get("user") === null) {
+    //     $state.go("login");
+    // }
 
 });
