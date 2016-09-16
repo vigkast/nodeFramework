@@ -70,17 +70,22 @@ var model = {
                         socialProvider: user.provider,
                     }]
                 };
-                if (user.email && user.email.length > 0) {
-                    modelUser.email = user.email[0];
+                if (user.emails && user.emails.length > 0) {
+                    modelUser.email = user.emails[0].value;
+                }
+                if (user.photos && user.photos.length > 0) {
+                    modelUser.photo = user.photos[0].value;
                 }
                 Model.saveData(modelUser, function(err, data2) {
                     if (err) {
                         callback(err, data2);
                     } else {
-                        data3 = _.clone(data2);
+                        data3 = data2.toObject();
+                        console.log(data3);
                         delete data3.oauthLogin;
                         delete data3.password;
                         delete data3.forgotPassword;
+                        delete data3.otp;
                         callback(err, data3);
                     }
                 });
@@ -88,6 +93,7 @@ var model = {
                 delete data.oauthLogin;
                 delete data.password;
                 delete data.forgotPassword;
+                delete data.otp;
                 callback(err, data);
             }
         });
