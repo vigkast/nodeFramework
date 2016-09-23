@@ -9,12 +9,21 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.navigation = NavigationService.getnav();
 })
 
-.controller('LoginCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+.controller('LoginCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams, $state) {
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("login");
     $scope.menutitle = NavigationService.makeactive("Login");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.currentHost = window.location.origin;
+    if ($stateParams.id) {
+        NavigationService.parseAccessToken($stateParams.id, function() {
+            $state.go("dashboard");
+        });
+    } else {
+        NavigationService.removeAccessToken();
+    }
+
 })
 
 .controller('BranchListCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {

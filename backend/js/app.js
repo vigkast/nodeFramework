@@ -28,6 +28,12 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
         controller: 'LoginCtrl'
     })
 
+    .state('loginapp', {
+        url: "/login/:id",
+        templateUrl: "views/template.html",
+        controller: 'LoginCtrl'
+    })
+
     .state('branch-list', {
         url: "/branch-list/{page:.*}/{keyword:.*}",
         templateUrl: "views/template.html",

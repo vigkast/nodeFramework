@@ -4,7 +4,8 @@ templateservicemod.service('TemplateService', function() {
   this.meta = "Google";
   this.metadesc = "Home";
   this.pageMax = 10;
-
+  this.adminurl = adminurl;
+  this.accessTokenUrl = adminurl;
   var d = new Date();
   this.year = d.getFullYear();
 

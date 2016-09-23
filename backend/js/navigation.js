@@ -1,5 +1,3 @@
-// var adminurl = "http://localhost:1337/api/";
-var adminurl = "http://104.155.238.145/api/";
 var imgurl = adminurl + "upload/";
 
 var imgpath = imgurl + "readFile";
@@ -264,6 +262,15 @@ var navigationservice = angular.module('navigationservice', [])
     return {
         getnav: function() {
             return navigation;
+        },
+        parseAccessToken: function(data, callback) {
+            if (data) {
+                $.jStorage.set("accessToken", data);
+                callback();
+            }
+        },
+        removeAccessToken: function(data, callback) {
+            $.jStorage.flush();
         },
         makeactive: function(menuname) {
             for (var i = 0; i < navigation.length; i++) {
