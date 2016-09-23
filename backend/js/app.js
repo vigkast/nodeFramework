@@ -4,64 +4,1145 @@ var firstapp = angular.module('firstapp', [
     'phonecatControllers',
     'templateservicemod',
     'navigationservice',
-    'imageupload'
+    'pascalprecht.translate',
+    'angulartics',
+    'angulartics.google.analytics',
+    'imageupload',
+    "ngMap"
+
 ]);
 
-firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider,$locationProvider) {
-
+firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
     // for http request with session
     $httpProvider.defaults.withCredentials = true;
-
     $stateProvider
+        .state('dashboard', {
+            url: "/dashboard",
+            templateUrl: "views/template.html",
+            controller: 'DashboardCtrl'
+        })
 
-        .state('login', {
+    .state('login', {
         url: "/login",
-        templateUrl: "views/login.html",
+        templateUrl: "views/template.html",
         controller: 'LoginCtrl'
     })
 
-    .state('users', {
-        url: "/users",
+    .state('branch-list', {
+        url: "/branch-list/{page:.*}/{keyword:.*}",
         templateUrl: "views/template.html",
-        controller: 'UsersCtrl'
+        controller: 'BranchListCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
     })
 
-    .state('projects', {
-        url: "/projects",
+    .state('branch-create', {
+        url: "/branch-create",
         templateUrl: "views/template.html",
-        controller: 'ProjectsCtrl'
+        controller: 'BranchCreateCtrl'
     })
 
-    .state('api', {
-        url: "/api/:id",
+    .state('branch-edit', {
+        url: "/branch-edit/:id",
         templateUrl: "views/template.html",
-        controller: 'APICtrl'
+        controller: 'BranchEditCtrl'
     })
 
-    .state('onlyview', {
-        url: "/onlyview/:id",
+    .state('country-list', {
+        url: "/country-list/{page:.*}/{keyword:.*}",
         templateUrl: "views/template.html",
-        controller: 'onlyViewPageCtrl'
+        controller: 'CountryCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
     })
 
-    .state('page', {
-            url: "/page/:jsonName",
+    .state('createcountry', {
+        url: "/country-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateCountryCtrl'
+    })
+
+    .state('editcountry', {
+        url: "/country-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditCountryCtrl'
+    })
+
+    .state('zone-list', {
+        url: "/zone-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ZoneCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createzone', {
+        url: "/zone-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateZoneCtrl'
+    })
+
+    .state('editzone', {
+        url: "/zone-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditZoneCtrl'
+    })
+
+    .state('state-list', {
+        url: "/state-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'StateCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createstate', {
+        url: "/state-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateStateCtrl'
+    })
+
+    .state('editstate', {
+        url: "/state-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditStateCtrl'
+    })
+
+    .state('district-list', {
+        url: "/district-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'DistrictCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createdistrict', {
+        url: "/district-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateDistrictCtrl'
+    })
+
+    .state('editdistrict', {
+        url: "/district-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditDistrictCtrl'
+    })
+
+    .state('currency-list', {
+        url: "/currency-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CurrencyCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createcurrency', {
+        url: "/currency-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateCurrencyCtrl'
+    })
+
+    .state('editcurrency', {
+        url: "/currency-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditCurrencyCtrl'
+    })
+
+    .state('city-list', {
+        url: "/city-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CityCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createcity', {
+        url: "/city-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateCityCtrl'
+    })
+
+    .state('editcity', {
+        url: "/city-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditCityCtrl'
+    })
+
+    .state('office-list', {
+        url: "/office-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'OfficeCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+
+    .state('createoffice', {
+        url: "/office-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateOfficeCtrl'
+    })
+
+    .state('editoffice', {
+        url: "/office-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditOfficeCtrl'
+    })
+
+    .state('typeOfOffice-list', {
+        url: "/typeOfOffice-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'TypeOfOfficeCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createtypeOfOffice', {
+        url: "/typeOfOffice-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateTypeOfOfficeCtrl'
+    })
+
+    .state('edittypeOfOffice', {
+        url: "/typeOfOffice-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditTypeOfOfficeCtrl'
+    })
+
+    .state('activityType-list', {
+        url: "/activityType-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "activity type"
+        }
+    })
+
+    .state('createactivityType', {
+        url: "/activityType-create/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreateModelCtrl',
+        params: {
+            id: "",
+            model: "activity type"
+        }
+    })
+
+    .state('editactivityType', {
+        url: "/activityType-edit/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'EditModelCtrl',
+        params: {
+            id: "",
+            model: "activity type"
+        }
+    })
+
+    .state('expense-list', {
+        url: "/expense-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "expense"
+        }
+    })
+
+    .state('createexpense', {
+        url: "/expense-create/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreateModelCtrl',
+        params: {
+            id: "",
+            model: "expense"
+        }
+    })
+
+    .state('editexpense', {
+        url: "/expense-edit/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'EditModelCtrl',
+        params: {
+            id: "",
+            model: "expense"
+        }
+    })
+
+    .state('department-list', {
+        url: "/department-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "department"
+        }
+    })
+
+    .state('createdepartment', {
+        url: "/department-create/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreateModelCtrl',
+        params: {
+            id: "",
+            model: "department"
+        }
+    })
+
+    .state('editdepartment', {
+        url: "/department-edit/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'EditModelCtrl',
+        params: {
+            id: "",
+            model: "department"
+        }
+    })
+
+
+    .state('uniqueType-list', {
+        url: "/uniquetype-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'UniqueTypetCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+
+    .state('createuniquetype', {
+        url: "/uniquetype-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateUniqueTypeCtrl'
+    })
+
+    .state('edituniquetype', {
+        url: "/uniquetype-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditUniqueTypeCtrl'
+    })
+
+    .state('policyType-list', {
+        url: "/policytype-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "policy type"
+        }
+    })
+
+    .state('createpolicyType', {
+        url: "/policytype-create/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreatePolicyTypeCtrl',
+        params: {
+            id: "",
+            model: "policy type"
+        }
+    })
+
+    .state('editpolicyType', {
+        url: "/policytype-edit/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'EditPolicyTypeCtrl',
+        params: {
+            id: "",
+            model: "policy type"
+        }
+    })
+
+    .state('policy-list', {
+        url: "/policy-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'PolicyCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createpolicy', {
+        url: "/policy-create",
+        templateUrl: "views/template.html",
+        controller: 'CreatePolicyCtrl'
+    })
+
+    .state('editpolicy', {
+        url: "/policy-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditPolicyCtrl'
+    })
+
+    .state('policyDoc-list', {
+        url: "/policydoc-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "policy doc"
+        }
+    })
+
+    .state('createpolicyDoc', {
+        url: "/policydoc-create/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreatePolicyDocCtrl',
+        params: {
+            id: "",
+            model: "policy doc"
+        }
+    })
+
+    .state('editpolicyDoc', {
+        url: "/policydoc-edit/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'EditPolicyDocCtrl',
+        params: {
+            id: "",
+            model: "policy doc"
+        }
+    })
+
+    .state('industry-list', {
+        url: "/industry-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'IndustryCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createindustry', {
+        url: "/industry-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateIndustryCtrl'
+    })
+
+    .state('editindustry', {
+        url: "/industry-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditIndustryCtrl'
+    })
+
+    .state('category-list', {
+        url: "/category-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CategoryCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createcategory', {
+        url: "/category-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateCategoryCtrl'
+    })
+
+    .state('editcategory', {
+        url: "/category-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditCategoryCtrl'
+    })
+
+    .state('func-list', {
+        url: "/func-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "func"
+        }
+    })
+
+    .state('createfunc', {
+        url: "/func-create/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreateModelCtrl',
+        params: {
+            id: "",
+            model: "func"
+        }
+    })
+
+    .state('editfunc', {
+        url: "/func-edit/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'EditModelCtrl',
+        params: {
+            id: "",
+            model: "func"
+        }
+    })
+
+    .state('causeLoss-list', {
+        url: "/causeloss-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "cause loss"
+        }
+    })
+
+    .state('createcauseLoss', {
+        url: "/causeloss-create/{id:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreateCauseLossCtrl',
+        params: {
+            id: ""
+        }
+    })
+
+    .state('editcauseLoss', {
+        url: "/causeloss-edit/{id:.*}",
+        templateUrl: "views/template.html",
+        controller: 'EditCauseLossCtrl',
+        params: {
+            id: ""
+        }
+    })
+
+    .state('natureLoss-list', {
+        url: "/natureloss-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "nature loss"
+        }
+    })
+
+    .state('createnatureLoss', {
+        url: "/natureloss-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateModelCtrl',
+        params: {
+            model: "nature loss"
+        }
+    })
+
+    .state('editnatureLoss', {
+        url: "/natureloss-edit/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'EditModelCtrl',
+        params: {
+            id: "",
+            model: "nature loss"
+        }
+    })
+
+    .state('businessbranch-list', {
+        url: "/businessbranch-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'BusinessBranchCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createbusinessbranch', {
+        url: "/businessbranch-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateBusinessBranchCtrl'
+    })
+
+    .state('editbusinessbranch', {
+        url: "/businessbranch-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditBusinessBranchCtrl'
+    })
+
+    .state('menu-list', {
+        url: "/menu-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'MenuCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createmenu', {
+        url: "/menu-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateMenuCtrl'
+    })
+
+    .state('editmenu', {
+        url: "/menu-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditMenuCtrl'
+    })
+
+    .state('role-list', {
+        url: "/role-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'RoleCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createrole', {
+        url: "/role-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateRoleCtrl'
+    })
+
+    .state('editrole', {
+        url: "/role-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditRoleCtrl'
+    })
+
+    .state('user-list', {
+        url: "/user-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'UserCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createuser', {
+        url: "/user-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateUserCtrl'
+    })
+
+    .state('edituser', {
+        url: "/user-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditUserCtrl'
+    })
+
+    .state('employee-list', {
+        url: "/employee-list//{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "employee"
+        }
+    })
+
+    .state('createemployee', {
+        url: "/employee-create/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreateEmployeeCtrl',
+        params: {
+            id: "",
+            model: "employee"
+        }
+    })
+
+    .state('editemployee', {
+        url: "/employee-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditEmployeeCtrl',
+        params: {
+            id: "",
+            model: "employee"
+        }
+    })
+
+    .state('product-list', {
+        url: "/product-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ProductCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createproduct', {
+        url: "/product-detail",
+        templateUrl: "views/template.html",
+        controller: 'CreateProductCtrl'
+    })
+
+    .state('editproduct', {
+        url: "/product-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditProductCtrl'
+    })
+
+    .state('salvage-list', {
+        url: "/salvage-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "salvage"
+        }
+    })
+
+    .state('createsalvage', {
+        url: "/salvage-detail/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreateModelCtrl',
+        params: {
+            id: "",
+            model: "salvage"
+        }
+    })
+
+    .state('editSalvage', {
+        url: "/salvage-edit/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'EditModelCtrl',
+        params: {
+            id: "",
+            model: "salvage"
+        }
+    })
+
+    .state('claims-list', {
+        url: "/claims-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "claims"
+        }
+    })
+
+    .state('createclaims', {
+        url: "/claims-detail/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreateModelCtrl',
+        params: {
+            id: "",
+            model: "claims"
+        }
+    })
+
+    .state('editclaims', {
+        url: "/claims-edit/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'EditModelCtrl',
+        params: {
+            id: "",
+            model: "claims"
+        }
+    })
+
+    .state('bankMaster-list', {
+        url: "/bankmaster-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'BankMasterCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createbankmaster', {
+            url: "/bankmaster-detail",
             templateUrl: "views/template.html",
-            controller: 'jsonViewCtrl'
+            controller: 'CreateBankmasterCtrl'
         })
-        .state('pageno', {
-            url: "/page/:jsonName/:no/:search",
+        .state('editbankmaster', {
+            url: "/bankmaster-detail/:id",
             templateUrl: "views/template.html",
-            controller: 'jsonViewCtrl'
-        });
+            controller: 'EditBankmasterCtrl'
+        })
 
+    .state('company-list', {
+        url: "/company-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CompanyCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createcompany', {
+        url: "/company-detail",
+        templateUrl: "views/template.html",
+        controller: 'CreateCompanyCtrl'
+    })
+
+    .state('editcompany', {
+        url: "/company-detail/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditCompanyCtrl'
+    })
+
+    .state('customer-list', {
+        url: "/customer-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "customer"
+        }
+    })
+
+    .state('createcustomer', {
+        url: "/customer-detail/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreateCustomerCtrl',
+        params: {
+            id: "",
+            model: "customer"
+        }
+    })
+
+    .state('editcustomer', {
+        url: "/customer-edit/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'EditCustomerCtrl',
+        params: {
+            id: "",
+            model: "customer"
+        }
+    })
+
+    .state('contactManagement-list', {
+        url: "/contactmanagement-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ContactManagementCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createcontactmanagement', {
+        url: "/contactmanagement-detail",
+        templateUrl: "views/template.html",
+        controller: 'CreateContactManagementCtrl'
+    })
+
+    .state('contacttype-list', {
+        url: "/contacttype-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ContactTypeCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createcontacttype', {
+        url: "/contacttype-detail",
+        templateUrl: "views/template.html",
+        controller: 'CreateContactTypeCtrl'
+    })
+
+    .state('contactTypeOffice-list', {
+        url: "/contacttypeoffice-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ContactTypeOfficeCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
+
+    .state('createcontacttypeoffice', {
+        url: "/contacttypeoffice-detail",
+        templateUrl: "views/template.html",
+        controller: 'CreateContactTypeOfficeCtrl'
+    })
+
+    .state('customerSegment-list', {
+        url: "/customersegment-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "customer segment"
+        }
+    })
+
+    .state('createcustomerSegment', {
+        url: "/customersegment-create/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreateModelCtrl',
+        params: {
+            id: "",
+            model: "customer segment"
+        }
+    })
+
+    .state('editcustomerSegment', {
+        url: "/customersegment-edit/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'EditModelCtrl',
+        params: {
+            id: "",
+            model: "customer segment"
+        }
+    })
+
+    .state('customerCompany-list', {
+        url: "/customercompany-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "customer company"
+        }
+    })
+
+    .state('createcustomerCompany', {
+        url: "/customercompany-create/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreateModelCtrl',
+        params: {
+            id: "",
+            model: "customer company"
+        }
+    })
+
+    .state('editcustomerCompany', {
+        url: "/customercompany-edit/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'EditModelCtrl',
+        params: {
+            id: "",
+            model: "customer company"
+        }
+    })
+
+    .state('grade-list', {
+        url: "/grade-list/:id/:keyword/:model",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "grade"
+        }
+    })
+
+    .state('creategrade', {
+        url: "/grade-create/:id/:model",
+        templateUrl: "views/template.html",
+        controller: 'CreateModelCtrl',
+        params: {
+            id: "",
+            model: "grade"
+        }
+    })
+
+    .state('editgrade', {
+        url: "/grade-edit/:id/:model",
+        templateUrl: "views/template.html",
+        controller: 'EditModelCtrl',
+        params: {
+            id: "",
+            model: "grade"
+        }
+    })
+
+    .state('surveyCode-list', {
+        url: "/surveycode-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "survey code"
+        }
+    })
+
+    .state('createsurveyCode', {
+        url: "/surveycode-create/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreateModelCtrl',
+        params: {
+            id: "",
+            model: "survey code"
+        }
+    })
+
+    .state('editsurveyCode', {
+        url: "/surveycode-edit/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'EditModelCtrl',
+        params: {
+            id: "",
+            model: "survey code"
+        }
+    })
+
+    .state('transferOffice-list', {
+        url: "/transferoffice-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "transfer office"
+        }
+    })
+
+    .state('createtransferoffice', {
+        url: "/transferoffice-create/{id:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CreateModelCtrl',
+        params: {
+            id: "",
+            model: "transfer office"
+        }
+    })
+
+    .state('edittransferofficer', {
+        url: "/transferOfficer-edit",
+        templateUrl: "views/template.html",
+        controller: 'EditTransferOfficerCtrl'
+    })
+
+    .state('createassignment', {
+            url: "/assignment-create/{id:.*}/{model:.*}",
+            templateUrl: "views/template.html",
+            controller: 'CreateAssignmentCtrl',
+            params: {
+                id: "",
+                model: "assignment"
+            }
+        })
+        .state('editassignment', {
+            url: "/assignment-edit/{id:.*}/{model:.*}",
+            templateUrl: "views/template.html",
+            controller: 'EditAssignmentCtrl',
+            params: {
+                id: "",
+                model: "assignment"
+            }
+        })
+        .state('assignment-list', {
+            url: "/assignment-list",
+            templateUrl: "views/template.html",
+            controller: 'ModelViewCtrl',
+            params: {
+                page: "1",
+                keyword: "",
+                model: "assignment"
+            }
+        })
+
+    .state('timeline', {
+        url: "/timeline",
+        templateUrl: "views/template.html",
+        controller: 'TimelineCtrl'
+    })
+
+    .state('template-list', {
+        url: "/template-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "template"
+        }
+    })
+
+    .state('createtemplate', {
+        url: "/template-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateTemplateCtrl'
+    })
+
+    .state('edittemplate', {
+        url: "/template-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditTemplateCtrl'
+    })
+
+    .state('templateLor-list', {
+        url: "/templateLor-list/{page:.*}/{keyword:.*}/{model:.*}",
+        templateUrl: "views/template.html",
+        controller: 'ModelViewCtrl',
+        params: {
+            page: "1",
+            keyword: "",
+            model: "template lor"
+        }
+    })
+
+    .state('createtemplateLor', {
+        url: "/templateLor-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateTemplateLORCtrl'
+    })
+
+    .state('edittemplateLor', {
+        url: "/templateLor-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditTemplateLORCtrl'
+    })
+
+    .state('template-view', {
+        url: "/template-view",
+        templateUrl: "views/template.html",
+        controller: 'TemplateViewCtrl'
+    })
+
+    .state('email-inbox', {
+        url: "/email-inbox",
+        templateUrl: "views/template.html",
+        controller: 'EmailInboxCtrl'
+    })
+
+    .state('email-single', {
+        url: "/email-single",
+        templateUrl: "views/template.html",
+        controller: 'EmailSingleCtrl'
+    })
+
+    ;
     $urlRouterProvider.otherwise("/login");
-    $locationProvider.html5Mode({
-        enabled: isproduction,
-        requireBase: true,
-        rewriteLinks: true
-    });
+    $locationProvider.html5Mode(isproduction);
+
 });
+
 
 firstapp.filter('uploadpath', function() {
     return function(input, width, height, style) {
@@ -76,45 +1157,14 @@ firstapp.filter('uploadpath', function() {
             other += "&style=" + style;
         }
         if (input) {
-            return imgpath + "?file=" + input + other;
-        }
-    };
-});
-
-firstapp.filter('getValue', function($filter) {
-    return function(input, keyVal, type) {
-        if (keyVal) {
-            var keyArr = keyVal.split(".");
-            var returnValue = input;
-            _.each(keyArr, function(n) {
-                returnValue = returnValue[n];
-            });
-
-            if (type == "date") {
-                console.log('in date');
-                // return new Date(returnValue);
-                return $filter("date")(returnValue, "medium");
-            }
-            if (type == "longdate") {
-                console.log('in date');
-                // return new Date(returnValue);
-                return $filter("date")(returnValue, "longDate");
-            }
-            if (type == "time") {
-                console.log('in time');
-                return $filter("date")(returnValue, "shortTime");
-            }
-            if (type != "image") {
-                return returnValue;
+            if (input.indexOf('https://') == -1) {
+                return imgpath + "?file=" + input + other;
             } else {
-                return $filter("uploadpath")(returnValue, 100, 100, "fill");
+                return input;
             }
         }
-
     };
 });
-
-
 firstapp.directive('imageonload', function() {
     return {
         restrict: 'A',
@@ -126,6 +1176,7 @@ firstapp.directive('imageonload', function() {
     };
 });
 
+
 firstapp.directive('uploadImage', function($http, $filter) {
     return {
         templateUrl: 'views/directive/uploadFile.html',
@@ -134,6 +1185,12 @@ firstapp.directive('uploadImage', function($http, $filter) {
             callback: "=ngCallback"
         },
         link: function($scope, element, attrs) {
+
+            $scope.showImage = function() {
+                console.log($scope.image);
+            };
+
+
             $scope.isMultiple = false;
             $scope.inObject = false;
             if (attrs.multiple || attrs.multiple === "") {
@@ -143,17 +1200,21 @@ firstapp.directive('uploadImage', function($http, $filter) {
             if (attrs.noView || attrs.noView === "") {
                 $scope.noShow = true;
             }
+
+            $scope.$watch("image", function(newVal, oldVal) {
+                if (newVal && newVal.file) {
+                    $scope.uploadNow(newVal);
+                }
+            });
+
             if ($scope.model) {
                 if (_.isArray($scope.model)) {
                     $scope.image = [];
                     _.each($scope.model, function(n) {
                         $scope.image.push({
-                            url: $filter("uploadpath")(n)
+                            url: n
                         });
                     });
-                } else {
-                    $scope.image = {};
-                    $scope.image.url = $filter("uploadpath")($scope.model);
                 }
 
             }
@@ -163,7 +1224,9 @@ firstapp.directive('uploadImage', function($http, $filter) {
             $scope.clearOld = function() {
                 $scope.model = [];
             };
-            $scope.upload = function(image) {
+            $scope.uploadNow = function(image) {
+                $scope.uploadStatus = "uploading";
+
                 var Template = this;
                 image.hide = true;
                 var formData = new FormData();
@@ -174,10 +1237,10 @@ firstapp.directive('uploadImage', function($http, $filter) {
                     },
                     transformRequest: angular.identity
                 }).success(function(data) {
-                    console.log("success");
                     if ($scope.callback) {
                         $scope.callback(data);
                     } else {
+                        $scope.uploadStatus = "uploaded";
                         if ($scope.isMultiple) {
                             if ($scope.inObject) {
                                 $scope.model.push({
@@ -196,16 +1259,75 @@ firstapp.directive('uploadImage', function($http, $filter) {
     };
 });
 
-firstapp.directive('img', function($compile, $parse) {
 
+firstapp.directive('onlyDigits', function() {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        link: function(scope, element, attr, ctrl) {
+            var digits;
+
+            function inputValue(val) {
+                if (val) {
+                    if (attr.type == "text") {
+                        digits = val.replace(/[^0-9\-\\]/g, '');
+                    } else {
+                        digits = val.replace(/[^0-9\-\\]/g, '');
+                    }
+
+
+                    if (digits !== val) {
+                        ctrl.$setViewValue(digits);
+                        ctrl.$render();
+                    }
+                    return parseInt(digits, 10);
+                }
+                return undefined;
+            }
+            ctrl.$parsers.push(inputValue);
+        }
+    };
+});
+
+firstapp.filter('propsFilter', function() {
+    return function(items, props) {
+        var out = [];
+
+        if (angular.isArray(items)) {
+            items.forEach(function(item) {
+                var itemMatches = false;
+
+                var keys = Object.keys(props);
+                for (var i = 0; i < keys.length; i++) {
+                    var prop = keys[i];
+                    var text = props[prop].toLowerCase();
+                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                        itemMatches = true;
+                        break;
+                    }
+                }
+
+                if (itemMatches) {
+                    out.push(item);
+                }
+            });
+        } else {
+            // Let the output be the input untouched
+            out = items;
+        }
+
+        return out;
+    };
+});
+
+firstapp.directive('img', function($compile, $parse) {
     return {
         restrict: 'E',
         replace: false,
         link: function($scope, element, attrs) {
             var $element = $(element);
-
             if (!attrs.noloading) {
-                $element.after("<img src='img/no-image.png' class='loading' />");
+                $element.after("<img src='img/loading.gif' class='loading' />");
                 var $loading = $element.next(".loading");
                 $element.load(function() {
                     $loading.remove();
@@ -218,103 +1340,265 @@ firstapp.directive('img', function($compile, $parse) {
     };
 });
 
-firstapp.directive('myEditor', function() {
-    var uniqueId = 0;
-    return {
-        restrict: 'E',
-        require: 'ngModel',
-        scope: true,
-        template: '<textarea></textarea>',
-        link: function(scope, element, attrs, ngModel) {
-            var id = 'myEditor_' + uniqueId++;
-            element.find('textarea').attr('id', id);
-            tinymce.init({
-                selector: '#' + id
-            });
-
-            var editor = tinymce.get(id);
-            alert(editor); // why is this undefined?
-        }
-    };
-});
-
-var editorG = {};
-var jsonEditorNo = 0;
-firstapp.directive('jsoneditor', function($compile, $parse) {
+firstapp.directive('fancyboxBox', function($document) {
     return {
         restrict: 'EA',
-        scope: false,
-        link: function($scope, element, attrs) {
-            $element = $(element);
-            $element.css("min-height", "200px");
-            var jsoneditornumber = (jsonEditorNo++);
-            $element.attr("id", "jsonEditor" + jsoneditornumber);
-            var editor = ace.edit("jsonEditor" + jsoneditornumber);
-            editor.setTheme("ace/theme/monokai");
-            editor.$blockScrolling = Infinity;
-            var JsonMode = ace.require("ace/mode/json").Mode;
+        replace: false,
+        link: function(scope, element, attr) {
+            var $element = $(element);
+            var target;
+            if (attr.rel) {
+                target = $("[rel='" + attr.rel + "']");
+            } else {
+                target = element;
+            }
 
-            editorG = editor;
-            editor.session.setMode(new JsonMode());
-
-
-            editor.setValue($scope.api.Response[attrs.model], 1);
-            editor.on("change", function(e) {
-
-                $scope.api.Response[attrs.model] = editor.getValue();
-                $scope.$apply();
-            });
-            var wrapMode = true;
-            setTimeout(function() {
-                editor.getSession().setUseWrapMode(wrapMode);
-            }, 100);
-
-            editor.commands.addCommand({
-                name: "beautify",
-                bindKey: {
-                    win: "Ctrl-Alt-B",
-                    mac: "Ctrl-Option-B"
-                },
-                exec: function(editor) {
-                    var value = editor.getValue();
-                    var beautiVal = js_beautify(value);
-                    editor.setValue(beautiVal);
-                    editor.clearSelection();
-
-                }
-            });
-
-            editor.commands.addCommand({
-                name: "wrap",
-                bindKey: {
-                    win: "Ctrl-Alt-S",
-                    mac: "Ctrl-Option-S"
-                },
-                exec: function(editor) {
-                    wrapMode = !wrapMode;
-                    editor.getSession().setUseWrapMode(wrapMode);
-
+            target.fancybox({
+                openEffect: 'fade',
+                closeEffect: 'fade',
+                closeBtn: true,
+                helpers: {
+                    media: {}
                 }
             });
         }
     };
 });
 
-firstapp.directive('dlEnterKey', function() {
-    return function(scope, element, attrs) {
+firstapp.directive('menuOptions', function($document) {
+    return {
+        restrict: 'C',
+        replace: false,
+        link: function(scope, element, attr) {
+            var $element = $(element);
+            $(element).on("click", function() {
+                $(".side-header.opened-menu").toggleClass('slide-menu');
+                $(".main-content").toggleClass('wide-content');
+                $("footer").toggleClass('wide-footer');
+                $(".menu-options").toggleClass('active');
+            });
 
-        element.bind("keydown keypress", function(event) {
-            var keyCode = event.which || event.keyCode;
+        }
+    };
+});
 
-            // If enter key is pressed
-            if (keyCode === 13) {
-                scope.$apply(function() {
-                    // Evaluate the expression
-                    scope.$eval(attrs.dlEnterKey);
+firstapp.filter('serverimage', function() {
+    return function(input) {
+        if (input) {
+            return imgpath + input;
+        } else {
+            return "img/logo.png";
+        }
+    };
+});
+
+firstapp.filter('convDate', function() {
+    return function(input) {
+        return new Date(input);
+    };
+});
+
+firstapp.filter('downloadImage', function() {
+    return function(input) {
+        if (input) {
+            return adminurl + "download/" + input;
+        } else {
+            return "img/logo.png";
+        }
+    };
+});
+
+firstapp.directive('oI', function($document) {
+    return {
+        restrict: 'C',
+        replace: false,
+        link: function(scope, element, attr) {
+            var $element = $(element);
+            $element.click(function() {
+                $element.parent().siblings().children("ul").slideUp();
+                $element.parent().siblings().removeClass("active");
+                $element.parent().children("ul").slideToggle();
+                $element.parent().toggleClass("active");
+                return false;
+            });
+
+        }
+    };
+});
+firstapp.directive('slimscroll', function($document) {
+    return {
+        restrict: 'EA',
+        replace: false,
+        link: function(scope, element, attr) {
+            var $element = $(element);
+            $element.slimScroll({
+                height: '400px',
+                wheelStep: 10,
+                size: '2px'
+            });
+        }
+    };
+});
+
+firstapp.directive('addressForm', function($document) {
+    return {
+        templateUrl: 'views/directive/address-form.html',
+        scope: {
+            formData: "=ngModel",
+            demoForm: "=ngValid"
+        },
+        restrict: 'EA',
+        replace: false,
+        controller: function($scope, NgMap, NavigationService) {
+
+            $scope.map = {};
+            $scope.change = function() {
+                NgMap.getMap().then(function(map) {
+                    var latLng = {
+                        lat: map.markers[0].position.lat(),
+                        lng: map.markers[0].position.lng()
+                    };
+                    _.assign($scope.formData, latLng);
+                });
+            };
+            var LatLongi = 0;
+            $scope.getLatLng = function(address) {
+
+                NavigationService.getLatLng(address, ++LatLongi, function(data, i) {
+
+                    if (i == LatLongi) {
+                        $scope.formData = _.assign($scope.formData, data.results[0].geometry.location);
+                    }
+                });
+                // $http.get("http://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCn9ypqFNxdXt9Zu2YqLcdD1Xdt2wNul9s&address="+address);
+            };
+
+        },
+        // link: function($scope, element, attr, NgMap) {
+        //     var $element = $(element);
+        //     $scope.demoForm = {};
+        //     $scope.demoForm.lat = 19.0760;
+        //     $scope.demoForm.long = 72.8777;
+        //     $scope.map = {};
+        //     $scope.change = function() {
+        //       NgMap.getMap().then(function(map) {
+        //         console.log(map);
+        //       });
+        //
+        //     };
+        //
+        // }
+    };
+});
+var aa = {};
+firstapp.directive('multipleSelect', function($document, $timeout) {
+    return {
+        templateUrl: 'views/directive/multiple-select.html',
+        scope: {
+            model: '=ngModel',
+            api: "@api",
+            name: "@name",
+            required: "@required",
+            filter: "@filter",
+            ngName: "=ngName",
+            create: "@ngCreate",
+
+        },
+        restrict: 'EA',
+        replace: false,
+        controller: 'MultipleSelectCtrl',
+        link: function(scope, element, attr, NavigationService) {
+            var $element = $(element);
+            scope.activeKey = 0;
+            scope.isRequired = true;
+            if (scope.required === undefined) {
+                scope.isRequired = false;
+            }
+            scope.typeselect = attr.typeselect;
+            // $scope.searchNew()
+            aa = $element;
+            var maxItemLength = 40;
+            var maxBoxLength = 200;
+            $timeout(function() {
+
+                $element.find(".typeText").keyup(function(event) {
+                    var scrollTop = $element.find("ul.allOptions").scrollTop();
+                    var optionLength = $element.find("ul.allOptions li").length;
+                    if (event.keyCode == 40) {
+                        scope.activeKey++;
+                    } else if (event.keyCode == 38) {
+                        scope.activeKey--;
+                    } else if (event.keyCode == 13) {
+                        $element.find("ul.allOptions li").eq(scope.activeKey).trigger("click");
+                    }
+                    if (scope.activeKey < 0) {
+                        scope.activeKey = optionLength - 1;
+                    }
+                    if (scope.activeKey >= optionLength) {
+                        scope.activeKey = 0;
+                    }
+                    var newScroll = -1;
+                    var scrollVisibility = (scrollTop + maxBoxLength) - maxItemLength;
+                    var currentItemPosition = scope.activeKey * maxItemLength;
+                    if (currentItemPosition < scrollTop) {
+                        newScroll = (maxItemLength * scope.activeKey);
+
+                    } else if (currentItemPosition > scrollVisibility) {
+                        newScroll = (maxItemLength * scope.activeKey);
+
+                    }
+                    if (newScroll != -1) {
+                        $element.find("ul.allOptions").scrollTop(newScroll);
+                    }
+
+                    scope.$apply();
                 });
 
-                event.preventDefault();
+            }, 100);
+
+        }
+    };
+});
+
+firstapp.filter('ageFilter', function() {
+    function calculateAge(birthday) { // birthday is a date
+        var ageDifMs = Date.now() - birthday.getTime();
+        var ageDate = new Date(ageDifMs); // miliseconds from epoch
+        return Math.abs(ageDate.getUTCFullYear() - 1970);
+    }
+
+    return function(birthdate) {
+        return calculateAge(birthdate);
+    };
+});
+firstapp.filter('capitalize', function() {
+    return function(input, all) {
+        var reg = (all) ? /([^\W_]+[^\s-]*) */g : /([^\W_]+[^\s-]*)/;
+        return (!!input) ? input.replace(reg, function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }) : '';
+    };
+});
+
+firstapp.config(function($translateProvider) {
+    $translateProvider.translations('en', LanguageEnglish);
+    $translateProvider.translations('hi', LanguageHindi);
+    $translateProvider.preferredLanguage('en');
+});
+
+firstapp.directive('alphaNumeric', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attr, ngModelCtrl) {
+            function fromUser(text) {
+                var transformedInput = text.replace(/[^0-9a-zA-Z]/g, '');
+                if (transformedInput !== text) {
+                    ngModelCtrl.$setViewValue(transformedInput);
+                    ngModelCtrl.$render();
+                }
+                return transformedInput; // or return Number(transformedInput)
             }
-        });
+            ngModelCtrl.$parsers.push(fromUser);
+        }
     };
 });
