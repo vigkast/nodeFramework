@@ -19,7 +19,8 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
         .state('dashboard', {
             url: "/dashboard",
             templateUrl: "views/template.html",
-            controller: 'DashboardCtrl'
+            controller: 'DashboardCtrl',
+            
         })
 
     .state('login', {

@@ -1,20 +1,26 @@
 var globalfunction = {};
 angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ui.select', 'ngAnimate', 'toastr', 'ngSanitize', 'angular-flexslider', 'ui.tinymce', 'imageupload', 'ngMap', 'toggle-switch', 'cfp.hotkeys', 'ui.sortable'])
 
-.controller('DashboardCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+.controller('DashboardCtrl', function($scope, TemplateService, NavigationService, $timeout, $state) {
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("dashboard");
     $scope.menutitle = NavigationService.makeactive("Dashboard");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    console.log($state);
+
 })
+
+.controller('AccessToken', function($scope, TemplateService, NavigationService, $timeout) {
+
+})
+
 
 .controller('LoginCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams, $state) {
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("login");
     $scope.menutitle = NavigationService.makeactive("Login");
     TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
     $scope.currentHost = window.location.origin;
     if ($stateParams.id) {
         NavigationService.parseAccessToken($stateParams.id, function() {
