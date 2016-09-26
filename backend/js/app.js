@@ -29,6 +29,12 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
         controller: 'LoginCtrl'
     })
 
+    .state('loginapp', {
+        url: "/login/:id",
+        templateUrl: "views/login.html",
+        controller: 'LoginCtrl'
+    })
+
     .state('country-list', {
         url: "/country-list/{page:.*}/{keyword:.*}",
         templateUrl: "views/template.html",
