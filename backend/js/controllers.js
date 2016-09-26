@@ -26,7 +26,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.currentHost = window.location.origin;
     if ($stateParams.id) {
         NavigationService.parseAccessToken($stateParams.id, function () {
-            $state.go("dashboard");
+            NavigationService.profile(function () {
+                $state.go("dashboard");
+            }, function () {
+                $state.go("login");
+            });
+
         });
     } else {
         NavigationService.removeAccessToken();
@@ -468,4 +473,4 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }
         //  $rootScope.$apply();
     };
-})
+});

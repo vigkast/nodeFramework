@@ -42,6 +42,19 @@ var navigationservice = angular.module('navigationservice', [])
         removeAccessToken: function (data, callback) {
             $.jStorage.flush();
         },
+        profile: function (callback, errorCallback) {
+            var data = {
+                accessToken: $.jStorage.get("accessToken")
+            };
+            $http.post(adminurl + 'user/profile', data).success(function (data) {
+                if (data.value == true) {
+                    $.jStorage.set("profile", data.data);
+                    callback();
+                } else {
+                    errorCallback(data.error);
+                }
+            });
+        },
         makeactive: function (menuname) {
             for (var i = 0; i < navigation.length; i++) {
                 if (navigation[i].name == menuname) {

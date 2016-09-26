@@ -53,12 +53,12 @@ module.exports = mongoose.model('User', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
-    existsSocial: function(user, callback) {
+    existsSocial: function (user, callback) {
         var Model = this;
         Model.findOne({
             "oauthLogin.socialId": user.id,
             "oauthLogin.socialProvider": user.provider,
-        }).lean().exec(function(err, data) {
+        }).lean().exec(function (err, data) {
             if (err) {
                 callback(err, data);
             } else if (_.isEmpty(data)) {
@@ -76,7 +76,7 @@ var model = {
                 if (user.photos && user.photos.length > 0) {
                     modelUser.photo = user.photos[0].value;
                 }
-                Model.saveData(modelUser, function(err, data2) {
+                Model.saveData(modelUser, function (err, data2) {
                     if (err) {
                         callback(err, data2);
                     } else {
@@ -95,6 +95,19 @@ var model = {
                 delete data.forgotPassword;
                 delete data.otp;
                 callback(err, data);
+            }
+        });
+    },
+    profile: function (data, callback) {
+        User.findOne({
+            accessToken: data.accessToken
+        }, 'name email photo mobile accessLevel').exec(function (err, data) {
+            if (err) {
+                callback(err);
+            } else if (data) {
+                callback(null, data)
+            } else {
+                callback("No Data Found", data);
             }
         });
     }
