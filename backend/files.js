@@ -37,4 +37,5 @@ module.exports = [
     'backend/js/controllers.js',
     'backend/js/navigation.js',
     'backend/js/templateservice.js',
+    'backend/js/jsonService.js',
 ];

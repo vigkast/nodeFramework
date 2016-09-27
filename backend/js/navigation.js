@@ -66,8 +66,8 @@ var navigationservice = angular.module('navigationservice', [])
             return menuname;
         },
 
-        searchCountry: function (formData, i, callback) {
-            $http.post(adminurl + 'country/search', formData).success(function (data) {
+        search: function (url, formData, i, callback) {
+            $http.post(adminurl + url, formData).success(function (data) {
                 callback(data, i);
             });
         },

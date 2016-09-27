@@ -1,5 +1,5 @@
 var globalfunction = {};
-angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ui.select', 'ngAnimate', 'toastr', 'ngSanitize', 'angular-flexslider', 'ui.tinymce', 'imageupload', 'ngMap', 'toggle-switch', 'cfp.hotkeys', 'ui.sortable'])
+angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', "jsonservicemod", 'ui.bootstrap', 'ui.select', 'ngAnimate', 'toastr', 'ngSanitize', 'angular-flexslider', 'ui.tinymce', 'imageupload', 'ngMap', 'toggle-switch', 'cfp.hotkeys', 'ui.sortable'])
 
 .controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
     //Used to name the .html file
@@ -18,6 +18,55 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 })
 
 
+.controller('PageJsonCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
+
+    $scope.json = JsonService;
+    $scope.template = TemplateService.changecontent("dashboard");
+    $scope.menutitle = NavigationService.makeactive("Country List");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+
+    JsonService.getJson($stateParams.id, function () {
+
+    });
+
+})
+
+
+.controller('ViewCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
+    $scope.json = JsonService;
+    $scope.template = TemplateService;
+    var i = 0;
+    $scope.currentPage = 1;
+    $scope.search = {
+        keyword: ""
+    };
+    if ($stateParams.keyword) {
+        $scope.search.keyword = $stateParams.keyword;
+    }
+    $scope.getAllItems = function (keywordChange) {
+        $scope.totalItems = undefined;
+        if (keywordChange) {
+            $scope.currentPage = 1;
+        }
+        NavigationService.search($scope.json.json.apiCall.url, {
+                page: $scope.currentPage,
+                keyword: $scope.search.keyword
+            }, ++i,
+            function (data, ini) {
+                if (ini == i) {
+                    $scope.items = data.data.results;
+                    $scope.totalItems = data.data.total;
+                    $scope.maxRow = data.data.options.count;
+                }
+            });
+    };
+    $scope.getAllItems();
+
+})
+
+
+
 .controller('LoginCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state) {
     //Used to name the .html file
 
@@ -31,7 +80,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }, function () {
                 $state.go("login");
             });
-
         });
     } else {
         NavigationService.removeAccessToken();
