@@ -56,7 +56,7 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
         templateUrl: "views/template.html",
         controller: 'EditCountryCtrl'
     });
-    $urlRouterProvider.otherwise("/login");
+    $urlRouterProvider.otherwise("/dashboard");
     $locationProvider.html5Mode(isproduction);
 
 });
@@ -301,9 +301,24 @@ firstapp.directive('menuOptions', function ($document) {
 });
 
 firstapp.filter('serverimage', function () {
-    return function (input) {
+    return function (input, width, height, style) {
         if (input) {
-            return imgpath + input;
+            if (input.substr(0, 4) == "http") {
+                return input;
+            } else {
+                image = imgpath + "?file=" + input;
+                if (width) {
+                    image += "&width=" + width;
+                }
+                if (height) {
+                    image += "&height=" + height;
+                }
+                if (style) {
+                    image += "&style=" + style;
+                }
+                return image;
+            }
+
         } else {
             return "img/logo.png";
         }

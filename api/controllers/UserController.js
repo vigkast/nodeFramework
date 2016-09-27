@@ -24,7 +24,6 @@ var controller = {
         } else {
             res.callback("Please provide Valid AccessToken", null);
         }
-
     }
 };
 module.exports = _.assign(module.exports, controller);
