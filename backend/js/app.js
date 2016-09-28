@@ -20,7 +20,6 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
             url: "/dashboard",
             templateUrl: "views/template.html",
             controller: 'DashboardCtrl',
-
         })
 
     .state('login', {
