@@ -1117,6 +1117,10 @@ img.uploadingImage {
     border-bottom: 1px solid $border-color;
 }
 
+.fancybox-inner img {
+    opacity: 1;
+}
+
 
 /* Start writing sass here */
 

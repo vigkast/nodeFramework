@@ -37,7 +37,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.json = JsonService;
     $scope.template = TemplateService;
     var i = 0;
-    if ($stateParams.page) {
+    if ($stateParams.page && !isNaN(parseInt($stateParams.page))) {
         $scope.currentPage = $stateParams.page;
     } else {
         $scope.currentPage = 1;
