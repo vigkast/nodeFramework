@@ -9,7 +9,6 @@ var firstapp = angular.module('firstapp', [
     'angulartics.google.analytics',
     'imageupload',
     "ngMap"
-
 ]);
 
 firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
@@ -89,6 +88,7 @@ firstapp.filter('uploadpath', function () {
         }
     };
 });
+
 firstapp.directive('imageonload', function () {
     return {
         restrict: 'A',
@@ -99,7 +99,6 @@ firstapp.directive('imageonload', function () {
         }
     };
 });
-
 
 firstapp.directive('uploadImage', function ($http, $filter) {
     return {
