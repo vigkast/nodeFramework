@@ -20,7 +20,8 @@
     }, {
         "name": "Mobile",
         "isSort": "",
-        "tableRef": "mobile"
+        "tableRef": "mobile",
+        "type": "tel"
     }],
     "action": [{
         "name": "edit",

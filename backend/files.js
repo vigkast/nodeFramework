@@ -31,6 +31,9 @@ module.exports = [
     "bower_components/angular-hotkeys/build/hotkeys.js",
     "bower_components/moment/min/moment.min.js",
     "bower_components/angular-ui-sortable/sortable.js",
+    "bower_components/intl-tel-input/lib/libphonenumber/build/utils.js",
+    "bower_components/intl-tel-input/build/js/intlTelInput.js",
+    "bower_components/international-phone-number/releases/international-phone-number.js",
 
     'backend/js/app.js',
     'backend/js/language.js',

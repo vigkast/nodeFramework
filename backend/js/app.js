@@ -8,7 +8,8 @@ var firstapp = angular.module('firstapp', [
     'angulartics',
     'angulartics.google.analytics',
     'imageupload',
-    "ngMap"
+    "ngMap",
+    "internationalPhoneNumber"
 ]);
 
 firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
@@ -29,7 +30,7 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
     })
 
     .state('page', {
-        url: "/page/:id",
+        url: "/page/:id/{page:.*}/{keyword:.*}",
         templateUrl: "views/template.html",
         controller: 'PageJsonCtrl'
     })
@@ -524,19 +525,23 @@ firstapp.config(function ($translateProvider) {
     $translateProvider.preferredLanguage('en');
 });
 
-firstapp.directive('alphaNumeric', function () {
+
+
+
+firstapp.directive('viewField', function ($http, $filter) {
     return {
-        require: 'ngModel',
-        link: function (scope, element, attr, ngModelCtrl) {
-            function fromUser(text) {
-                var transformedInput = text.replace(/[^0-9a-zA-Z]/g, '');
-                if (transformedInput !== text) {
-                    ngModelCtrl.$setViewValue(transformedInput);
-                    ngModelCtrl.$render();
-                }
-                return transformedInput; // or return Number(transformedInput)
+        templateUrl: 'views/directive/viewField.html',
+        scope: {
+            type: '=type',
+            value: "=value"
+        },
+        link: function ($scope, element, attrs) {
+            if (!$scope.type.type) {
+                $scope.type.type = "text";
             }
-            ngModelCtrl.$parsers.push(fromUser);
+            $scope.form = {};
+            $scope.form.model = $scope.value[$scope.type.tableRef];
+            $scope.template = "views/viewField/" + $scope.type.type + ".html";
         }
     };
 });

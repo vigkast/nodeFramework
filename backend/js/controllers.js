@@ -37,13 +37,31 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.json = JsonService;
     $scope.template = TemplateService;
     var i = 0;
-    $scope.currentPage = 1;
+    if ($stateParams.page) {
+        $scope.currentPage = $stateParams.page;
+    } else {
+        $scope.currentPage = 1;
+    }
+
     $scope.search = {
         keyword: ""
     };
     if ($stateParams.keyword) {
         $scope.search.keyword = $stateParams.keyword;
     }
+    console.log($state);
+    $scope.changePage = function (page) {
+        var goTo = "page";
+        if ($scope.search.keyword) {
+            goTo = "page";
+        }
+        $state.go(goTo, {
+            id: $stateParams.id,
+            page: page,
+            keyword: $scope.search.keyword
+        });
+    };
+
     $scope.getAllItems = function (keywordChange) {
         $scope.totalItems = undefined;
         if (keywordChange) {
