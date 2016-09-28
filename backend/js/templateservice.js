@@ -14,6 +14,7 @@ templateservicemod.service('TemplateService', function () {
     this.menu = "views/menu.html";
     this.content = "views/content/content.html";
     this.footer = "views/footer.html";
+    this.profile = $.jStorage.get("profile");
   };
 
   this.changecontent = function (page) {

@@ -78,28 +78,29 @@ global["exec"] = require('child_process').exec;
 global["_"] = require('lodash');
 global["chalk"] = require('chalk');
 global["uid"] = require('rand-token').uid;
+global["request"] = require('request');
 
 // passport Globals
 global["passport"] = require('passport');
 global["LocalStrategy"] = require('passport-local').Strategy;
 global["FacebookStrategy"] = require('passport-facebook').Strategy;
 global["TwitterStrategy"] = require('passport-twitter').Strategy;
-global["GoogleStrategy"] = require('passport-google-oauth20').Strategy;
+global["GoogleStrategy"] = require('passport-google-auth').Strategy;
 
 // Files to Import
 global["jsFiles"] = require("../frontend/files.js");
 global["jsFilesBackend"] = require("../backend/files.js");
 
 //colored console
-global["blue"] = function(data) {
+global["blue"] = function (data) {
     console.log(chalk.blue(data));
 };
-global["red"] = function(data) {
+global["red"] = function (data) {
     console.log(chalk.red(data));
 };
-global["green"] = function(data) {
+global["green"] = function (data) {
     console.log(chalk.green(data));
 };
-global["log"] = function(data) {
+global["log"] = function (data) {
     console.log(data);
 };
