@@ -58,7 +58,7 @@ module.exports.http = {
         myRequestLogger: function (req, res, next) {
             req.models = req.path.split("/");
             // console.log(req.models);
-            req.model = mongoose.models[_.capitalize(req.models[2])];
+            req.model = mongoose.models[_.upperFirst(req.models[2])];
 
 
             if (req.body && req.body.accessToken) {
