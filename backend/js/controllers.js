@@ -17,21 +17,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }
 })
 
-
 .controller('PageJsonCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
-
     $scope.json = JsonService;
-    $scope.template = TemplateService.changecontent("dashboard");
+    $scope.template = TemplateService.changecontent("none");
     $scope.menutitle = NavigationService.makeactive("Country List");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
-
-    JsonService.getJson($stateParams.id, function () {
-
-    });
-
+    JsonService.getJson($stateParams.id, function () {});
 })
-
 
 .controller('ViewCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
     $scope.json = JsonService;
