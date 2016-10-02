@@ -1,12 +1,12 @@
 module.exports = {
-    index: function(req, res) {
+    index: function (req, res) {
         res.metaView();
     },
-    download: function(req, res) {
+    download: function (req, res) {
 
         Config.readUploaded(req.param("filename"), null, null, null, res);
     },
-    backend: function(req, res) {
+    backend: function (req, res) {
         var env = require("../../config/env/" + sails.config.environment + ".js");
         res.view("backend", {
             jsFiles: jsFilesBackend,
@@ -16,9 +16,9 @@ module.exports = {
             adminurl: env.realHost + "/api/",
         });
     },
-    gitPull: function(req, res) {
+    gitPull: function (req, res) {
         function gitPull() {
-            exec('git pull', function(error, stdout, stderr) {
+            exec('git pull', function (error, stdout, stderr) {
                 if (error) {
                     return;
                 }
@@ -46,6 +46,17 @@ module.exports = {
         } else {
             res.notFound();
         }
+    },
+    demo: function (req, res) {
+        sails.renderView('email/welcome', {
+            name: "Pooja",
+            lastname: "Thakre",
+            hobbies: ["cricket", "name", "email", "phone"]
+        }, function (err, view) {
+
+            res.send(view);
+        });
+
     }
 
 

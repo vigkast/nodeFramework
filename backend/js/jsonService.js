@@ -1,11 +1,11 @@
 var jsonservicemod = angular.module('jsonservicemod', ["templateservicemod"]);
-jsonservicemod.service('JsonService', function ($http, TemplateService) {
+jsonservicemod.service('JsonService', function ($http, TemplateService, $state) {
   this.json = {};
   var JsonService = this;
   this.getJson = function (page, callback) {
     $http.get("pageJson/" + page + ".json").success(function (data) {
       JsonService.json = data;
-      switch (data.details.pageType) {
+      switch (data.pageType) {
         case "view":
           {
             TemplateService.changecontent("view");
@@ -27,6 +27,14 @@ jsonservicemod.service('JsonService', function ($http, TemplateService) {
       callback();
     });
 
+  };
+
+  this.eventAction = function (action) {
+    if (action.type == "page") {
+      $state.go("page", {
+        id: action.action
+      });
+    }
   };
 
 

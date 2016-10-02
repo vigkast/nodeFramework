@@ -42,7 +42,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     if ($stateParams.keyword) {
         $scope.search.keyword = $stateParams.keyword;
     }
-    console.log($state);
     $scope.changePage = function (page) {
         var goTo = "page";
         if ($scope.search.keyword) {

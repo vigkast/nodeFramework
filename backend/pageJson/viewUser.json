@@ -1,6 +1,6 @@
 {
     "title": "All User",
-    "desciption": "",
+    "description": "List of Users",
     "pageType": "view",
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
@@ -44,28 +44,26 @@
         }]
     }],
     "button": [{
-        "name": "excelexport",
+        "name": "Excel Export",
         "icon": "print",
-        "color": "#f37021",
+        "class": "btn-danger",
+        "type": "redirect",
         "action": "excelexport"
     }, {
-        "name": "uploadcsv",
+        "name": "Upload Excel",
         "icon": "delete",
-        "color": "red",
+        "class": "btn-warning",
+        "type": "redirect",
         "action": "uploadcsv"
-    }],
-    "filter": [{
-        "name": "category",
-        "url": "http://chaitalee.com/expertuser/getAll"
     }, {
-        "name": "uploadcsv",
-        "icon": "delete",
-        "color": "red",
-        "action": "uploadcsv"
+        "name": "Create",
+        "icon": "plus",
+        "class": "btn-success",
+        "type": "page",
+        "action": "createUser"
     }],
     "apiCall": {
         "url": "User/search",
         "params": "_id"
-    },
-    "createButtonState": "page({jsonName:'createUser'})"
+    }
 }
