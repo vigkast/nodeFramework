@@ -83,7 +83,6 @@
         "sideMenuRedirect": true,
         "stateName": "page({jsonName:'viewUser'})"
     }],
-
     "apiCall": {
         "url": "User/save"
     }

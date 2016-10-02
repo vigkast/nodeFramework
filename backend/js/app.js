@@ -16,11 +16,12 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
     // for http request with session
     $httpProvider.defaults.withCredentials = true;
     $stateProvider
+
         .state('dashboard', {
-            url: "/dashboard",
-            templateUrl: "views/template.html",
-            controller: 'DashboardCtrl',
-        })
+        url: "/dashboard",
+        templateUrl: "views/template.html",
+        controller: 'DashboardCtrl',
+    })
 
     .state('login', {
         url: "/login",
@@ -63,7 +64,6 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
     });
     $urlRouterProvider.otherwise("/dashboard");
     $locationProvider.html5Mode(isproduction);
-
 });
 
 
@@ -524,12 +524,28 @@ firstapp.config(function ($translateProvider) {
     $translateProvider.preferredLanguage('en');
 });
 
-
-
-
 firstapp.directive('viewField', function ($http, $filter) {
     return {
         templateUrl: 'views/directive/viewField.html',
+        scope: {
+            type: '=type',
+            value: "=value"
+        },
+        link: function ($scope, element, attrs) {
+            if (!$scope.type.type) {
+                $scope.type.type = "text";
+            }
+            $scope.form = {};
+            $scope.form.model = $scope.value[$scope.type.tableRef];
+            $scope.template = "views/viewField/" + $scope.type.type + ".html";
+        }
+    };
+});
+
+
+firstapp.directive('detailField', function ($http, $filter) {
+    return {
+        templateUrl: 'views/directive/detailField.html',
         scope: {
             type: '=type',
             value: "=value"

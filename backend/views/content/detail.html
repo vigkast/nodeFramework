@@ -31,7 +31,10 @@
                     <form name="countryform" role="form" class="sec ng-pristine ng-valid">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group">
+                                <detail-field type="field" value="item">
+                                </detail-field>
+
+                                <div class="form-group" fields>
                                     <label>Country*</label>
                                     <input type="text" name="name" ng-model="formData.name" class="form-control" required>
                                     <div class="error-msg" ng-show="countryform.name.$invalid && countryform.name.$touched">Please Enter Country</div>
