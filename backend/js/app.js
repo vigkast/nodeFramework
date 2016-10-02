@@ -555,8 +555,10 @@ firstapp.directive('detailField', function ($http, $filter) {
                 $scope.type.type = "text";
             }
             $scope.form = {};
-            $scope.form.model = $scope.value[$scope.type.tableRef];
-            $scope.template = "views/viewField/" + $scope.type.type + ".html";
+            if ($scope.value) {
+                $scope.form.model = $scope.value[$scope.type.tableRef];
+            }
+            $scope.template = "views/field/" + $scope.type.type + ".html";
         }
     };
 });
