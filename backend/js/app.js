@@ -548,16 +548,18 @@ firstapp.directive('detailField', function ($http, $filter) {
         templateUrl: 'views/directive/detailField.html',
         scope: {
             type: '=type',
-            value: "=value"
+            value: "=value",
+            detailForm: "=detailForm"
         },
         link: function ($scope, element, attrs) {
             if (!$scope.type.type) {
                 $scope.type.type = "text";
             }
             $scope.form = {};
-            if ($scope.value) {
+            if ($scope.value && $scope.value[$scope.type.tableRef]) {
                 $scope.form.model = $scope.value[$scope.type.tableRef];
             }
+
             $scope.template = "views/field/" + $scope.type.type + ".html";
         }
     };

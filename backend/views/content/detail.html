@@ -28,11 +28,10 @@
                         <div class="widget-title">
                             <h3>{{json.json.name}}</h3>
                         </div>
-
-                        <form name="countryform" role="form" class="sec ng-pristine ng-valid">
+                        <form name="detailForm" role="form" class="sec ng-pristine ng-valid">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <detail-field type="field" value="item" ng-repeat="field in json.json.fields">
+                                    <detail-field type="field" form="detailForm" value="item" ng-repeat="field in json.json.fields">
                                     </detail-field>
                                 </div>
                             </div>
