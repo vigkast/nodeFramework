@@ -13,11 +13,6 @@
         "isSort": "",
         "tableRef": "email"
     }, {
-        "name": "Photo",
-        "isSort": "",
-        "type": "image",
-        "tableRef": "photo"
-    }, {
         "name": "Mobile",
         "isSort": "",
         "tableRef": "mobile"

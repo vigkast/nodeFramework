@@ -5,14 +5,6 @@
     "pageType": "create",
     "urlFields": ["newuser"],
     "fields": [{
-        "name": "Name",
-        "type": "text",
-        "tableRef": "name",
-        "placeholder": "Enter name",
-        "id": "input1",
-        "validation": ["required", "trim", "unique"],
-        "url": ""
-    }, {
         "name": "Email",
         "type": "email",
         "tableRef": "email",
