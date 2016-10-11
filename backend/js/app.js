@@ -192,10 +192,11 @@ firstapp.directive('onlyDigits', function () {
 
             function inputValue(val) {
                 if (val) {
+                    var otherVal = val + "";
                     if (attr.type == "text") {
-                        digits = val.replace(/[^0-9\-\\]/g, '');
+                        digits = otherVal.replace(/[^0-9\-\.\\]/g, '');
                     } else {
-                        digits = val.replace(/[^0-9\-\\]/g, '');
+                        digits = otherVal.replace(/[^0-9\-\.\\]/g, '');
                     }
 
 
@@ -549,7 +550,8 @@ firstapp.directive('detailField', function ($http, $filter) {
         scope: {
             type: '=type',
             value: "=value",
-            detailForm: "=form"
+            detailForm: "=form",
+            formData: "=data"
         },
         link: function ($scope, element, attrs) {
             if (!$scope.type.type) {

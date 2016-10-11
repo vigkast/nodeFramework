@@ -28,13 +28,17 @@ $body-color-font: #505050;
 @import "template/main";
 @import "template/responsive";
 @import "custom-switch";
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url("../fonts/glyphicons-halflings-regular.eot");
+    src: url("../fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
+}
+
 button,
 div,
 input {
     outline: none !important;
 }
-
-body {}
 
 img.loading {
     text-align: center;
@@ -75,6 +79,10 @@ a,
 .input-lg {
     border-radius: 0;
     @include box-shadow(none);
+}
+
+.form-control.un-disable {
+    background-color: white;
 }
 
 .form-control:focus {
@@ -164,32 +172,47 @@ a,
 }
 
 .btn-red {
-    @include button-variant(white, $red, $red);
+    @include button-variant(white,
+    $red,
+    $red);
 }
 
 .btn-green {
-    @include button-variant(white, $green, $green);
+    @include button-variant(white,
+    $green,
+    $green);
 }
 
 .btn-blue {
-    @include button-variant(white, $blue, $blue);
+    @include button-variant(white,
+    $blue,
+    $blue);
 }
 
 .btn-orange {
-    @include button-variant(white, $orange, $orange);
+    @include button-variant(white,
+    $orange,
+    $orange);
 }
 
 .btn-google {
-    @include button-variant(white, $google, $google);
+    @include button-variant(white,
+    $google,
+    $google);
 }
 
-$trans-black: rgba( black, .15);
+$trans-black: rgba( black,
+.15);
 .btn-darker {
-    @include button-variant(white, $trans-black, transparent);
+    @include button-variant(white,
+    $trans-black,
+    transparent);
 }
 
 .btn-clear {
-    @include button-variant(white, transparent, transparent);
+    @include button-variant(white,
+    transparent,
+    transparent);
     padding: 0;
 }
 
