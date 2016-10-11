@@ -62,7 +62,7 @@
         "url": ""
     }, {
         "name": "OTP",
-        "type": "month",
+        "type": "wysiwyg",
         "tableRef": "otp",
         "placeholder": "Enter Otp",
         "id": "otp",

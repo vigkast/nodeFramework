@@ -83,6 +83,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.data = {
         email: "Chinatn"
     };
+    $scope.tinymceOptions = {
+        plugins: 'link image code',
+        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+    };
 })
 
 
