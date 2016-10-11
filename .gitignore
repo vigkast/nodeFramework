@@ -120,6 +120,3 @@ nbproject
 .tmp
 .editorconfig
 .sailsrc
-
-
-views/layout.ejs
