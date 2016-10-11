@@ -80,8 +80,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 .controller('DetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
     $scope.json = JsonService;
     $scope.template = TemplateService;
+    $scope.data = {
+        email: "Chinatn"
+    };
 })
-
 
 
 .controller('LoginCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state) {
