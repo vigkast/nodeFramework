@@ -1,6 +1,5 @@
 <div class="form-group" fields>
-    <label>{{type.name}} * </label>
-    <input ng-model="form.name" type="email" name="email" class="form-control" required>
-    <div class="error-msg" ng-show="detailForm.email.$invalid && countryform.email.$touched">Please Enter {{type.name}}</div>
-    {{formData}} {{detailForm}}
+    <label>{{type.name}} <span ng-show="type.required">*</span></label>
+    <input type="email" name="{{type.tableRef}}" ng-model="formData.name" class="form-control" ng-required="type.required">
+    <div class="error-msg" ng-show="detailForm[type.tableRef].$invalid && detailForm[type.tableRef].$touched">Please enter valid {{type.name}}</div>
 </div>

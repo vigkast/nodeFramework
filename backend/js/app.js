@@ -549,11 +549,19 @@ firstapp.directive('detailField', function ($http, $filter) {
         scope: {
             type: '=type',
             value: "=value",
-            detailForm: "=detailForm"
+            detailForm: "=form"
         },
         link: function ($scope, element, attrs) {
             if (!$scope.type.type) {
                 $scope.type.type = "text";
+            }
+            if ($scope.type.validation) {
+                var isRequired = _.findIndex($scope.type.validation, function (n) {
+                    return n == "required";
+                });
+                if (isRequired >= 0) {
+                    $scope.type.required = true;
+                }
             }
             $scope.form = {};
             if ($scope.value && $scope.value[$scope.type.tableRef]) {

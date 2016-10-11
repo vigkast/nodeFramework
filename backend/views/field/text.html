@@ -1,5 +1,5 @@
 <div class="form-group" fields>
-    <label>{{type.name}}*</label>
-    <input type="text" name="name" ng-model="formData.name" class="form-control" required>
-    <div class="error-msg" ng-show="countryform.name.$invalid && countryform.name.$touched">Please Enter Country</div>
+    <label>{{type.name}} <span ng-show="type.required">*</span></label>
+    <input type="text" name="{{type.tableRef}}" ng-model="formData.name" class="form-control" ng-required="type.required">
+    <div class="error-msg" ng-show="detailForm[type.tableRef].$invalid && detailForm[type.tableRef].$touched">Please enter valid {{type.name}}</div>
 </div>
