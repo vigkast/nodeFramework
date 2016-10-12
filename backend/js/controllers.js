@@ -79,6 +79,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 .controller('DetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
     $scope.json = JsonService;
+    JsonService.setKeyword($stateParams.keyword);
     $scope.template = TemplateService;
     $scope.data = {};
 })

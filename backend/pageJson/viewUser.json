@@ -19,24 +19,25 @@
     }],
     "action": [{
         "name": "edit",
-        "icon": "mode_edit",
-        "color": "#f37021",
-        "action": "redirect",
-        "jsonPage": "editUser",
-        "fieldsToSend": ["_id"],
-        "callFindOne": "User/getOne"
+        "icon": "fa-pencil",
+        "buttonClass": "btn-primary",
+        "type": "page",
+        "action": "editUser",
+        "fieldsToSend": {
+            "_id": "_id"
+        }
     }, {
         "name": "delete",
-        "icon": "delete",
-        "color": "red",
-        "action": "apiCallConfirm",
+        "icon": "fa-trash",
+        "buttonClass": "btn-danger",
+        "type": "apiCallConfirm",
         "title": "Delete User",
-        "content": "Are you sure you want to delete award?",
+        "content": "Are you sure you want to delete User?",
         "api": "user/delete",
-        "fieldsToSend": [{
+        "fieldsToSend": {
             "name": "_id",
             "value": "_id"
-        }]
+        }
     }],
     "button": [{
         "name": "Excel Export",

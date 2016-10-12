@@ -45,13 +45,11 @@
                                         <td ng-repeat="field in json.json.fields">
                                             <view-field type="field" value="item"></view-field>
                                         </td>
-                                        <td>
-                                            <a class="btn btn-primary " ui-sref="editcountry({id:country._id}) ">
-                                                <i class="fa fa-pencil "></i>
+                                        <td ng-repeat="but in json.json.action">
+                                            <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
+                                                <i class="fa" ng-class="but.icon"></i>{{but.name}}
                                             </a>
-                                            <a class="btn btn-danger " ng-click="deleteCountry(country._id) ">
-                                                <i class="fa fa-trash "></i>
-                                            </a>
+
                                         </td>
                                     </tr>
                                 </tbody>
