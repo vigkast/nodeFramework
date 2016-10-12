@@ -59,6 +59,7 @@
     "smart-app-banner": "^1.3.0",
     "svg-morpheus": "https://github.com/alexk111/SVG-Morpheus.git#~0.1.8",
     "lodash": "^4.16.0",
-    "ui-router": "~0.2.15"
+    "ui-router": "~0.2.15",
+    "tinymce": "4.3.12"
   }
 }

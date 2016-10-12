@@ -80,13 +80,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 .controller('DetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
     $scope.json = JsonService;
     $scope.template = TemplateService;
-    $scope.data = {
-        email: "Chinatn"
-    };
-    $scope.tinymceOptions = {
-        plugins: 'link image code',
-        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
-    };
+    $scope.data = {};
 })
 
 
