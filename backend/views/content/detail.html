@@ -2,10 +2,10 @@
     <div class="breadcrumbs">
         <ul>
             <li>
-                <a title="Home">Locations </a>
+                <a title="Home">Home </a>
             </li>
             <li>
-                <a ui-sref="country-list">{{header.name}}</a>
+                <a>{{json.json.title}}</a>
             </li>
         </ul>
     </div>
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-md-4 column">
                 <div class="heading-profile">
-                    <h2>{{header.name}}</h2>
+                    <h2>{{json.json.title}}</h2>
                 </div>
             </div>
         </div>
@@ -25,8 +25,8 @@
             <div class="col-md-12">
                 <div class="widget">
                     <div class="form-elements-sec">
-                        <div class="widget-title">
-                            <h3>{{json.json.name}}</h3>
+                        <div class="widget-title" ng-show="json.json.desciption">
+                            <h3>{{json.json.desciption}}</h3>
                         </div>
                         <form name="detailForm" role="form" class="sec ng-pristine ng-valid">
                             <div class="row">
