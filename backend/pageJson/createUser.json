@@ -47,7 +47,7 @@
     }, {
         "name": "Text Area",
         "type": "textarea",
-        "tableRef": "forgotPassword",
+        "tableRef": "textarea",
         "placeholder": "Enter forgot password",
         "id": "forgotPassword",
         "validation": ["required", "trim", "unique"],
