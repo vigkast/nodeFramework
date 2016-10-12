@@ -8,6 +8,7 @@ module.exports = [
     'bower_components/peity/jquery.peity.min.js',
     'bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
     'bower_components/tinymce-dist/tinymce.js',
+    'bower_components/tinymce-dist/themes/modern/theme.js',
     'bower_components/angular/angular.min.js',
     'bower_components/angular-animate/angular-animate.min.js',
     'bower_components/angular-flexslider/angular-flexslider.js',
