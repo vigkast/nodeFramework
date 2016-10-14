@@ -47,7 +47,7 @@ var navigationservice = angular.module('navigationservice', [])
                 accessToken: $.jStorage.get("accessToken")
             };
             $http.post(adminurl + 'user/profile', data).success(function (data) {
-                if (data.value == true) {
+                if (data.value === true) {
                     $.jStorage.set("profile", data.data);
                     callback();
                 } else {
@@ -73,6 +73,10 @@ var navigationservice = angular.module('navigationservice', [])
         },
         countrySave: function (formData, callback) {
             $http.post(adminurl + 'country/save', formData).success(callback);
+        },
+
+        viewSave: function (url, formData, callback) {
+            $http.post(adminurl + url, formData).success(callback);
         },
 
         getOneCountry: function (id, callback) {

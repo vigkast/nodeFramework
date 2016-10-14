@@ -5,19 +5,19 @@
     "pageType": "create",
     "urlFields": ["newuser"],
     "fields": [{
-        "name": "Date",
-        "type": "date",
-        "tableRef": "date",
-        "placeholder": "Enter Date",
-        "id": "date",
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
         "validation": ["required", "trim", "unique"],
         "url": ""
     }, {
-        "name": "Checkbox",
-        "type": "checkbox",
-        "tableRef": "checkbox",
-        "placeholder": "",
-        "id": "checkbox",
+        "name": "Email",
+        "type": "text",
+        "tableRef": "email",
+        "placeholder": "Enter Email",
+        "id": "email",
         "validation": ["", "trim", "unique"],
         "url": ""
     }, {
@@ -68,28 +68,6 @@
         "id": "otp",
         "validation": ["required", "trim", "unique"],
         "url": ""
-    }, {
-        "name": "Access Level",
-        "type": "select",
-        "tableRef": "accessLevel",
-        "placeholder": "Enter access level",
-        "id": "accessLevel",
-        "validation": ["required", "trim", "unique"],
-        "url": [{
-            "value": "User",
-            "name": "User"
-        }, {
-            "value": "Admin",
-            "name": "Admin"
-        }]
-    }],
-    "action": [{
-        "name": "submit",
-        "action": "submitUser"
-    }, {
-        "name": "cancel",
-        "sideMenuRedirect": true,
-        "stateName": "page({jsonName:'viewUser'})"
     }],
     "apiCall": {
         "url": "User/save"
