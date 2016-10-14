@@ -10,7 +10,6 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state) 
     } catch (e) {
       console.log("keyword is not is json format");
     }
-
   };
   this.getJson = function (page, callback) {
     $http.get("pageJson/" + page + ".json").success(function (data) {
