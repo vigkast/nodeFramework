@@ -1,5 +1,5 @@
-var jsonservicemod = angular.module('jsonservicemod', ["templateservicemod"]);
-jsonservicemod.service('JsonService', function ($http, TemplateService, $state) {
+var jsonservicemod = angular.module('jsonservicemod', ["templateservicemod", "toastr"]);
+jsonservicemod.service('JsonService', function ($http, TemplateService, $state, toastr) {
   this.json = {};
   this.keyword = {};
   var JsonService = this;
@@ -44,6 +44,7 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state) 
         id: action.action
       };
       if (value && action && action.fieldsToSend) {
+        toastr.success("Country deleted successfully.", "Country deleted");
         var keyword = {};
         _.each(action.fieldsToSend, function (n, key) {
           keyword[key] = value[n];

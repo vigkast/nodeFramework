@@ -24,6 +24,35 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     JsonService.getJson($stateParams.id, function () {});
+
+    globalfunction.confDel = function (callback) {
+
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: '/frontend/views/modal/conf-delete.html',
+            size: 'sm',
+            scope: $scope
+        });
+        $scope.close = function (value) {
+            callback(value);
+            modalInstance.close("cancel");
+        };
+    };
+
+    globalfunction.confDel(function (value) {
+        console.log(value);
+        if (value) {
+            NavigationService.apiCall(id, function (data) {
+                if (data.value) {
+                    $scope.showAllCountries();
+                    toastr.success("Country deleted successfully.", "Country deleted");
+                } else {
+                    toastr.error("There was an error while deleting country", "Country deleting error");
+                }
+            });
+        }
+    });
+
 })
 
 .controller('ViewCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
@@ -80,15 +109,29 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     JsonService.setKeyword($stateParams.keyword);
     $scope.template = TemplateService;
     $scope.data = {};
+    console.log("detail controller");
     console.log($scope.json);
+
+    //  START FOR EDIT
+    if ($scope.json.json.preApi) {
+        NavigationService.apiCall($scope.json.json.preApi.url, {
+            [$scope.json.json.preApi.params]: $scope.json.keyword._id
+        }, function (data) {
+            $scope.data = data.data;
+        });
+    }
+    //  END FOR EDIT
+
     $scope.saveData = function (formData) {
         console.log(formData);
-        NavigationService.viewSave($scope.json.json.apiCall.url, formData, function (data) {
+        NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
             if (data.value === true) {
+                $scope.json.json.action[0].stateName.json.keyword = "";
+                $scope.json.json.action[0].stateName.json.page = "";
                 $state.go($scope.json.json.action[0].stateName.page, $scope.json.json.action[0].stateName.json);
-                toastr.success($scope.json.json.name + formData.name + " created successfully.", $scope.json.json.name + " Created");
+                toastr.success($scope.json.json.name + " " + formData.name + " " + $scope.json.json.pageType + "ed successfully.", $scope.json.json.name + " " + $scope.json.json.pageType + "ed");
             } else {
-                toastr.error($scope.json.json.name + " creation failed.", $scope.json.json.name + " creation error");
+                toastr.error("Failed " + $scope.json.json.pageType + "ing " + $scope.json.json.name, "Error " + $scope.json.json.pageType + "ing " + $scope.json.json.name);
             }
         });
     };
@@ -167,8 +210,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     } else {
                         toastr.error("There was an error while deleting country", "Country deleting error");
                     }
-
-
                 });
             }
         });

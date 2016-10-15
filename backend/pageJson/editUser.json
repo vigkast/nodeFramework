@@ -1,5 +1,6 @@
 {
-    "title": "Edit Award",
+    "title": "Edit User",
+    "name": "User",
     "jsonPage": "viewUser",
     "desciption": "",
     "pageType": "edit",
@@ -8,88 +9,72 @@
         "name": "Name",
         "type": "text",
         "tableRef": "name",
-        "model": "name",
-        "placeholder": "Enter name",
-        "id": "input1",
+        "placeholder": "Enter Name",
+        "id": "name",
         "validation": ["required", "trim", "unique"],
         "url": ""
     }, {
         "name": "Email",
-        "type": "email",
-        "model": "email",
+        "type": "text",
         "tableRef": "email",
-        "placeholder": "Enter email",
-        "id": "input2",
-        "validation": ["required", "trim", "unique"],
+        "placeholder": "Enter Email",
+        "id": "email",
+        "validation": ["", "trim", "unique"],
         "url": ""
     }, {
         "name": "Photo",
         "type": "image",
         "tableRef": "photo",
-        "model": "photo",
         "placeholder": "Upload photo",
-        "id": "input2",
+        "id": "photo",
         "validation": ["required", "trim", "unique"],
         "url": ""
     }, {
         "name": "Password",
         "type": "password",
-        "model": "password",
         "tableRef": "password",
         "placeholder": "Enter password",
-        "id": "input2",
-        "validation": ["required", "trim", "unique"],
+        "id": "password",
+        "validation": ["", "trim", "unique"],
         "url": ""
     }, {
         "name": "Forgot Password",
         "type": "password",
         "tableRef": "forgotPassword",
-        "model": "forgotPassword",
         "placeholder": "Enter forgot password",
-        "id": "input2",
-        "validation": ["required", "trim", "unique"],
+        "id": "forgotPassword",
+        "validation": ["", "trim", "unique"],
         "url": ""
     }, {
         "name": "Mobile",
         "type": "text",
-        "model": "mobile",
         "tableRef": "mobile",
         "placeholder": "Enter mobile",
-        "id": "input2",
+        "id": "mobile",
         "validation": ["required", "trim", "unique"],
         "url": ""
     }, {
         "name": "OTP",
-        "type": "text",
+        "type": "wysiwyg",
         "tableRef": "otp",
-        "model": "otp",
         "placeholder": "Enter Otp",
-        "id": "input2",
+        "id": "otp",
         "validation": ["required", "trim", "unique"],
         "url": ""
-    }, {
-        "name": "Access Level",
-        "type": "select",
-        "model": "accessLevel",
-        "tableRef": "accessLevel",
-        "placeholder": "Enter access level",
-        "id": "input2",
-        "validation": ["required", "trim", "unique"],
-        "url": [{
-            "value": "User",
-            "name": "User"
-        }, {
-            "value": "Admin",
-            "name": "Admin"
-        }]
     }],
     "action": [{
         "name": "submit",
-        "action": "submitUser"
+        "action": "submitUser",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewUser"
+            }
+        }
     }, {
         "name": "cancel",
         "sideMenuRedirect": true,
-        "stateName": "page({jsonName:'viewUser'})"
+        "stateName": "page({id:'viewUser'})"
     }],
     "apiCall": {
         "url": "User/save",

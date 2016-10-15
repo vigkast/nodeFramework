@@ -75,7 +75,7 @@ var navigationservice = angular.module('navigationservice', [])
             $http.post(adminurl + 'country/save', formData).success(callback);
         },
 
-        viewSave: function (url, formData, callback) {
+        apiCall: function (url, formData, callback) {
             $http.post(adminurl + url, formData).success(callback);
         },
 

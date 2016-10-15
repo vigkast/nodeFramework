@@ -1,44 +1,88 @@
 {
     "title": "Edit User",
+    "name": "User",
     "jsonPage": "viewUser",
     "desciption": "",
     "pageType": "edit",
     "urlFields": ["_id"],
     "fields": [{
-        "name": "Title",
+        "name": "Name",
         "type": "text",
-        "tableRef": "awardname",
-        "model": "awardname",
-        "placeholder": "Enter name",
-        "id": "input1",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
         "validation": ["required", "trim", "unique"],
         "url": ""
     }, {
-        "name": "Winner",
+        "name": "Email",
         "type": "text",
-        "model": "winner",
-        "tableRef": "winner",
-        "placeholder": "Enter winner",
-        "id": "input2",
+        "tableRef": "email",
+        "placeholder": "Enter Email",
+        "id": "email",
+        "validation": ["", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Photo",
+        "type": "image",
+        "tableRef": "photo",
+        "placeholder": "Upload photo",
+        "id": "photo",
         "validation": ["required", "trim", "unique"],
         "url": ""
     }, {
-        "name": "Sub-Note",
+        "name": "Password",
+        "type": "password",
+        "tableRef": "password",
+        "placeholder": "Enter password",
+        "id": "password",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Forgot Password",
+        "type": "password",
+        "tableRef": "forgotPassword",
+        "placeholder": "Enter forgot password",
+        "id": "forgotPassword",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Text Area",
+        "type": "textarea",
+        "tableRef": "textarea",
+        "placeholder": "Enter forgot password",
+        "id": "forgotPassword",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "Mobile",
         "type": "text",
-        "tableRef": "note",
-        "model": "note",
-        "placeholder": "Enter note",
-        "id": "input2",
+        "tableRef": "mobile",
+        "placeholder": "Enter mobile",
+        "id": "mobile",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }, {
+        "name": "OTP",
+        "type": "wysiwyg",
+        "tableRef": "otp",
+        "placeholder": "Enter Otp",
+        "id": "otp",
         "validation": ["required", "trim", "unique"],
         "url": ""
     }],
     "action": [{
         "name": "submit",
-        "action": "submitUser"
+        "action": "submitUser",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewUser"
+            }
+        }
     }, {
         "name": "cancel",
         "sideMenuRedirect": true,
-        "stateName": "page({jsonName:'viewUser'})"
+        "stateName": "page({id:'viewUser'})"
     }],
     "apiCall": {
         "url": "User/save",
