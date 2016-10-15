@@ -75,7 +75,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 })
 
-.controller('DetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
+.controller('DetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, toastr) {
     $scope.json = JsonService;
     JsonService.setKeyword($stateParams.keyword);
     $scope.template = TemplateService;
@@ -83,7 +83,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     console.log($scope.json);
     $scope.saveData = function (formData) {
         console.log(formData);
-    }
+        NavigationService.viewSave($scope.json.json.apiCall.url, formData, function (data) {
+            if (data.value === true) {
+                $state.go($scope.json.json.action[0].stateName.page, $scope.json.json.action[0].stateName.json);
+                toastr.success($scope.json.json.name + formData.name + " created successfully.", $scope.json.json.name + " Created");
+            } else {
+                toastr.error($scope.json.json.name + " creation failed.", $scope.json.json.name + " creation error");
+            }
+        });
+    };
 })
 
 .controller('LoginCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state) {
