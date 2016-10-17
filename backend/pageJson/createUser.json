@@ -14,6 +14,15 @@
         "validation": ["required", "trim", "unique"],
         "url": ""
     }, {
+        "name": "User",
+        "type": "selectFromTable",
+        "tableRef": "user",
+        "searchApi": "searchCall",
+        "placeholder": "Enter User",
+        "id": "user",
+        "validation": ["required", "trim", "unique"],
+        "url": "user/search"
+    }, {
         "name": "Email",
         "type": "text",
         "tableRef": "email",

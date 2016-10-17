@@ -1,5 +1,5 @@
-var jsonservicemod = angular.module('jsonservicemod', ["templateservicemod", "toastr"]);
-jsonservicemod.service('JsonService', function ($http, TemplateService, $state, toastr) {
+var jsonservicemod = angular.module('jsonservicemod', ["templateservicemod", "toastr", "ui.bootstrap"]);
+jsonservicemod.service('JsonService', function ($http, TemplateService, $state, toastr, $uibModal) {
   this.json = {};
   this.keyword = {};
   var JsonService = this;
@@ -37,6 +37,33 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
     });
 
   };
+  this.deleteFunction = function (callback) {
+
+    var modalInstance = $uibModal.open({
+      // animation: $scope.animationsEnabled,
+      templateUrl: '/backend/views/modal/conf-delete.html',
+      size: 'sm',
+      scope: this
+    });
+    // this.close = function (value) {
+    //   callback(value);
+    //   modalInstance.close("cancel");
+    // };
+  };
+
+  var openCustomModal = function (size, title, message) {
+    // var actionToPerformOnConfirm = action;
+    console.log("in model");
+    var modalInstance = $uibModal.open({
+      templateUrl: '/backend/views/modal/conf-delete.html',
+      size: "lg",
+      resolve: {
+        title: title,
+        message: message
+      }
+    });
+  };
+
 
   this.eventAction = function (action, value) {
     if (action && action.type == "page") {
@@ -44,7 +71,6 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
         id: action.action
       };
       if (value && action && action.fieldsToSend) {
-        toastr.success("Country deleted successfully.", "Country deleted");
         var keyword = {};
         _.each(action.fieldsToSend, function (n, key) {
           keyword[key] = value[n];
@@ -52,6 +78,8 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
         sendTo.keyword = JSON.stringify(keyword);
       }
       $state.go("page", sendTo);
+    } else {
+      openCustomModal("lg", "small", "small");
     }
   };
 

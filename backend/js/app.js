@@ -100,6 +100,7 @@ firstapp.directive('imageonload', function () {
     };
 });
 
+
 firstapp.directive('uploadImage', function ($http, $filter) {
     return {
         templateUrl: 'views/directive/uploadFile.html',
@@ -436,6 +437,7 @@ firstapp.directive('multipleSelect', function ($document, $timeout) {
         scope: {
             model: '=ngModel',
             api: "@api",
+            url: "@url",
             name: "@name",
             required: "@required",
             filter: "@filter",
