@@ -2,6 +2,7 @@ var jsonservicemod = angular.module('jsonservicemod', ["templateservicemod", "to
 jsonservicemod.service('JsonService', function ($http, TemplateService, $state, toastr, $uibModal, NavigationService) {
   this.json = {};
   this.keyword = {};
+  this.refreshView;
   var JsonService = this;
   this.setKeyword = function (data) {
     try {
@@ -84,6 +85,7 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
           NavigationService.delete(action.api, value, function (data) {
             if (data.value) {
               toastr.success(JsonService.json.title + " deleted successfully.", JsonService.json.title + " deleted");
+              JsonService.refreshView();
             } else {
               toastr.error("There was an error while deleting " + JsonService.json.title, JsonService.json.title + " deleting error");
             }

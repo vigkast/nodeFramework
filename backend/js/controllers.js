@@ -253,6 +253,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 }
             });
     };
+    JsonService.refreshView = $scope.getAllItems;
     $scope.getAllItems();
 
 })
