@@ -1,5 +1,5 @@
 var jsonservicemod = angular.module('jsonservicemod', ["templateservicemod", "toastr", "ui.bootstrap"]);
-jsonservicemod.service('JsonService', function ($http, TemplateService, $state, toastr, $uibModal) {
+jsonservicemod.service('JsonService', function ($http, TemplateService, $state, toastr, $uibModal, NavigationService) {
   this.json = {};
   this.keyword = {};
   var JsonService = this;
@@ -66,22 +66,35 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
 
 
   this.eventAction = function (action, value) {
+    var sendTo = {
+      id: action.action
+    };
+    if (value && action && action.fieldsToSend) {
+      var keyword = {};
+      _.each(action.fieldsToSend, function (n, key) {
+        keyword[key] = value[n];
+      });
+      sendTo.keyword = JSON.stringify(keyword);
+    }
     if (action && action.type == "page") {
-      var sendTo = {
-        id: action.action
-      };
-      if (value && action && action.fieldsToSend) {
-        var keyword = {};
-        _.each(action.fieldsToSend, function (n, key) {
-          keyword[key] = value[n];
-        });
-        sendTo.keyword = JSON.stringify(keyword);
-      }
       $state.go("page", sendTo);
-    } else {
-      openCustomModal("lg", "small", "small");
+    } else if (action && action.type == "apiCallConfirm") {
+      globalfunction.confDel(function (value2) {
+        if (value2) {
+          NavigationService.delete(action.api, value, function (data) {
+            if (data.value) {
+              toastr.success(JsonService.json.title + " deleted successfully.", JsonService.json.title + " deleted");
+            } else {
+              toastr.error("There was an error while deleting " + JsonService.json.title, JsonService.json.title + " deleting error");
+            }
+          });
+        }
+      });
     }
   };
+
+
+
 
 
 });

@@ -71,6 +71,11 @@ var navigationservice = angular.module('navigationservice', [])
                 callback(data, i);
             });
         },
+        delete: function (url, formData, callback) {
+            $http.post(adminurl + url, formData).success(function (data) {
+                callback(data);
+            });
+        },
         countrySave: function (formData, callback) {
             $http.post(adminurl + 'country/save', formData).success(callback);
         },

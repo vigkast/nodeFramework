@@ -180,7 +180,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     JsonService.getJson($stateParams.id, function () {});
 
     globalfunction.confDel = function (callback) {
-
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: '/backend/views/modal/conf-delete.html',
