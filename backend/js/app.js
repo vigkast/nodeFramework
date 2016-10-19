@@ -431,6 +431,38 @@ firstapp.directive('addressForm', function ($document) {
         // }
     };
 });
+
+// firstapp.directive('box', function ($uibModal) {
+//     return {
+//         templateUrl: 'views/directive/box.html',
+//         scope: {
+//             type: '=type',
+//             model: '=ngModel'
+//         },
+//         link: function ($scope, element, attrs) {
+//             $scope.model = {};
+//             console.log($scope.model);
+//             $scope.data = {};
+//             $scope.eventModel = function (text) {
+//                 $scope.type.state = text;
+//                 var modalInstance = $uibModal.open({
+//                     animation: $scope.animationsEnabled,
+//                     templateUrl: '/backend/views/modal/modal.html',
+//                     size: 'lg',
+//                     scope: $scope
+//                 });
+//                 $scope.close = function (value) {
+//                     callback(value);
+//                     modalInstance.close("cancel");
+//                 };
+//             };
+//             $scope.submitModal = function (moddata) {
+//                 console.log(moddata);
+//             };
+//         }
+//     };
+// });
+
 var aa = {};
 firstapp.directive('multipleSelect', function ($document, $timeout) {
     return {
@@ -554,52 +586,12 @@ firstapp.directive('detailField', function ($http, $filter, JsonService) {
             type: '=type',
             value: "=value",
             detailForm: "=form",
-            formData: "=data"
-        },
-        link: function ($scope, element, attrs) {
-            if (!$scope.type.type) {
-                $scope.type.type = "text";
-            }
-            $scope.json = JsonService;
-            $scope.tinymceOptions = {
-                selector: 'textarea',
-                height: 500,
-                theme: 'modern',
-                plugins: [
-                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                    'searchreplace wordcount visualblocks visualchars code fullscreen',
-                    'insertdatetime media nonbreaking save table contextmenu directionality',
-                    'emoticons template paste textcolor colorpicker textpattern imagetools '
-                ],
-                toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                toolbar2: 'print preview media | forecolor backcolor emoticons',
-                image_advtab: true,
-                templates: [{
-                    title: 'Test template 1',
-                    content: 'Test 1'
-                }, {
-                    title: 'Test template 2',
-                    content: 'Test 2'
-                }],
-                content_css: [
-                    '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                    '//www.tinymce.com/css/codepen.min.css'
-                ]
-            };
-            if ($scope.type.validation) {
-                var isRequired = _.findIndex($scope.type.validation, function (n) {
-                    return n == "required";
-                });
-                if (isRequired >= 0) {
-                    $scope.type.required = true;
-                }
-            }
-            $scope.form = {};
-            if ($scope.value && $scope.value[$scope.type.tableRef]) {
-                $scope.form.model = $scope.value[$scope.type.tableRef];
-            }
+            formData: "=data",
 
-            $scope.template = "views/field/" + $scope.type.type + ".html";
+        },
+        controller: 'DetailFieldCtrl',
+        link: function ($scope, element, attrs) {
+
         }
     };
 });

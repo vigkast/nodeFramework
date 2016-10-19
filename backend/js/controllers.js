@@ -196,7 +196,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: '/backend/views/modal/modal.html',
-            size: 'sm',
+            size: 'lg',
             scope: $scope
         });
         $scope.close = function (value) {
@@ -302,6 +302,91 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
         });
     };
+})
+
+.controller('DetailFieldCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
+    if (!$scope.type.type) {
+        $scope.type.type = "text";
+    }
+    $scope.json = JsonService;
+    $scope.tinymceOptions = {
+        selector: 'textarea',
+        height: 500,
+        theme: 'modern',
+        plugins: [
+            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            'searchreplace wordcount visualblocks visualchars code fullscreen',
+            'insertdatetime media nonbreaking save table contextmenu directionality',
+            'emoticons template paste textcolor colorpicker textpattern imagetools '
+        ],
+        toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        toolbar2: 'print preview media | forecolor backcolor emoticons',
+        image_advtab: true,
+        templates: [{
+            title: 'Test template 1',
+            content: 'Test 1'
+        }, {
+            title: 'Test template 2',
+            content: 'Test 2'
+        }],
+        content_css: [
+            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+            '//www.tinymce.com/css/codepen.min.css'
+        ]
+    };
+    if ($scope.type.validation) {
+        var isRequired = _.findIndex($scope.type.validation, function (n) {
+            return n == "required";
+        });
+        if (isRequired >= 0) {
+            $scope.type.required = true;
+        }
+    }
+    $scope.form = {};
+    if ($scope.value && $scope.value[$scope.type.tableRef]) {
+        $scope.form.model = $scope.value[$scope.type.tableRef];
+    }
+
+    $scope.template = "views/field/" + $scope.type.type + ".html";
+
+    // console.log($scope.type.type);
+    if ($scope.type.type == "box") {
+        if (!_.isArray($scope.formData[$scope.type.tableRef])) {
+            $scope.formData[$scope.type.tableRef] = [{
+                name: "Chintan",
+                mobile: "9819222221"
+            }];
+
+        }
+        $scope.model = $scope.formData[$scope.type.tableRef];
+        $scope.search = {
+            text: ""
+        };
+    }
+    $scope.state = "";
+    $scope.createBox = function (state) {
+        $scope.state = state;
+        $scope.model.push({});
+        $scope.editBox("Create", $scope.model[$scope.model.length - 1]);
+    };
+    $scope.editBox = function (state, data) {
+        $scope.state = state;
+        $scope.data = data;
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: '/backend/views/modal/modal.html',
+            size: 'lg',
+            scope: $scope
+        });
+        $scope.close = function (value) {
+            callback(value);
+            modalInstance.close("cancel");
+        };
+    };
+    $scope.deleteBox = function (index, data) {
+        console.log(data);
+        data.splice(index, 1);
+    }
 })
 
 .controller('LoginCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state) {
