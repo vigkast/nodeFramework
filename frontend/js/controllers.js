@@ -1,6 +1,6 @@
-angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ksSwiper'])
+angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider'])
 
-.controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+.controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
     $scope.template = TemplateService.changecontent("home"); //Use same name of .html file
     $scope.menutitle = NavigationService.makeactive("Home"); //This is the Title of the Website
     TemplateService.title = $scope.menutitle;
@@ -14,7 +14,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     ];
 })
 
-.controller('FormCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+.controller('FormCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
     $scope.template = TemplateService.changecontent("form"); //Use same name of .html file
     $scope.menutitle = NavigationService.makeactive("Form"); //This is the Title of the Website
     TemplateService.title = $scope.menutitle;
@@ -22,23 +22,23 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     $scope.formSubmitted = false;
 
-    $scope.submitForm = function(data) {
+    $scope.submitForm = function (data) {
         console.log(data);
         $scope.formSubmitted = true;
     }
 })
 
-.controller('headerctrl', function($scope, TemplateService) {
+.controller('headerctrl', function ($scope, TemplateService) {
     $scope.template = TemplateService;
-    $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+    $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         $(window).scrollTop(0);
     });
     $.fancybox.close(true);
 })
 
-.controller('languageCtrl', function($scope, TemplateService, $translate, $rootScope) {
+.controller('languageCtrl', function ($scope, TemplateService, $translate, $rootScope) {
 
-    $scope.changeLanguage = function() {
+    $scope.changeLanguage = function () {
         console.log("Language CLicked");
 
         if (!$.jStorage.get("language")) {
