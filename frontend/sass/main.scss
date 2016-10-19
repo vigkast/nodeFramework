@@ -3,8 +3,8 @@
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap-sprockets";
 @import "../../bower_components/flexslider/flexslider";
 @import "../../bower_components/font-awesome/scss/font-awesome";
+@import "../../bower_components/angular-ui-swiper/dist/angular-ui-swiper";
 @import "../../bower_components/fancyBox/source/jquery.fancybox";
-@import "../../bower_components/swiper/dist/css/swiper.min";
 @import "../../bower_components/smart-app-banner/smart-app-banner";
 
 /* Bootstrap Variables Goes Here */
@@ -114,17 +114,6 @@ footer {
     }
 }
 
-//SWIPER CSS
-.swiper-button-prev,
-.swiper-container-rtl .swiper-button-next {
-    background-image: url(../img/prev.png);
-}
-
-.swiper-button-next,
-.swiper-container-rtl .swiper-button-prev {
-    background-image: url(../img/next.png);
-}
-
 
 /* Start writing sass here */
 
@@ -132,7 +121,7 @@ footer {
     min-height: 450px;
 }
 
-.full-img {
+.img-full {
     width: 100%;
     display: block;
 }
