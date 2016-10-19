@@ -9,7 +9,8 @@ var firstapp = angular.module('firstapp', [
     'angulartics.google.analytics',
     'imageupload',
     "ngMap",
-    "internationalPhoneNumber"
+    "internationalPhoneNumber",
+    "jsonservicemod"
 ]);
 
 firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
@@ -546,7 +547,7 @@ firstapp.directive('viewField', function ($http, $filter) {
 });
 
 
-firstapp.directive('detailField', function ($http, $filter) {
+firstapp.directive('detailField', function ($http, $filter, JsonService) {
     return {
         templateUrl: 'views/directive/detailField.html',
         scope: {
@@ -559,6 +560,7 @@ firstapp.directive('detailField', function ($http, $filter) {
             if (!$scope.type.type) {
                 $scope.type.type = "text";
             }
+            $scope.json = JsonService;
             $scope.tinymceOptions = {
                 selector: 'textarea',
                 height: 500,

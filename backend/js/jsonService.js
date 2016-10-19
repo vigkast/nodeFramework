@@ -65,33 +65,45 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
     });
   };
 
+  this.eventModal = function (value) {
+    console.log(value);
+  };
+
 
   this.eventAction = function (action, value) {
     var sendTo = {
       id: action.action
     };
-    if (value && action && action.fieldsToSend) {
-      var keyword = {};
-      _.each(action.fieldsToSend, function (n, key) {
-        keyword[key] = value[n];
+    console.log(action);
+    if (action.type == "box") {
+      JsonService.modal = action;
+      globalfunction.openModal(function (data) {
+        console.log(data);
       });
-      sendTo.keyword = JSON.stringify(keyword);
-    }
-    if (action && action.type == "page") {
-      $state.go("page", sendTo);
-    } else if (action && action.type == "apiCallConfirm") {
-      globalfunction.confDel(function (value2) {
-        if (value2) {
-          NavigationService.delete(action.api, value, function (data) {
-            if (data.value) {
-              toastr.success(JsonService.json.title + " deleted successfully.", JsonService.json.title + " deleted");
-              JsonService.refreshView();
-            } else {
-              toastr.error("There was an error while deleting " + JsonService.json.title, JsonService.json.title + " deleting error");
-            }
-          });
-        }
-      });
+    } else {
+      if (value && action && action.fieldsToSend) {
+        var keyword = {};
+        _.each(action.fieldsToSend, function (n, key) {
+          keyword[key] = value[n];
+        });
+        sendTo.keyword = JSON.stringify(keyword);
+      }
+      if (action && action.type == "page") {
+        $state.go("page", sendTo);
+      } else if (action && action.type == "apiCallConfirm") {
+        globalfunction.confDel(function (value2) {
+          if (value2) {
+            NavigationService.delete(action.api, value, function (data) {
+              if (data.value) {
+                toastr.success(JsonService.json.title + " deleted successfully.", JsonService.json.title + " deleted");
+                JsonService.refreshView();
+              } else {
+                toastr.error("There was an error while deleting " + JsonService.json.title, JsonService.json.title + " deleting error");
+              }
+            });
+          }
+        });
+      }
     }
   };
 

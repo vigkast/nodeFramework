@@ -192,6 +192,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
     };
 
+    globalfunction.openModal = function (callback) {
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: '/backend/views/modal/modal.html',
+            size: 'sm',
+            scope: $scope
+        });
+        $scope.close = function (value) {
+            callback(value);
+            modalInstance.close("cancel");
+        };
+    };
+
     // globalfunction.confDel(function (value) {
     //     console.log(value);
     //     if (value) {

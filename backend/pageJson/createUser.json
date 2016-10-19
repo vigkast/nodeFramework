@@ -14,6 +14,30 @@
         "validation": ["required", "trim", "unique"],
         "url": ""
     }, {
+        "name": "Product",
+        "type": "box",
+        "tableRef": "product",
+        "validation": ["required", "trim", "unique"],
+        "field": [{
+            "name": "Name",
+            "type": "text",
+            "tableRef": "name",
+            "placeholder": "Enter Name",
+            "id": "name",
+            "validation": ["required", "trim", "unique"],
+            "url": "",
+            "onView": true
+        }, {
+            "name": "Mobile Number",
+            "type": "text",
+            "tableRef": "name",
+            "placeholder": "Enter Name",
+            "id": "name",
+            "validation": ["required", "trim", "unique"],
+            "url": "",
+            "onView": false
+        }]
+    }, {
         "name": "User",
         "type": "selectFromTable",
         "tableRef": "user",
