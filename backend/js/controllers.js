@@ -833,19 +833,87 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 
-    $scope.schemaTypes = [{
-        value: '',
-        name: 'Select type of schema'
-    }, {
-        value: 'Custom Input',
-        name: 'Custom Input'
-    }, {
-        value: 'System Fields',
-        name: 'System Fields'
-    }, {
-        value: 'Dropdown',
-        name: 'Dropdown'
-    }];
+    $scope.schema = [{
+            "schemaType": "Boolean",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "Color",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "Date",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "Email",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "File",
+            "Input1": "MB Limit",
+            "Input2": ""
+        }, {
+            "schemaType": "Image",
+            "Input1": "pixel x",
+            "Input2": "pixel y "
+        }, {
+            "schemaType": "Location",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "Mobile",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "Multiple Select",
+            "Input1": "Enum",
+            "Input2": ""
+        }, {
+            "schemaType": "Multiple Select From Table",
+            "Input1": "Collection",
+            "Input2": "Field"
+        }, {
+            "schemaType": "Number",
+            "Input1": "min ",
+            "Input2": "max"
+        }, {
+            "schemaType": "Single Select ",
+            "Input1": "Enum",
+            "Input2": ""
+        },
+
+        {
+            "schemaType": "Single Select From Table",
+            "Input1": "Collection",
+            "Input2": "Field"
+        }, {
+            "schemaType": "Telephone",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "Text",
+            "Input1": "min length",
+            "Input2": "max length"
+        }, {
+            "schemaType": "TextArea",
+            "Input1": "min length",
+            "Input2": "max length"
+        }, {
+            "schemaType": "URL",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "WYSIWYG",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "Youtube",
+            "Input1": "",
+            "Input2": ""
+        }
+    ]
+
 
     $scope.inputTypes = [{
         value: '',
