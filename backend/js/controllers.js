@@ -309,6 +309,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.type.type = "text";
     }
     $scope.json = JsonService;
+    $scope.tags = {};
     $scope.tinymceOptions = {
         selector: 'textarea',
         height: 500,
@@ -349,14 +350,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     $scope.template = "views/field/" + $scope.type.type + ".html";
 
-    // console.log($scope.type.type);
+    // BOX
     if ($scope.type.type == "box") {
         if (!_.isArray($scope.formData[$scope.type.tableRef])) {
-            $scope.formData[$scope.type.tableRef] = [{
-                name: "Chintan",
-                mobile: "9819222221"
-            }];
-
+            $scope.formData[$scope.type.tableRef] = [];
         }
         $scope.model = $scope.formData[$scope.type.tableRef];
         $scope.search = {
@@ -386,6 +383,22 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.deleteBox = function (index, data) {
         console.log(data);
         data.splice(index, 1);
+    };
+
+    //  TAGS STATIC AND FROM TABLE
+    $scope.refreshTags = function (search) {
+        if ($scope.type.url !== "") {
+            NavigationService.searchCall($scope.type.url, {
+                keyword: search
+            }, 1, function (data1) {
+                $scope.tags[$scope.type.tableRef] = data1.data.results;
+            });
+        } else {
+            $scope.tags[$scope.type.tableRef] = $scope.type.dropDown;
+        }
+    };
+    if ($scope.type.type == "tags") {
+        $scope.refreshTags();
     }
 })
 
