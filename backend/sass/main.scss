@@ -929,6 +929,19 @@ img.uploadingImage {
         font-weight: bold;
         position: relative;
         text-transform: uppercase;
+        .form-control {
+            width: 50%;
+            float: left;
+            +.form-control {
+                border-left: 1px solid !important;
+                -webkit-appearance: none;
+            }
+        }
+        &:after {
+            clear: both;
+            content: '';
+            display: table;
+        }
         &:hover {
             .mark-float {
                 width: 40px;
@@ -984,10 +997,15 @@ img.uploadingImage {
         &:nth-child(1),
         &:nth-child(2),
         &:nth-child(3),
-        &:nth-child(4) {
+        &:nth-child(4),
+        &:nth-child(5),
+        &:nth-child(6),
+        &:nth-child(7),
+        &:nth-child(8) {
             border-bottom: 1px solid $body-color-font;
         }
-        &:nth-child(5) {
+        &:nth-child(5),
+        &:nth-child(9) {
             border-left: 0px solid $body-color-font;
         }
         &.col-item-25 {
