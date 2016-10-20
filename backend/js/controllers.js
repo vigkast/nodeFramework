@@ -826,6 +826,82 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 })
 
+.controller('SchemaCreatorCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("schema-creator");
+    $scope.menutitle = NavigationService.makeactive("Schema Creator");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+
+    $scope.schemaTypes = [{
+        value: '',
+        name: 'Select type of schema'
+    }, {
+        value: 'Custom Input',
+        name: 'Custom Input'
+    }, {
+        value: 'System Fields',
+        name: 'System Fields'
+    }, {
+        value: 'Dropdown',
+        name: 'Dropdown'
+    }];
+
+    $scope.inputTypes = [{
+        value: '',
+        name: 'Select type of input'
+    }, {
+        value: 'Text',
+        name: 'Text'
+    }, {
+        value: 'Date',
+        name: 'Date'
+    }, {
+        value: 'Textarea',
+        name: 'Textarea'
+    }];
+
+    $scope.formData = {};
+    $scope.formData.status = true;
+
+    $scope.formData.forms = [{
+        head: '',
+        items: [{}, {}]
+    }];
+
+    $scope.addHead = function () {
+        $scope.formData.forms.push({
+            head: $scope.formData.forms.length + 1,
+            items: [{}]
+        });
+    };
+    $scope.removeHead = function (index) {
+        if ($scope.formData.forms.length > 1) {
+            $scope.formData.forms.splice(index, 1);
+        } else {
+            $scope.formData.forms = [{
+                head: '',
+                items: [{}, {}]
+            }];
+        }
+    };
+
+    $scope.addItem = function (obj) {
+        var index = $scope.formData.forms.indexOf(obj);
+        $scope.formData.forms[index].items.push({});
+    };
+
+    $scope.removeItem = function (obj, indexItem) {
+        var indexHead = $scope.formData.forms.indexOf(obj);
+        if ($scope.formData.forms[indexHead].items.length > 1) {
+            $scope.formData.forms[indexHead].items.splice(indexItem, 1);
+        } else {
+            $scope.formData.forms[indexHead].items = [{}];
+        }
+    };
+
+})
+
 .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
     $scope.template = TemplateService;
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {

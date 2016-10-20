@@ -58,6 +58,12 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
         controller: 'CreateCountryCtrl'
     })
 
+    .state('schema-creator', {
+        url: "/schema-creator",
+        templateUrl: "views/template.html",
+        controller: 'SchemaCreatorCtrl'
+    })
+
     .state('editcountry', {
         url: "/country-edit/:id",
         templateUrl: "views/template.html",

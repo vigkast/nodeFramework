@@ -1,0 +1,74 @@
+<form name="formName" ng-submit="saveModel(formData)">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                    <h2>Create New Schema</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget">
+        <div class="form-elements-sec">
+            <div class="sec">
+                <div class="clearfix"></div>
+                <div class="form-builder">
+                    <div class="form-repeater" ng-repeat="form in formData.forms">
+                        <div class="form-builder-head">
+                            <div class="mark-float">
+                                <i class="fa fa-plus-circle success" ng-click="addHead();"></i>
+                                <i class="fa fa-minus-circle danger" ng-click="removeHead($index);"></i>
+                            </div>
+                            <input type="text" ng-model="form.name" placeholder="Enter Heading" class="form-control">
+                        </div>
+                        <div class="form-builder-hr" id="sortable-ul-selector-id" ui-sortable="sortableOptions" ng-model="form.items">
+                            <div class="form-builder-item row-item" ng-repeat="item in form.items">
+                                <div class="right-float mark-float">
+                                    <i class="fa fa-bars handleBar"></i>
+                                </div>
+
+                                <div class="col-item col-item-25">
+                                    <input type="text" ng-model="item.name" placeholder="Enter schema name" class="form-control">
+                                </div>
+                                <div class="col-item col-item-25">
+                                    <select class="form-control" ng-model="item.type"> 
+                                            <option value="{{item.value}}" ng-repeat="item in schemaTypes">{{item.name}}</option>
+                                        </select>
+                                </div>
+                                <div class="col-item col-item-25">
+                                    <input type="text" ng-model="item.default" placeholder="Enter default" class="form-control">
+                                </div>
+                                <div class="col-item col-item-25">
+                                    <p>
+                                        <toggle-switch on-label="Required" off-label="Optional" ng-model="item.required" class="switch-mini switch-success "></toggle-switch>
+                                    </p>
+                                </div>
+                                <div class="col-item col-item-25">
+                                    <p>
+                                        <toggle-switch on-label="Brief" off-label="Detailed" ng-model="item.view" class="switch-mini switch-success "></toggle-switch>
+                                    </p>
+                                </div>
+                                <div class="col-item col-item-25">
+                                    <p>
+                                        <toggle-switch on-label="Unique" off-label="Common" ng-model="item.unique" class="switch-mini switch-success "></toggle-switch>
+                                    </p>
+                                </div>
+                                <div class="mark-float">
+                                    <i class="fa fa-plus-circle success" ng-click="addItem(form);"></i>
+                                    <i class="fa fa-minus-circle danger" ng-click="removeItem(form, $index);"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="text-center mt20 odd-even-button">
+        <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
+        <a class="btn btn-default" ui-sref="template-lor-list">Cancel</a>
+    </div>
+    </div>
+</form>
