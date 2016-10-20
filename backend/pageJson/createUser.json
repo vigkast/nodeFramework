@@ -20,16 +20,10 @@
         "placeholder": "Enter Hobbies",
         "id": "hobbies",
         "validation": ["required", "trim", "unique"],
-        "url": "user/search",
-        "dropDownField": "mobile",
+        "url": "",
+        "dropDownField": "",
         "dropDownType": "single",
-        "dropDown": [{
-            "name": "sohan",
-            "fullname": "sohan honakheri"
-        }, {
-            "name": "mahesh",
-            "fullname": "mahesh tiwari"
-        }]
+        "dropDown": [true, false]
     }, {
         "name": "Product",
         "type": "box",
@@ -56,7 +50,7 @@
         }]
     }, {
         "name": "User",
-        "type": "text",
+        "type": "selectFromTable",
         "tableRef": "user",
         "searchApi": "searchCall",
         "placeholder": "Enter User",

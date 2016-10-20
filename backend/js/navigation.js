@@ -81,9 +81,11 @@ var navigationservice = angular.module('navigationservice', [])
         },
 
         apiCall: function (url, formData, callback) {
+            console.log(url);
             $http.post(adminurl + url, formData).success(callback);
         },
         searchCall: function (url, formData, i, callback) {
+            console.log(url);
             $http.post(adminurl + url, formData).success(function (data) {
                 callback(data, i);
             });
