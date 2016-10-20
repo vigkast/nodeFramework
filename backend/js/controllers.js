@@ -912,7 +912,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             "Input1": "",
             "Input2": ""
         }
-    ]
+    ];
 
 
     $scope.inputTypes = [{
