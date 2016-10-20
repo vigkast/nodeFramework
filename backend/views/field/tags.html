@@ -5,9 +5,8 @@
         <ui-select-match placeholder="{{type.placeholder}}">{{$item[type.dropDownField]}}</ui-select-match>
         <ui-select-choices repeat="tag in tags[type.tableRef] | filter:$select.search" refresh-delay="0" refresh="refreshTags($select.search)">{{tag[type.dropDownField]}}</ui-select-choices>
     </ui-select>
-    <ui-select tagging="tagTransform" tagging-label="(press enter to add new)" name="{{type.tableRef}}" ng-model="formData[type.tableRef]"
-        theme="bootstrap" ng-required="type.required" ng-if="type.dropDownType == 'single'">
-        <ui-select-match placeholder="{{type.placeholder}}">{{$item[type.dropDownField]}}</ui-select-match>
+    <ui-select name="{{type.tableRef}}" ng-model="formData[type.tableRef]" theme="bootstrap" ng-required="type.required" ng-if="type.dropDownType == 'single'">
+        <ui-select-match placeholder="{{type.placeholder}}">{{$select.selected[type.dropDownField]}}</ui-select-match>
         <ui-select-choices repeat="tag in tags[type.tableRef] | filter:$select.search" refresh-delay="0" refresh="refreshTags($select.search)">{{tag[type.dropDownField]}}</ui-select-choices>
     </ui-select>
     <div class="error-msg" ng-show="detailForm[type.tableRef].$invalid && detailForm[type.tableRef].$touched && type.required">Please enter valid {{type.name}}</div>
