@@ -339,12 +339,6 @@ firstapp.filter('serverimage', function () {
     };
 });
 
-firstapp.filter('convDate', function () {
-    return function (input) {
-        return new Date(input);
-    };
-});
-
 firstapp.filter('downloadImage', function () {
     return function (input) {
         if (input) {
@@ -564,6 +558,17 @@ firstapp.config(function ($translateProvider) {
     $translateProvider.translations('en', LanguageEnglish);
     $translateProvider.translations('hi', LanguageHindi);
     $translateProvider.preferredLanguage('en');
+});
+
+firstapp.directive('dateForm', function () {
+    return {
+        scope: {
+            ngModel: '=ngModel'
+        },
+        link: function ($scope, element, attrs) {
+            console.log($scope.ngModel);
+        }
+    };
 });
 
 firstapp.directive('viewField', function ($http, $filter) {

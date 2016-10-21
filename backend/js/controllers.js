@@ -285,11 +285,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             [$scope.json.json.preApi.params]: $scope.json.keyword._id
         }, function (data) {
             $scope.data = data.data;
-            _.each($scope.json.json.fields, function (n) {
-                if (n.type === "date") {
-                    $scope.data[n.tableRef] = new Date($scope.data[n.tableRef]);
-                }
-            });
+            // _.each($scope.json.json.fields, function (n) {
+            //     if (n.type === "date") {
+            //         $scope.data[n.tableRef] = new Date($scope.data[n.tableRef]);
+            //     }
+            // });
 
         });
     }
@@ -365,11 +365,23 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.template = "views/field/" + $scope.type.type + ".html";
 
     // BOX
+    if ($scope.type.type == "date") {
+        console.log("indate");
+        console.log($scope.formData);
+
+        $timeout(function () {
+            $scope.formData[$scope.type.tableRef] = new Date($scope.formData[$scope.type.tableRef]);
+        }, 1000);
+
+
+    }
     if ($scope.type.type == "box") {
         if (!_.isArray($scope.formData[$scope.type.tableRef]) && $scope.formData[$scope.type.tableRef] === '') {
             $scope.formData[$scope.type.tableRef] = [];
         }
-        $scope.model = $scope.formData[$scope.type.tableRef];
+        $timeout(function () {
+            $scope.model = $scope.formData[$scope.type.tableRef];
+        }, 1000);
         $scope.search = {
             text: ""
         };
