@@ -310,6 +310,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }
     $scope.json = JsonService;
     $scope.tags = {};
+    $scope.tagNgModel = {};
     $scope.tinymceOptions = {
         selector: 'textarea',
         height: 500,
@@ -400,6 +401,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     if ($scope.type.type == "tags") {
         $scope.refreshTags();
     }
+
+    $scope.tagClicked = function (select, index) {
+        if ($scope.type.fieldType === "array") {
+            $scope.formData[$scope.type.tableRef] = [];
+            _.each(select, function (n) {
+                $scope.formData[$scope.type.tableRef].push(n._id);
+            });
+        } else {
+            $scope.formData[$scope.type.tableRef] = select;
+        }
+    };
 })
 
 .controller('LoginCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state) {
