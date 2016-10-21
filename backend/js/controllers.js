@@ -323,6 +323,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.json = JsonService;
     $scope.tags = {};
     $scope.tagNgModel = {};
+    // $scope.boxModel
     $scope.tinymceOptions = {
         selector: 'textarea',
         height: 500,

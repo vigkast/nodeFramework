@@ -42,7 +42,7 @@
         "type": "box",
         "tableRef": "product",
         "validation": ["", "trim", "unique"],
-        "field": [{
+        "fields": [{
             "name": "Name",
             "type": "text",
             "tableRef": "name",
