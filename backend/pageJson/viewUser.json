@@ -16,6 +16,10 @@
         "name": "Mobile",
         "isSort": "",
         "tableRef": "mobile"
+    }, {
+        "name": "User",
+        "isSort": "",
+        "tableRef": "user"
     }],
     "action": [{
         "name": "edit",
