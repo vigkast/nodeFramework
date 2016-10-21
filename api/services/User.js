@@ -7,6 +7,9 @@ var schema = new Schema({
         type: String,
         validate: validators.isEmail()
     },
+    dob: {
+        type: Date
+    },
     photo: {
         type: String,
         default: ""

@@ -285,6 +285,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             [$scope.json.json.preApi.params]: $scope.json.keyword._id
         }, function (data) {
             $scope.data = data.data;
+            _.each($scope.json.json.fields, function (n) {
+                if (n.type === "date") {
+                    $scope.data[n.tableRef] = new Date($scope.data[n.tableRef]);
+                }
+            });
+
         });
     }
     //  END FOR EDIT
