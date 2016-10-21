@@ -62,6 +62,14 @@ var schema = new Schema({
         }],
         index: true,
         restrictedDelete: true
+    },
+    product: {
+        name: {
+            type: String
+        },
+        mobile: {
+            type: String
+        }
     }
 });
 

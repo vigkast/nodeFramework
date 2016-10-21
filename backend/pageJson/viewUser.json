@@ -19,7 +19,10 @@
     }, {
         "name": "User",
         "isSort": "",
-        "tableRef": "user"
+        "tableRef": {
+            "field": "user",
+            "tableRef": "name"
+        }
     }],
     "action": [{
         "name": "edit",

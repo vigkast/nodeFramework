@@ -365,7 +365,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     // BOX
     if ($scope.type.type == "box") {
-        if (!_.isArray($scope.formData[$scope.type.tableRef])) {
+        if (!_.isArray($scope.formData[$scope.type.tableRef]) && $scope.formData[$scope.type.tableRef] === '') {
             $scope.formData[$scope.type.tableRef] = [];
         }
         $scope.model = $scope.formData[$scope.type.tableRef];
