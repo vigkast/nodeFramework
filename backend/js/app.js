@@ -578,20 +578,21 @@ firstapp.directive('viewField', function ($http, $filter) {
                 $scope.type.type = "text";
             }
             $scope.form = {};
+            $scope.objectDepth = function () {
+                if (_.isObjectLike($scope.storeObj)) {
+                    if ($scope.storeValue[$scope.storeObj.field]) {
+                        $scope.form.model = $scope.storeValue[$scope.storeObj.field][$scope.storeObj.tableRef];
+                        $scope.storeObj = $scope.storeObj.tableRef;
+                        if (_.isObjectLike($scope.storeObj)) {
+                            $scope.objectDepth();
+                        }
+                    }
+                }
+            };
             if (_.isObjectLike($scope.type.tableRef)) {
                 $scope.storeObj = $scope.type.tableRef;
                 $scope.storeValue = $scope.value;
-                while (_.isObjectLike($scope.storeObj)) {
-                    // console.log
-                    // if (angular.isObject($scope.storeObj)) {
-                    console.log($scope.storeObj);
-                    console.log(_.isObjectLike($scope.storeObj));
-                    $scope.form.model = $scope.storeValue[$scope.storeObj.field][$scope.storeObj.tableRef];
-
-                    $scope.storeObj = $scope.storeObj.tableRef;
-                    console.log($scope.storeObj);
-                    // }
-                }
+                $scope.objectDepth();
 
             } else {
                 $scope.form.model = $scope.value[$scope.type.tableRef];
