@@ -131,7 +131,12 @@
     }, {
         "name": "cancel",
         "sideMenuRedirect": true,
-        "stateName": "page({id:'viewUser'})"
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewUser"
+            }
+        }
     }],
     "apiCall": {
         "url": "User/save"

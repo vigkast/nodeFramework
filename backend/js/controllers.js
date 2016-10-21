@@ -295,6 +295,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }
     //  END FOR EDIT
 
+    $scope.onCancel = function (sendTo) {
+        $scope.json.json.action[1].stateName.json.keyword = "";
+        $scope.json.json.action[1].stateName.json.page = "";
+        $state.go($scope.json.json.action[1].stateName.page, $scope.json.json.action[1].stateName.json);
+    };
+
     $scope.saveData = function (formData) {
         console.log(formData);
         NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
