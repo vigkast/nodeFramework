@@ -47,29 +47,6 @@ var schema = new Schema({
         type: String,
         default: "User",
         enum: ['User', 'Admin']
-    },
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        index: true,
-        required: true,
-        key: "userref"
-    },
-    userref: {
-        type: [{
-            type: Schema.Types.ObjectId,
-            ref: "User"
-        }],
-        index: true,
-        restrictedDelete: true
-    },
-    product: {
-        name: {
-            type: String
-        },
-        mobile: {
-            type: String
-        }
     }
 });
 

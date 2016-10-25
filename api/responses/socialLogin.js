@@ -1,4 +1,4 @@
-module.exports = function(profile) {
+module.exports = function (profile) {
     var req = this.req;
     var res = this.res;
     var sails = req._sails;
@@ -7,15 +7,16 @@ module.exports = function(profile) {
         res.serverError();
     } else {
         if (req.session.returnUrl) {
-            User.existsSocial(profile, function(err, data) {
+            User.existsSocial(profile, function (err, data) {
                 if (err || !data) {
-                    res.serverError();
+                    console.log(err);
+                    console.log(data);
+                    res.serverError(err);
                 } else {
                     res.redirect(req.session.returnUrl + "/" + data.accessToken[0]);
-                    req.session.destroy(function() {});
+                    req.session.destroy(function () {});
                 }
             });
-
         } else {
             User.existsSocial(profile, res.callback);
         }
