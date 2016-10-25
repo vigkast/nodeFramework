@@ -594,7 +594,8 @@ $trans-black: rgba( black,
 }
 
 .table .btn {
-    padding: 0 5px;
+    padding: 3px 6px;
+    text-transform: capitalize;
 }
 
 .chkbx {
@@ -741,17 +742,15 @@ form.search-form {
     overflow-y: auto;
 }
 
-.form-control,
-.table td {
-    text-transform: capitalize;
-}
-
+// .form-control,
+// .table td {
+//     text-transform: capitalize;
+// }
 .text-upper {
     text-transform: uppercase;
 }
 
-.text-lower,
-input[type="email"].form-control {
+.text-lower {
     text-transform: lowercase;
 }
 
@@ -929,19 +928,6 @@ img.uploadingImage {
         font-weight: bold;
         position: relative;
         text-transform: uppercase;
-        .form-control {
-            width: 50%;
-            float: left;
-            +.form-control {
-                border-left: 1px solid !important;
-                -webkit-appearance: none;
-            }
-        }
-        &:after {
-            clear: both;
-            content: '';
-            display: table;
-        }
         &:hover {
             .mark-float {
                 width: 40px;
@@ -964,7 +950,7 @@ img.uploadingImage {
     }
     .form-builder-item {
         position: relative;
-        // padding-left: 20px;
+        padding-left: 20px;
         .mark-float {
             &.right-float {
                 width: 20px;
@@ -982,36 +968,19 @@ img.uploadingImage {
 }
 
 .row-item {
-    display: block;
-    &:before,
-    &:after {
-        content: "";
-        clear: both;
-        display: table;
-    }
+    @include display(flex);
     .col-item {
-        float: left;
+        @include flex(1);
+        width: 100%;
         +.col-item {
             border-left: 1px solid $body-color-font;
         }
-        &:nth-child(1),
-        &:nth-child(2),
-        &:nth-child(3),
-        &:nth-child(4),
-        &:nth-child(5),
-        &:nth-child(6),
-        &:nth-child(7),
-        &:nth-child(8) {
-            border-bottom: 1px solid $body-color-font;
-        }
-        &:nth-child(5),
-        &:nth-child(9) {
-            border-left: 0px solid $body-color-font;
-        }
         &.col-item-25 {
+            @include flex(0 0 25%);
             width: 25%;
         }
         &.col-item-35 {
+            @include flex(0 0 35%);
             width: 35%;
         }
     }
@@ -1154,10 +1123,6 @@ img.uploadingImage {
     }
 }
 
-.main-content {
-    padding: 80px 45px 50px 265px;
-}
-
 .mce-btn button {
     padding: 4px 8px !important;
 }
@@ -1180,6 +1145,17 @@ img.uploadingImage {
 
 .mce-container img {
     opacity: 1;
+}
+
+.widget-title .btn-danger,
+.widget-title .btn-warning {
+    display: none;
+}
+
+@media screen\0 {
+    .admin-details {
+        background: #fff;
+    }
 }
 
 

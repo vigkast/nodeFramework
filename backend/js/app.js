@@ -58,20 +58,21 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
         controller: 'CreateCountryCtrl'
     })
 
-    .state('schema-creator', {
-        url: "/schema-creator",
-        templateUrl: "views/template.html",
-        controller: 'SchemaCreatorCtrl'
-    })
-
     .state('editcountry', {
         url: "/country-edit/:id",
         templateUrl: "views/template.html",
         controller: 'EditCountryCtrl'
+    })
+
+    .state('schema-creator', {
+        url: "/schema-creator",
+        templateUrl: "views/template.html",
+        controller: 'SchemaCreatorCtrl'
     });
     $urlRouterProvider.otherwise("/dashboard");
     $locationProvider.html5Mode(isproduction);
 });
+
 
 
 firstapp.filter('uploadpath', function () {
@@ -93,6 +94,12 @@ firstapp.filter('uploadpath', function () {
                 return input;
             }
         }
+    };
+});
+
+firstapp.filter('showdate', function () {
+    return function (input) {
+        return new Date(input);
     };
 });
 
@@ -339,6 +346,12 @@ firstapp.filter('serverimage', function () {
     };
 });
 
+firstapp.filter('convDate', function () {
+    return function (input) {
+        return new Date(input);
+    };
+});
+
 firstapp.filter('downloadImage', function () {
     return function (input) {
         if (input) {
@@ -545,6 +558,14 @@ firstapp.filter('ageFilter', function () {
         return calculateAge(birthdate);
     };
 });
+firstapp.filter('momentDate', function () {
+    return function (date, format) {
+        if (!format) {
+            format = "Do MMM YYYY, ddd";
+        }
+        return moment(date).format(format);
+    };
+});
 firstapp.filter('capitalize', function () {
     return function (input, all) {
         var reg = (all) ? /([^\W_]+[^\s-]*) */g : /([^\W_]+[^\s-]*)/;
@@ -558,17 +579,6 @@ firstapp.config(function ($translateProvider) {
     $translateProvider.translations('en', LanguageEnglish);
     $translateProvider.translations('hi', LanguageHindi);
     $translateProvider.preferredLanguage('en');
-});
-
-firstapp.directive('dateForm', function () {
-    return {
-        scope: {
-            ngModel: '=ngModel'
-        },
-        link: function ($scope, element, attrs) {
-            console.log($scope.ngModel);
-        }
-    };
 });
 
 firstapp.directive('viewField', function ($http, $filter) {
@@ -603,12 +613,20 @@ firstapp.directive('viewField', function ($http, $filter) {
                 $scope.form.model = $scope.value[$scope.type.tableRef];
             }
 
-
             $scope.template = "views/viewField/" + $scope.type.type + ".html";
         }
     };
 });
-
+firstapp.directive('dateForm', function () {
+    return {
+        scope: {
+            ngModel: '=ngModel'
+        },
+        link: function ($scope, element, attrs) {
+            console.log($scope.ngModel);
+        }
+    };
+});
 
 firstapp.directive('detailField', function ($http, $filter, JsonService) {
     return {
