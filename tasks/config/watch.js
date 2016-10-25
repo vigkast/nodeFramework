@@ -14,25 +14,40 @@
  *   https://github.com/gruntjs/grunt-contrib-watch
  *
  */
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
-  grunt.config.set('watch', {
-    sass: {
-      // Assets to watch:
-      files: ['frontend/sass/**'],
-      tasks: ['sass:development']
-    },
-    copy: {
-      // Assets to watch:
-      files: ['frontend/views/**','frontend/img/**','frontend/fonts/**'],
-      tasks: ['copy:development']
-    },
-    js: {
-      // Assets to watch:
-      files: ['frontend/js/**'],
-      tasks: ['copy:jsDevelopment']
-    }
-  });
+    grunt.config.set('watch', {
+        sass: {
+            // Assets to watch:
+            files: ['frontend/sass/**'],
+            tasks: ['sass:development']
+        },
+        copy: {
+            // Assets to watch:
+            files: ['frontend/views/**', 'frontend/img/**', 'frontend/fonts/**'],
+            tasks: ['copy:development']
+        },
+        js: {
+            // Assets to watch:
+            files: ['frontend/js/**'],
+            tasks: ['copy:jsDevelopment']
+        },
+        backendSass: {
+            // Assets to watch:
+            files: ['backend/sass/**'],
+            tasks: ['sass:backendDevelopment']
+        },
+        backendCopy: {
+            // Assets to watch:
+            files: ['backend/views/**', 'backend/img/**', 'backend/fonts/**'],
+            tasks: ['copy:backendDevelopment']
+        },
+        backendJs: {
+            // Assets to watch:
+            files: ['backend/js/**'],
+            tasks: ['copy:jsBackendDevelopment']
+        }
+    });
 
-  grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 };

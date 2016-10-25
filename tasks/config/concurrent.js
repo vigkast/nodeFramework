@@ -19,10 +19,10 @@
  *   https://github.com/gruntjs/grunt-contrib-copy
  *
  */
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     grunt.config.set('concurrent', {
-        watch: ['watch:sass','watch:copy','watch:js'],
+        watch: ['watch:sass', 'watch:copy', 'watch:js', 'watch:backendSass', 'watch:backendCopy', 'watch:backendJs'],
     });
 
     grunt.loadNpmTasks('grunt-concurrent');

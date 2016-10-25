@@ -7,10 +7,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.menutitle = NavigationService.makeactive("Dashboard");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
-    $state.go("page", {
-        id: "viewContact"
-    });
 })
+
 
 .controller('AccessController', function ($scope, TemplateService, NavigationService, $timeout, $state) {
     if ($.jStorage.get("accessToken")) {
