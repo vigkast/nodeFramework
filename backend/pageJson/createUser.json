@@ -26,7 +26,7 @@
         "placeholder": "Enter Name",
         "id": "name",
         "validation": [
-            "required",
+            "",
             "trim",
             "unique"
         ],
@@ -50,7 +50,7 @@
         "placeholder": "Enter Hobbies",
         "id": "hobbies",
         "validation": [
-            "required",
+            "",
             "trim",
             "unique"
         ],
@@ -107,11 +107,39 @@
         "placeholder": "Enter User",
         "id": "user",
         "validation": [
-            "required",
+            "",
             "trim",
             "unique"
         ],
         "url": "user/search"
+    }, {
+        "name": "Demo1",
+        "type": "selectFromTable",
+        "tableRef": "demo1",
+        "searchApi": "searchCall",
+        "placeholder": "Enter demo1",
+        "id": "demo1",
+        "validation": [
+            "",
+            "trim",
+            "unique"
+        ],
+        "url": "demo1/search"
+    }, {
+        "name": "Demo2",
+        "type": "selectFromTable",
+        "tableRef": "demo2",
+        "searchApi": "searchCall",
+        "placeholder": "Enter demo2",
+        "id": "demo2",
+        "validation": [
+            "",
+            "trim",
+            "unique"
+        ],
+        "url": "demo2/search",
+        "filterField": "demo1",
+        "filterValue": "demo1"
     }, {
         "name": "Email",
         "type": "text",

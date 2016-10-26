@@ -1,0 +1,62 @@
+{
+    "title": "Create Demo1",
+    "name": "Demo1",
+    "jsonPage": "viewDemo1",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": [
+        "newdemo1"
+    ],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": [
+            "required",
+            "trim",
+            "unique"
+        ],
+        "url": ""
+    }, {
+        "name": "Demo2",
+        "type": "selectFromTable",
+        "tableRef": "demo2",
+        "searchApi": "searchCall",
+        "placeholder": "Enter Demo2",
+        "id": "demo2",
+        "validation": [
+            "",
+            "trim",
+            "unique"
+        ],
+        "url": "demo2/search"
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitDemo1",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewDemo1"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewDemo1"
+            }
+        }
+    }],
+    "preApi": {
+        "url": "Demo1/getOne",
+        "params": "_id"
+    },
+    "apiCall": {
+        "url": "Demo1/save"
+    }
+}
