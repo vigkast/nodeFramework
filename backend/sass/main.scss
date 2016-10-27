@@ -1152,6 +1152,19 @@ img.uploadingImage {
     display: none;
 }
 
+body {
+    overflow: visible !important;
+}
+
+.circle {
+    background-color: #1fc8ec;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    -webkit-transition: all 5s;
+    border-radius: 100px;
+}
+
 @media screen\0 {
     .admin-details {
         background: #fff;

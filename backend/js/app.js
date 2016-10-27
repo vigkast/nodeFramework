@@ -68,7 +68,14 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
         url: "/schema-creator",
         templateUrl: "views/template.html",
         controller: 'SchemaCreatorCtrl'
+    })
+
+    .state('jagz', {
+        url: "/jagz",
+        templateUrl: "views/jagz.html",
+        controller: 'JagzCtrl'
     });
+
     $urlRouterProvider.otherwise("/dashboard");
     $locationProvider.html5Mode(isproduction);
 });
