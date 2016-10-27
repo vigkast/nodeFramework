@@ -48,6 +48,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             n.height = radius;
             n.background = toColor(_.random(-12525360, 12525360));
             if (count % 7 === 0 || count % 7 === 5 || count % 7 === 6) {
+                if (count % 7 === 6) {
+                    n.background = "red";
+                    // n.width = 3;
+                    // n.height = 3;
+                }
                 var t = index * Math.PI / 180;
                 var x = (4.0 * Math.pow(Math.sin(t), 3));
                 var y = ((3.0 * Math.cos(t)) - (1.3 * Math.cos(2 * t)) - (0.6 * Math.cos(3 * t)) - (0.2 * Math.cos(4 * t)));
