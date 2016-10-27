@@ -20,12 +20,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 .controller('JagzCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $interval) {
 
-    function toColor(num) {
+    function toColor(num, red) {
         num >>>= 0;
         var b = num & 0xFF,
             g = (num & 0xFF00) >>> 8,
             r = (num & 0xFF0000) >>> 16,
             a = ((num & 0xFF000000) >>> 24) / 255;
+        if (red == "red") {
+            r = 255;
+            b = 0;
+            g = 0;
+        }
         return "rgba(" + [r, g, b, a].join(",") + ")";
     }
 
@@ -49,7 +54,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             n.background = toColor(_.random(-12525360, 12525360));
             if (count % 7 === 0 || count % 7 === 5 || count % 7 === 6) {
                 if (count % 7 === 6) {
-                    n.background = "red";
+                    n.background = toColor(_.random(-12525360, 12525360), "red");
                     // n.width = 3;
                     // n.height = 3;
                 }

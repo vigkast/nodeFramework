@@ -1161,7 +1161,7 @@ body {
     position: absolute;
     width: 100px;
     height: 100px;
-    -webkit-transition: all 5s;
+    @include transition(all 5s ease-in-out);
     border-radius: 100px;
 }
 
