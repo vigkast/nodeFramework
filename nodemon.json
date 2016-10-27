@@ -9,7 +9,8 @@
         "js": "node "
     },
     "watch": [
-        "*"
+        "api",
+        "config"
     ],
     "env": {
         "NODE_ENV": "development"

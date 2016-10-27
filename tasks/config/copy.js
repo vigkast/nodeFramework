@@ -19,7 +19,7 @@
  *   https://github.com/gruntjs/grunt-contrib-copy
  *
  */
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     grunt.config.set('copy', {
         assets: {
@@ -38,11 +38,67 @@ module.exports = function(grunt) {
                 dest: '.tmp/public/frontend'
             }]
         },
+        developmentFont: {
+            files: [{
+                expand: true,
+                cwd: './frontend',
+                src: ['fonts/**'],
+                dest: '.tmp/public/frontend'
+            }]
+        },
+        developmentImg: {
+            files: [{
+                expand: true,
+                cwd: './frontend',
+                src: ['img/**'],
+                dest: '.tmp/public/frontend'
+            }]
+        },
+        developmentViews: {
+            files: [{
+                expand: true,
+                cwd: './frontend',
+                src: ['views/**'],
+                dest: '.tmp/public/frontend'
+            }]
+        },
         backendDevelopment: {
             files: [{
                 expand: true,
                 cwd: './backend',
                 src: ['fonts/**', 'img/**', 'views/**', 'pageJson/**'],
+                dest: '.tmp/public/backend'
+            }]
+        },
+        backendDevelopmentFonts: {
+            files: [{
+                expand: true,
+                cwd: './backend',
+                src: ['fonts/**'],
+                dest: '.tmp/public/backend'
+            }]
+        },
+        backendDevelopmentImg: {
+            files: [{
+                expand: true,
+                cwd: './backend',
+                src: ['img/**'],
+                dest: '.tmp/public/backend'
+            }]
+        },
+        backendDevelopmentViews: {
+            files: [{
+                expand: true,
+                cwd: './backend',
+                src: ['views/**'],
+                dest: '.tmp/public/backend'
+            }]
+        },
+        backendDevelopmentPageJson: {
+            files: [{
+                expand: true,
+                cwd: './backend',
+                src: ['pageJson/**'],
                 dest: '.tmp/public/backend'
             }]
         },

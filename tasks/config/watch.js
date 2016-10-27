@@ -22,9 +22,19 @@ module.exports = function (grunt) {
             files: ['frontend/sass/**'],
             tasks: ['sass:development']
         },
-        copy: {
+        copyViews: {
             // Assets to watch:
-            files: ['frontend/views/**', 'frontend/img/**', 'frontend/fonts/**'],
+            files: ['frontend/views/**'],
+            tasks: ['copy:development']
+        },
+        copyImg: {
+            // Assets to watch:
+            files: ['frontend/img/**'],
+            tasks: ['copy:development']
+        },
+        copyFonts: {
+            // Assets to watch:
+            files: ['frontend/fonts/**'],
             tasks: ['copy:development']
         },
         js: {
@@ -37,10 +47,25 @@ module.exports = function (grunt) {
             files: ['backend/sass/**'],
             tasks: ['sass:backendDevelopment']
         },
-        backendCopy: {
+        backendCopyViews: {
             // Assets to watch:
-            files: ['backend/views/**', 'backend/img/**', 'backend/fonts/**'],
-            tasks: ['copy:backendDevelopment']
+            files: ['backend/views/**'],
+            tasks: ['copy:backendDevelopmentViews']
+        },
+        backendCopyImg: {
+            // Assets to watch:
+            files: ['backend/img/**'],
+            tasks: ['copy:backendDevelopmentImg']
+        },
+        backendCopyFonts: {
+            // Assets to watch:
+            files: ['backend/fonts/**'],
+            tasks: ['copy:backendDevelopmentFonts']
+        },
+        backendCopyPageJson: {
+            // Assets to watch:
+            files: ['backend/pagejson/**'],
+            tasks: ['copy:backendDevelopmentPageJson']
         },
         backendJs: {
             // Assets to watch:
