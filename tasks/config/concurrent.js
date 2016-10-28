@@ -20,10 +20,8 @@
  *
  */
 module.exports = function (grunt) {
-
     grunt.config.set('concurrent', {
-        watch: ['watch:sass', 'watch:copy', 'watch:js', 'watch:backendSass', 'watch:backendCopy', 'watch:backendJs'],
+        watch: ['watch:sass', 'watch:copyViews', 'watch:copyImg', 'watch:copyFonts', 'watch:js', 'watch:backendSass', 'watch:backendCopyViews', 'watch:backendCopyImg', 'watch:backendCopyFonts', 'watch:backendJs'],
     });
-
     grunt.loadNpmTasks('grunt-concurrent');
 };
