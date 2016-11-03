@@ -13,6 +13,7 @@
         "tableRef": "name",
         "placeholder": "Enter Name",
         "id": "name",
+        "disabled": "true",
         "validation": [
             "required",
             "trim",
@@ -21,10 +22,11 @@
         "url": ""
     }, {
         "name": "Address",
-        "type": "location",
+        "type": "textarea",
         "tableRef": "address",
         "placeholder": "Enter Name",
         "id": "name",
+        "disabled": "true",
         "validation": [
             "",
             "trim",
@@ -37,6 +39,7 @@
         "tableRef": "dob",
         "placeholder": "Enter DOB",
         "id": "dob",
+        "disabled": "true",
         "validation": [
             "required",
             "trim",
@@ -206,6 +209,7 @@
         "tableRef": "otp",
         "placeholder": "Enter Otp",
         "id": "otp",
+        "disabled": "true",
         "validation": [
             "required",
             "trim",
