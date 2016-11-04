@@ -127,7 +127,8 @@ firstapp.directive('uploadImage', function ($http, $filter) {
         templateUrl: 'views/directive/uploadFile.html',
         scope: {
             model: '=ngModel',
-            callback: "=ngCallback"
+            callback: "=ngCallback",
+            disabled: "=ngDisabled"
         },
         link: function ($scope, element, attrs) {
 
@@ -496,6 +497,7 @@ firstapp.directive('multipleSelect', function ($document, $timeout) {
             filter: "@filter",
             ngName: "=ngName",
             create: "@ngCreate",
+            disabled: "=ngDisabled"
 
         },
         restrict: 'EA',

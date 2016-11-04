@@ -22,6 +22,12 @@ var schema = new Schema({
         type: String,
         default: ""
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        index: true,
+        required: true,
+    },
     mobile: {
         type: String,
         default: ""
@@ -47,6 +53,9 @@ var schema = new Schema({
         type: String,
         default: "User",
         enum: ['User', 'Admin']
+    },
+    hobbies: {
+        type: []
     }
 });
 

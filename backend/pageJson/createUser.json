@@ -13,7 +13,6 @@
         "tableRef": "name",
         "placeholder": "Enter Name",
         "id": "name",
-        "disabled": "true",
         "validation": [
             "required",
             "trim",
@@ -26,7 +25,6 @@
         "tableRef": "address",
         "placeholder": "Enter Name",
         "id": "name",
-        "disabled": "true",
         "validation": [
             "",
             "trim",
@@ -39,7 +37,6 @@
         "tableRef": "dob",
         "placeholder": "Enter DOB",
         "id": "dob",
-        "disabled": "true",
         "validation": [
             "required",
             "trim",
@@ -161,6 +158,8 @@
         "tableRef": "photo",
         "placeholder": "Upload photo",
         "id": "photo",
+        "view": true,
+        "disabled": false,
         "validation": [
             "required",
             "trim",
@@ -209,7 +208,6 @@
         "tableRef": "otp",
         "placeholder": "Enter Otp",
         "id": "otp",
-        "disabled": "true",
         "validation": [
             "required",
             "trim",

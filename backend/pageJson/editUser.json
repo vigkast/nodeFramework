@@ -20,6 +20,7 @@
         "searchApi": "searchCall",
         "placeholder": "Enter User",
         "id": "user",
+        "disabled": true,
         "validation": ["required", "trim", "unique"],
         "url": "user/search"
     }, {
@@ -47,13 +48,35 @@
             "onView": true
         }]
     }, {
+        "name": "Hobbies",
+        "type": "tags",
+        "tableRef": "hobbies",
+        "placeholder": "Enter Hobbies",
+        "id": "hobbies",
+        "validation": [
+            "",
+            "trim",
+            "unique"
+        ],
+        "url": "",
+        "dropDownField": "",
+        "fieldType": "array",
+        "disabled": true,
+        "dropDownType": "multiple",
+        "dropDown": [
+            "yes",
+            "no",
+            "da"
+        ]
+    }, {
         "name": "DOB",
         "type": "date",
         "tableRef": "dob",
         "placeholder": "Enter DOB",
         "id": "dob",
         "validation": ["required", "trim", "unique"],
-        "url": ""
+        "url": "",
+        "disabled": false
     }, {
         "name": "Email",
         "type": "text",
@@ -68,6 +91,8 @@
         "tableRef": "photo",
         "placeholder": "Upload photo",
         "id": "photo",
+        "view": true,
+        "disabled": true,
         "validation": ["required", "trim", "unique"],
         "url": ""
     }, {
