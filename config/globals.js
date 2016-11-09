@@ -79,6 +79,7 @@ global["_"] = require('lodash');
 global["chalk"] = require('chalk');
 global["uid"] = require('rand-token').uid;
 global["request"] = require('request');
+global["fs"] = require('fs');
 
 // passport Globals
 global["passport"] = require('passport');
