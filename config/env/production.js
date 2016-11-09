@@ -26,9 +26,7 @@ module.exports = {
    ***************************************************************************/
 
   port: 80,
-  realHost: "http://wohlig.io",
-
-
+  realHost: "http://wohlig.io"
 
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *
