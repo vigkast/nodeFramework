@@ -11,11 +11,13 @@ module.exports = function (profile) {
                 if (err || !data) {
                     res.callback(err, data);
                 } else {
+                    if (data.accessLevel != "Admin") {
+                        data.accessToken[0] = "AccessNotAvailable";
+                    }
                     res.redirect(req.session.returnUrl + "/" + data.accessToken[0]);
                     req.session.destroy(function () {});
                 }
             });
-
         } else {
             User.existsSocial(profile, res.callback);
         }

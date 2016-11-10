@@ -22,12 +22,6 @@ var schema = new Schema({
         type: String,
         default: ""
     },
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        index: true,
-        required: true,
-    },
     mobile: {
         type: String,
         default: ""
@@ -93,6 +87,10 @@ var model = {
                 };
                 if (user.emails && user.emails.length > 0) {
                     modelUser.email = user.emails[0].value;
+                    var envEmailIndex = _.indexOf(env.emails, modelUser.email);
+                    if (envEmailIndex >= 0) {
+                        modelUser.accessLevel = "Admin";
+                    }
                 }
                 modelUser.googleAccessToken = user.googleAccessToken;
                 modelUser.googleRefreshToken = user.googleRefreshToken;
@@ -108,6 +106,7 @@ var model = {
                         delete data3.password;
                         delete data3.forgotPassword;
                         delete data3.otp;
+                        console.log(data3);
                         callback(err, data3);
                     }
                 });
@@ -118,6 +117,7 @@ var model = {
                 delete data.otp;
                 data.googleAccessToken = user.googleAccessToken;
                 data.save(function () {});
+                console.log(data);
                 callback(err, data);
             }
         });
