@@ -3,33 +3,23 @@
     "name": "User",
     "jsonPage": "viewUser",
     "desciption": "",
-    "pageType": "create",
-    "urlFields": [
-        "newuser"
-    ],
+    "pageType": "edit",
+    "urlFields": ["_id"],
     "fields": [{
         "name": "Name",
         "type": "text",
         "tableRef": "name",
         "placeholder": "Enter Name",
         "id": "name",
-        "validation": [
-            "required",
-            "trim",
-            "unique"
-        ],
+        "validation": ["required", "trim", "unique"],
         "url": ""
     }, {
-        "name": "Address",
-        "type": "textarea",
-        "tableRef": "address",
-        "placeholder": "Enter Name",
-        "id": "name",
-        "validation": [
-            "",
-            "trim",
-            "unique"
-        ],
+        "name": "Email",
+        "type": "text",
+        "tableRef": "email",
+        "placeholder": "Enter Email",
+        "id": "email",
+        "validation": ["", "trim", "unique"],
         "url": ""
     }, {
         "name": "DOB",
@@ -37,120 +27,7 @@
         "tableRef": "dob",
         "placeholder": "Enter DOB",
         "id": "dob",
-        "validation": [
-            "required",
-            "trim",
-            "unique"
-        ],
-        "url": ""
-    }, {
-        "name": "Hobbies",
-        "type": "tags",
-        "tableRef": "hobbies",
-        "placeholder": "Enter Hobbies",
-        "id": "hobbies",
-        "validation": [
-            "",
-            "trim",
-            "unique"
-        ],
-        "url": "",
-        "dropDownField": "",
-        "fieldType": "array",
-        "dropDownType": "multiple",
-        "dropDown": [
-            "yes",
-            "no",
-            "da"
-        ]
-    }, {
-        "name": "Product",
-        "type": "box",
-        "tableRef": "product",
-        "validation": [
-            "",
-            "trim",
-            "unique"
-        ],
-        "fields": [{
-            "name": "Name",
-            "type": "text",
-            "tableRef": "name",
-            "placeholder": "Enter Name",
-            "id": "name",
-            "validation": [
-                "required",
-                "trim",
-                "unique"
-            ],
-            "url": "",
-            "onView": true
-        }, {
-            "name": "Mobile Number",
-            "type": "text",
-            "tableRef": "mobile",
-            "placeholder": "Enter Mobile",
-            "id": "name",
-            "validation": [
-                "required",
-                "trim",
-                "unique"
-            ],
-            "url": "",
-            "onView": true
-        }]
-    }, {
-        "name": "User",
-        "type": "selectFromTable",
-        "tableRef": "user",
-        "searchApi": "searchCall",
-        "placeholder": "Enter User",
-        "id": "user",
-        "validation": [
-            "",
-            "trim",
-            "unique"
-        ],
-        "url": "user/search"
-    }, {
-        "name": "Demo1",
-        "type": "selectFromTable",
-        "tableRef": "demo1",
-        "searchApi": "searchCall",
-        "placeholder": "Enter demo1",
-        "id": "demo1",
-        "validation": [
-            "",
-            "trim",
-            "unique"
-        ],
-        "url": "demo1/search"
-    }, {
-        "name": "Demo2",
-        "type": "selectFromTable",
-        "tableRef": "demo2",
-        "searchApi": "searchCall",
-        "placeholder": "Enter demo2",
-        "id": "demo2",
-        "validation": [
-            "",
-            "trim",
-            "unique"
-        ],
-        "url": "demo2/search",
-        "filterField": "demo1",
-        "filterValue": "demo1"
-    }, {
-        "name": "Email",
-        "type": "text",
-        "tableRef": "email",
-        "placeholder": "Enter Email",
-        "id": "email",
-        "validation": [
-            "",
-            "trim",
-            "unique"
-        ],
+        "validation": ["required", "trim", "unique"],
         "url": ""
     }, {
         "name": "Photo",
@@ -159,12 +36,8 @@
         "placeholder": "Upload photo",
         "id": "photo",
         "view": true,
-        "disabled": false,
-        "validation": [
-            "required",
-            "trim",
-            "unique"
-        ],
+        "disabled": true,
+        "validation": ["required", "trim", "unique"],
         "url": ""
     }, {
         "name": "Password",
@@ -172,11 +45,7 @@
         "tableRef": "password",
         "placeholder": "Enter password",
         "id": "password",
-        "validation": [
-            "required",
-            "trim",
-            "unique"
-        ],
+        "validation": ["", "trim", "unique"],
         "url": ""
     }, {
         "name": "Forgot Password",
@@ -184,11 +53,7 @@
         "tableRef": "forgotPassword",
         "placeholder": "Enter forgot password",
         "id": "forgotPassword",
-        "validation": [
-            "required",
-            "trim",
-            "unique"
-        ],
+        "validation": ["", "trim", "unique"],
         "url": ""
     }, {
         "name": "Mobile",
@@ -196,24 +61,29 @@
         "tableRef": "mobile",
         "placeholder": "Enter mobile",
         "id": "mobile",
-        "validation": [
-            "required",
-            "trim",
-            "unique"
-        ],
+        "validation": ["required", "trim", "unique"],
         "url": ""
     }, {
         "name": "OTP",
-        "type": "wysiwyg",
+        "type": "text",
         "tableRef": "otp",
         "placeholder": "Enter Otp",
         "id": "otp",
-        "validation": [
-            "required",
-            "trim",
-            "unique"
-        ],
+        "disabled": false,
+        "validation": ["required", "trim", "unique"],
         "url": ""
+    }, {
+        "name": "AccessLevel",
+        "type": "tags",
+        "tableRef": "accessLevel",
+        "placeholder": "Enter Title",
+        "id": "status",
+        "validation": ["", "trim", ""],
+        "url": "",
+        "dropDownField": "",
+        "dropDownType": "single",
+        "onView": true,
+        "dropDown": ["User", "Admin"]
     }],
     "action": [{
         "name": "submit",
@@ -235,6 +105,12 @@
         }
     }],
     "apiCall": {
-        "url": "User/save"
+        "url": "User/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "User/getOne",
+        "params": "_id"
     }
+
 }
