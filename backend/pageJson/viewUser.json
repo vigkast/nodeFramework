@@ -16,13 +16,6 @@
         "name": "Mobile",
         "isSort": "",
         "tableRef": "mobile"
-    }, {
-        "name": "User",
-        "isSort": "",
-        "tableRef": {
-            "field": "user",
-            "tableRef": "name"
-        }
     }],
     "action": [{
         "name": "edit",
