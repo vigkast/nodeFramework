@@ -1,10 +1,10 @@
 {
-    "title": "Create User",
-    "name": "User",
-    "jsonPage": "viewUser",
-    "desciption": "",
-    "pageType": "edit",
-    "urlFields": ["_id"],
+  "title": "Create User",
+  "name": "User",
+  "jsonPage": "viewUser",
+  "desciption": "",
+  "pageType": "create",
+  "urlFields": ["User"],
     "fields": [{
         "name": "Name",
         "type": "text",
@@ -105,12 +105,6 @@
         }
     }],
     "apiCall": {
-        "url": "User/save",
-        "params": "_id"
-    },
-    "preApi": {
-        "url": "User/getOne",
-        "params": "_id"
+        "url": "User/save"
     }
-
 }
