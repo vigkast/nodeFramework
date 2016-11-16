@@ -23,7 +23,7 @@ var schema = new Schema({
     name: String,
     content: String,
 });
-//
+
 // var client = new Twitter({
 //     consumer_key: 'w0Mizb3YKniG8GfZmhQJbMvER',
 //     consumer_secret: '6wnwpnm6a475ROm3aY8aOy8YXynQxQgZkcoJ05Y8D9EvL0Duov',
@@ -242,6 +242,7 @@ var models = {
 
     },
     readUploaded: function (filename, width, height, style, res) {
+        res.setHeader('Cache-Control', 'public, max-age=31557600');
         var readstream = gfs.createReadStream({
             filename: filename
         });
