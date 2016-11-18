@@ -972,85 +972,82 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.navigation = NavigationService.getnav();
     $scope.collectionTypes = ["Table View", "Table View Drag and Drop", "Grid View", "Grid View Drag and Drop"];
     $scope.schema = [{
-            "schemaType": "Boolean",
-            "Input1": "",
-            "Input2": ""
-        }, {
-            "schemaType": "Color",
-            "Input1": "",
-            "Input2": ""
-        }, {
-            "schemaType": "Date",
-            "Input1": "",
-            "Input2": ""
-        }, {
-            "schemaType": "Email",
-            "Input1": "",
-            "Input2": ""
-        }, {
-            "schemaType": "File",
-            "Input1": "MB Limit",
-            "Input2": ""
-        }, {
-            "schemaType": "Image",
-            "Input1": "pixel x",
-            "Input2": "pixel y "
-        }, {
-            "schemaType": "Location",
-            "Input1": "",
-            "Input2": ""
-        }, {
-            "schemaType": "Mobile",
-            "Input1": "",
-            "Input2": ""
-        }, {
-            "schemaType": "Multiple Select",
-            "Input1": "Enum",
-            "Input2": ""
-        }, {
-            "schemaType": "Multiple Select From Table",
-            "Input1": "Collection",
-            "Input2": "Field"
-        }, {
-            "schemaType": "Number",
-            "Input1": "min ",
-            "Input2": "max"
-        }, {
-            "schemaType": "Single Select ",
-            "Input1": "Enum",
-            "Input2": ""
-        },
-
-        {
-            "schemaType": "Single Select From Table",
-            "Input1": "Collection",
-            "Input2": "Field"
-        }, {
-            "schemaType": "Telephone",
-            "Input1": "",
-            "Input2": ""
-        }, {
-            "schemaType": "Text",
-            "Input1": "min length",
-            "Input2": "max length"
-        }, {
-            "schemaType": "TextArea",
-            "Input1": "min length",
-            "Input2": "max length"
-        }, {
-            "schemaType": "URL",
-            "Input1": "",
-            "Input2": ""
-        }, {
-            "schemaType": "WYSIWYG",
-            "Input1": "",
-            "Input2": ""
-        }, {
-            "schemaType": "Youtube",
-            "Input1": "",
-            "Input2": ""
-        }
-    ];
+        "schemaType": "Boolean",
+        "Input1": "",
+        "Input2": ""
+    }, {
+        "schemaType": "Color",
+        "Input1": "",
+        "Input2": ""
+    }, {
+        "schemaType": "Date",
+        "Input1": "",
+        "Input2": ""
+    }, {
+        "schemaType": "Email",
+        "Input1": "",
+        "Input2": ""
+    }, {
+        "schemaType": "File",
+        "Input1": "MB Limit",
+        "Input2": ""
+    }, {
+        "schemaType": "Image",
+        "Input1": "pixel x",
+        "Input2": "pixel y "
+    }, {
+        "schemaType": "Location",
+        "Input1": "",
+        "Input2": ""
+    }, {
+        "schemaType": "Mobile",
+        "Input1": "",
+        "Input2": ""
+    }, {
+        "schemaType": "Multiple Select",
+        "Input1": "Enum",
+        "Input2": ""
+    }, {
+        "schemaType": "Multiple Select From Table",
+        "Input1": "Collection",
+        "Input2": "Field"
+    }, {
+        "schemaType": "Number",
+        "Input1": "min ",
+        "Input2": "max"
+    }, {
+        "schemaType": "Single Select ",
+        "Input1": "Enum",
+        "Input2": ""
+    }, {
+        "schemaType": "Single Select From Table",
+        "Input1": "Collection",
+        "Input2": "Field"
+    }, {
+        "schemaType": "Telephone",
+        "Input1": "",
+        "Input2": ""
+    }, {
+        "schemaType": "Text",
+        "Input1": "min length",
+        "Input2": "max length"
+    }, {
+        "schemaType": "TextArea",
+        "Input1": "min length",
+        "Input2": "max length"
+    }, {
+        "schemaType": "URL",
+        "Input1": "",
+        "Input2": ""
+    }, {
+        "schemaType": "WYSIWYG",
+        "Input1": "",
+        "Input2": ""
+    }, {
+        "schemaType": "Youtube",
+        "Input1": "",
+        "Input2": ""
+    }];
 
 
     $scope.inputTypes = [{
@@ -1106,6 +1103,69 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }
     };
 
+})
+
+.controller('ExcelUploadCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("excel-upload");
+    $scope.menutitle = NavigationService.makeactive("Excel Upload");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+
+    $scope.data = {
+        "total": 11,
+        "value": [
+            "582bfc524954ce2de1bfd0b7",
+            "582bfc524954ce2de1bfd0bc", {
+                "message": "Branch validation failed",
+                "name": "ValidationError",
+                "errors": {
+                    "office": {
+                        "message": "Path `office` is required.",
+                        "name": "ValidatorError",
+                        "properties": {
+                            "type": "required",
+                            "message": "Path `{PATH}` is required.",
+                            "path": "office"
+                        },
+                        "kind": "required",
+                        "path": "office"
+                    },
+                    "company": {
+                        "message": "Path `company` is required.",
+                        "name": "ValidatorError",
+                        "properties": {
+                            "type": "required",
+                            "message": "Path `{PATH}` is required.",
+                            "path": "company"
+                        },
+                        "kind": "required",
+                        "path": "company"
+                    },
+                    "shortName": {
+                        "message": "Path `shortName` is required.",
+                        "name": "ValidatorError",
+                        "properties": {
+                            "type": "required",
+                            "message": "Path `{PATH}` is required.",
+                            "path": "shortName"
+                        },
+                        "kind": "required",
+                        "path": "shortName"
+                    }
+                }
+            },
+            "582bfc524954ce2de1bfd0c6",
+            "582bfc524954ce2de1bfd0cb",
+            "582bfc524954ce2de1bfd0d0",
+            "582bfc524954ce2de1bfd0d6",
+            "582bfc524954ce2de1bfd0dc",
+            "582bfc524954ce2de1bfd0e2",
+            "582bfc524954ce2de1bfd0e7",
+            "582bfc524954ce2de1bfd0ec"
+        ]
+
+    };
 })
 
 .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
