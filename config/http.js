@@ -61,7 +61,7 @@ module.exports.http = {
             req.model = mongoose.models[_.upperFirst(req.models[2])];
 
 
-            if (req.body && req.body.accessToken) {
+            if (req.body && req.body._accessToken) {
                 User.profile(req.body, function (err, data) {
                     if (err) {
                         res.json({
