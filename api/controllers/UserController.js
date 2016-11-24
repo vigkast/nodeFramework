@@ -57,6 +57,10 @@ var controller = {
     },
     generateExcel: function (req, res) {
         User.generateExcel(req.modelName, res);
+    },
+    import: function (req, res) {
+        var data = Config.import("./employee.xlsx");
+        res.callback(null, data);
     }
 };
 module.exports = _.assign(module.exports, controller);
