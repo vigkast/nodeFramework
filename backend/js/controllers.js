@@ -1111,6 +1111,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.menutitle = NavigationService.makeactive("Excel Upload");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.form = {
+        file: null
+    };
 
     $scope.data = {
         "total": 11,

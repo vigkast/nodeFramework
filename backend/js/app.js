@@ -157,7 +157,6 @@ firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
                 console.log($scope.image);
             };
             $scope.check = true;
-            console.log($scope.type);
             if (!$scope.type) {
                 $scope.type = "image";
             }
@@ -177,7 +176,7 @@ firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
             // }
 
             $scope.$watch("image", function (newVal, oldVal) {
-
+                console.log(newVal, oldVal);
                 isArr = _.isArray(newVal);
                 if (!isArr && newVal && newVal.file) {
                     $scope.uploadNow(newVal);
@@ -250,7 +249,7 @@ firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
                         } else {
                             $scope.type = "img";
                         }
-                        $scope.model = data.data;
+                        $scope.model = data.data[0];
 
                     }
                     $timeout(function () {
