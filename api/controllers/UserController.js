@@ -54,22 +54,6 @@ var controller = {
         } else {
             res.callback("Access Denied for Database Backup");
         }
-    },
-    generateExcel: function (req, res) {
-        User.generateExcel(req.modelName, res);
-    },
-    import: function (req, res) {
-        if (req.body.file) {
-            Config.importGS(req.body.file, function (err, data) {
-                if (err) {
-                    callback(err, callback);
-                } else {
-                    req.model.import(data, res.callback);
-                }
-            });
-        } else {
-            res.callback("Incorrect Data Format");
-        }
     }
 };
 module.exports = _.assign(module.exports, controller);
