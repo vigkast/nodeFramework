@@ -214,8 +214,6 @@ var models = {
         var firstRow = _.slice(jsonExcel[0].data, 0, 1)[0];
         var excelDataToExport = _.slice(jsonExcel[0].data, 1);
         var dataObj = [];
-        console.log(firstRow);
-        console.log(excelDataToExport);
         _.each(excelDataToExport, function (val, key) {
             dataObj.push({});
             _.each(val, function (value, key2) {
