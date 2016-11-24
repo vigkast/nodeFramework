@@ -404,7 +404,7 @@ firstapp.filter('serverimage', function () {
             }
 
         } else {
-            return "frontend/img/logo.png";
+            return "img/logo.png";
         }
     };
 });
@@ -420,7 +420,7 @@ firstapp.filter('downloadImage', function () {
         if (input) {
             return adminurl + "download/" + input;
         } else {
-            return "frontend/img/logo.png";
+            return "img/logo.png";
         }
     };
 });
