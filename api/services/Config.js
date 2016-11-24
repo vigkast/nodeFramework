@@ -222,6 +222,25 @@ var models = {
         });
         return dataObj;
     },
+    importGS: function (filename, callback) {
+        var readstream = gfs.createReadStream({
+            filename: filename
+        });
+        readstream.on('error', function (err) {
+            res.json({
+                value: false,
+                error: err
+            });
+        });
+        var buffers = [];
+        readstream.on('data', function (buffer) {
+            buffers.push(buffer);
+        });
+        readstream.on('end', function () {
+            var buffer = Buffer.concat(buffers);
+            callback(null, Config.import(buffer));
+        });
+    },
     generateExcel: function (name, found, res) {
         // name = _.kebabCase(name);
         var excelData = [];
@@ -385,6 +404,15 @@ var models = {
             readstream.pipe(res);
         }
         //error handling, e.g. file does not exist
+    },
+    excelDateToDate: function isDate(value) {
+        value = (value - (25567 + 1)) * 86400 * 1000;
+        var mom = moment(value);
+        if (mom.isValid()) {
+            return mom.toDate();
+        } else {
+            return undefined;
+        }
     }
 };
 module.exports = _.assign(module.exports, models);

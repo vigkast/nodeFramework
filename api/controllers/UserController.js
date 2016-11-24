@@ -59,8 +59,17 @@ var controller = {
         User.generateExcel(req.modelName, res);
     },
     import: function (req, res) {
-        var data = Config.import("./employee.xlsx");
-        res.callback(null, data);
+        if (req.body.file) {
+            Config.importGS(req.body.file, function (err, data) {
+                if (err) {
+                    callback(err, callback);
+                } else {
+                    req.model.import(data, res.callback);
+                }
+            });
+        } else {
+            res.callback("Incorrect Data Format");
+        }
     }
 };
 module.exports = _.assign(module.exports, controller);

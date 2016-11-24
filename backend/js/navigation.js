@@ -88,8 +88,8 @@ var navigationservice = angular.module('navigationservice', [])
                 callback(data, i);
             });
         },
-        uploadExcel: function (form) {
-            $http.post(adminurl + form.model + '/generateExcel', {
+        uploadExcel: function (form, callback) {
+            $http.post(adminurl + form.model + '/import', {
                 file: form.file
             }).success(callback);
 

@@ -2,12 +2,13 @@ var schema = new Schema({
     name: {
         type: String,
         required: true,
-        excel: true
+        excel: true,
     },
     email: {
         type: String,
         validate: validators.isEmail(),
-        excel: "User Email"
+        excel: "User Email",
+        unique: true
     },
     dob: {
         type: Date,
@@ -85,9 +86,31 @@ module.exports = mongoose.model('User', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "user", "user"));
 var model = {
-
+    import: function (data, callback) {
+        var Model = this;
+        var retVal = [];
+        async.eachSeries(data, function (n, callback) {
+            Model(n).save(n, function (err, data) {
+                if (err) {
+                    err.val = data;
+                    retVal.push(err);
+                } else {
+                    retVal.push(data._id);
+                }
+                callback();
+            });
+        }, function (err) {
+            if (err) {
+                callback(err, data);
+            } else {
+                callback(err, {
+                    total: retVal.length,
+                    value: retVal
+                });
+            }
+        });
+    },
     generateExcel: function (name, res) {
-        console.log(name);
         var Model = this;
         Model.find().exec(function (err, data) {
 

@@ -1119,64 +1119,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.excelUploaded = function () {
         console.log("Excel is uploaded with name " + $scope.form.file);
         NavigationService.uploadExcel($scope.form, function (data) {
-            $scope.data = data;
+            $scope.data = data.data;
         });
     };
 
-    $scope.data = {
-        "total": 11,
-        "value": [
-            "582bfc524954ce2de1bfd0b7",
-            "582bfc524954ce2de1bfd0bc", {
-                "message": "Branch validation failed",
-                "name": "ValidationError",
-                "errors": {
-                    "office": {
-                        "message": "Path `office` is required.",
-                        "name": "ValidatorError",
-                        "properties": {
-                            "type": "required",
-                            "message": "Path `{PATH}` is required.",
-                            "path": "office"
-                        },
-                        "kind": "required",
-                        "path": "office"
-                    },
-                    "company": {
-                        "message": "Path `company` is required.",
-                        "name": "ValidatorError",
-                        "properties": {
-                            "type": "required",
-                            "message": "Path `{PATH}` is required.",
-                            "path": "company"
-                        },
-                        "kind": "required",
-                        "path": "company"
-                    },
-                    "shortName": {
-                        "message": "Path `shortName` is required.",
-                        "name": "ValidatorError",
-                        "properties": {
-                            "type": "required",
-                            "message": "Path `{PATH}` is required.",
-                            "path": "shortName"
-                        },
-                        "kind": "required",
-                        "path": "shortName"
-                    }
-                }
-            },
-            "582bfc524954ce2de1bfd0c6",
-            "582bfc524954ce2de1bfd0cb",
-            "582bfc524954ce2de1bfd0d0",
-            "582bfc524954ce2de1bfd0d6",
-            "582bfc524954ce2de1bfd0dc",
-            "582bfc524954ce2de1bfd0e2",
-            "582bfc524954ce2de1bfd0e7",
-            "582bfc524954ce2de1bfd0ec"
-        ]
 
-    };
 })
 
 .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
