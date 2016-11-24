@@ -17,8 +17,7 @@
                         <button class="btn btn-success"><i class="fa fa-table"></i> Download Excel Format </button>
                     </div>
                     <h4>Upload Excel File:</h4>
-                    {{form}}
-                    <upload-image type="excel" ng-model="form.file"></upload-image>
+                    <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();"></upload-image>
                 </div>
                 <div ng-if="data">
                     <h5>Upload Status:</h5>

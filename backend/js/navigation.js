@@ -17,6 +17,7 @@ var navigationservice = angular.module('navigationservice', [])
         getnav: function () {
             return navigation;
         },
+
         parseAccessToken: function (data, callback) {
             if (data) {
                 $.jStorage.set("accessToken", data);
@@ -86,7 +87,13 @@ var navigationservice = angular.module('navigationservice', [])
             }).success(function (data) {
                 callback(data, i);
             });
-        }
+        },
+        uploadExcel: function (form) {
+            $http.post(adminurl + form.model + '/generateExcel', {
+                file: form.file
+            }).success(callback);
+
+        },
 
     };
 });

@@ -152,7 +152,6 @@ firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
             callback: "&ngCallback"
         },
         link: function ($scope, element, attrs) {
-
             $scope.showImage = function () {
                 console.log($scope.image);
             };

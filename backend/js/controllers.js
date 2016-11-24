@@ -1112,7 +1112,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     $scope.form = {
-        file: null
+        file: null,
+        model: $stateParams.model
+    };
+
+    $scope.excelUploaded = function () {
+        console.log("Excel is uploaded with name " + $scope.form.file);
+        NavigationService.uploadExcel($scope.form, function (data) {
+            $scope.data = data;
+        });
     };
 
     $scope.data = {
