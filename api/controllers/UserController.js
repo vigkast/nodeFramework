@@ -54,6 +54,9 @@ var controller = {
         } else {
             res.callback("Access Denied for Database Backup");
         }
+    },
+    generateExcel: function (req, res) {
+        User.generateExcel(req.modelName, res);
     }
 };
 module.exports = _.assign(module.exports, controller);

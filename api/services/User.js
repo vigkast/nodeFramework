@@ -1,18 +1,39 @@
 var schema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        excel: true
     },
     email: {
         type: String,
-        validate: validators.isEmail()
+        validate: validators.isEmail(),
+        excel: "User Email"
     },
     dob: {
-        type: Date
+        type: Date,
+        excel: {
+            name: "Birthday",
+            modify: function (val, data) {
+                return moment(val).format("MMM DD YYYY");
+            }
+        }
     },
     photo: {
         type: String,
-        default: ""
+        default: "",
+        excel: [{
+            name: "Photo Val"
+        }, {
+            name: "Photo String",
+            modify: function (val, data) {
+                return "http://abc/" + val;
+            }
+        }, {
+            name: "Photo Kebab",
+            modify: function (val, data) {
+                return data.name + " " + moment(data.dob).format("MMM DD YYYY");
+            }
+        }]
     },
     password: {
         type: String,
@@ -65,6 +86,69 @@ module.exports = mongoose.model('User', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "user", "user"));
 var model = {
 
+    generateExcel: function (name, res) {
+        console.log(name);
+        var Model = this;
+        Model.find().exec(function (err, data) {
+
+            var data3 = _.map(data, function (data2) {
+                return modifyForExcel(data2);
+            });
+
+            function schamaObjectValConversion(newObj, schExcel, obj, key, value) {
+                var name = key;
+                if (schExcel.name) {
+                    name = schExcel.name;
+                }
+                if (schExcel.modify) {
+                    newObj[name] = schExcel.modify(value, obj);
+                } else {
+                    newObj[name] = value;
+                }
+            }
+
+            function modifyForExcel(obj) {
+                var newObj = {};
+
+                _.each(schema.obj, function (sch, key) {
+
+                    var value = obj[key];
+                    switch (typeof sch.excel) {
+
+                        case "boolean":
+                            {
+                                newObj[key] = value;
+                            }
+                            break;
+                        case "string":
+                            {
+                                newObj[sch.excel] = value;
+                            }
+                            break;
+                        case "object":
+                            {
+                                if (_.isArray(sch.excel)) {
+                                    _.each(sch.excel, function (singleExcel) {
+                                        schamaObjectValConversion(newObj, singleExcel, obj, key, value);
+                                    });
+
+                                } else {
+                                    schamaObjectValConversion(newObj, sch.excel, obj, key, value);
+
+                                }
+                            }
+                            break;
+                    }
+
+                });
+                return newObj;
+            }
+
+
+            Config.generateExcel(name, data3, res);
+
+        });
+    },
     existsSocial: function (user, callback) {
         var Model = this;
         Model.findOne({

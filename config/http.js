@@ -59,6 +59,7 @@ module.exports.http = {
             req.models = req.path.split("/");
             // console.log(req.models);
             req.model = mongoose.models[_.upperFirst(req.models[2])];
+            req.modelName = _.upperFirst(req.models[2]);
 
 
             if (req.body && req.body._accessToken) {
