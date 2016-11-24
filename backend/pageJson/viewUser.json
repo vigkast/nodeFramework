@@ -51,7 +51,8 @@
         "icon": "delete",
         "class": "btn-warning",
         "type": "redirect",
-        "action": "uploadcsv"
+        "action": "excel-upload/User",
+        "linkType": "internal"
     }, {
         "name": "Create",
         "icon": "plus",

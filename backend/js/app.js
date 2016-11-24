@@ -71,7 +71,7 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
     })
 
     .state('excel-upload', {
-        url: "/excel-upload",
+        url: "/excel-upload/:model",
         templateUrl: "views/template.html",
         controller: 'ExcelUploadCtrl'
     })
@@ -148,6 +148,7 @@ firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
         templateUrl: 'views/directive/uploadFile.html',
         scope: {
             model: '=ngModel',
+            type: "@type",
             callback: "&ngCallback"
         },
         link: function ($scope, element, attrs) {
@@ -156,7 +157,10 @@ firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
                 console.log($scope.image);
             };
             $scope.check = true;
-            $scope.type = "img";
+            console.log($scope.type);
+            if (!$scope.type) {
+                $scope.type = "image";
+            }
             $scope.isMultiple = false;
             $scope.inObject = false;
             if (attrs.multiple || attrs.multiple === "") {
