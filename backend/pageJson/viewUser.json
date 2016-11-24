@@ -44,7 +44,8 @@
         "icon": "print",
         "class": "btn-danger",
         "type": "redirect",
-        "action": "excelexport"
+        "action": "User/generateExcel",
+        "linkType": "admin"
     }, {
         "name": "Upload Excel",
         "icon": "delete",

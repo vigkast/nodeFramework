@@ -80,6 +80,12 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
       globalfunction.openModal(function (data) {
         console.log(data);
       });
+    } else if (action.type == "redirect") {
+      if (action.linkType == "admin") {
+        window.location.href = adminurl + action.action;
+      } else {
+        window.location.href = action.action;
+      }
     } else {
       if (value && action && action.fieldsToSend) {
         var keyword = {};
