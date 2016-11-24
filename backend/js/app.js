@@ -145,7 +145,7 @@ firstapp.directive('imageonload', function () {
 
 firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
     return {
-        templateUrl: 'backend/views/directive/uploadFile.html',
+        templateUrl: 'views/directive/uploadFile.html',
         scope: {
             model: '=ngModel',
             callback: "&ngCallback"
