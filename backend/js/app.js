@@ -145,7 +145,7 @@ firstapp.directive('imageonload', function () {
 
 firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
     return {
-        templateUrl: '/frontend/views/directive/uploadFile.html',
+        templateUrl: 'backend/views/directive/uploadFile.html',
         scope: {
             model: '=ngModel',
             callback: "&ngCallback"
@@ -706,5 +706,11 @@ firstapp.directive('detailField', function ($http, $filter, JsonService) {
         link: function ($scope, element, attrs) {
 
         }
+    };
+});
+
+firstapp.filter('urlencoder', function () {
+    return function (input) {
+        return window.encodeURIComponent(input);
     };
 });
