@@ -1,8 +1,8 @@
 {
   "name": "nodeapp",
   "private": true,
-  "version": "0.0.0",
-  "description": "a Sails application",
+  "version": "0.0.1",
+  "description": "A Wohlig Application",
   "keywords": [],
   "dependencies": {
     "chalk": "^1.1.3",
@@ -46,7 +46,6 @@
     "mongoose-validators": "^0.1.0",
     "monguurl": "^0.1.0",
     "node-xlsx": "^0.7.4",
-    "npm": "^3.10.6",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-google-auth": "^1.0.1",
