@@ -25,6 +25,26 @@ var controller = {
             res.callback("Please provide Valid AccessToken", null);
         }
     },
+    pdf: function (req, res) {
+        var pdf = require('html-pdf');
+        var html = fs.readFileSync('./views/pdf/demo.html', 'utf8');
+        var options = {
+            format: 'A4'
+        };
+        var id = mongoose.Types.ObjectId();
+        var newFilename = id + ".pdf";
+        var writestream = gfs.createWriteStream({
+            filename: newFilename
+        });
+        writestream.on('finish', function () {
+            res.callback(null, {
+                name: newFilename
+            });
+        });
+        pdf.create(html).toStream(function (err, stream) {
+            stream.pipe(writestream);
+        });
+    },
     backupDatabase: function (req, res) {
         var q = req.ip.search("127.0.0.1");
         if (q >= 0) {

@@ -5,19 +5,10 @@
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
-var mongoose = require('mongoose');
-var Grid = require('gridfs-stream');
-var fs = require("fs");
-var lwip = require("lwip");
-var process = require('child_process');
-var lodash = require('lodash');
-var moment = require('moment');
-var MaxImageSize = 1600;
-var request = require("request");
 
-var gfs = Grid(mongoose.connections[0].db, mongoose);
-gfs.mongo = mongoose.mongo;
-var Schema = mongoose.Schema;
+var MaxImageSize = 1600;
+
+
 
 var schema = new Schema({
     name: String,
