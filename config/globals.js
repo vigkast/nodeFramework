@@ -76,7 +76,8 @@ global["gfs"] = Grid(mongoose.connections[0].db, mongoose);
 gfs.mongo = mongoose.mongo;
 
 //Image Library
-global["lwip"] = require("lwip");
+global["stream"] = require('stream');
+global["Jimp"] = require("jimp");
 
 // Util Globals
 global["moment"] = require("moment");

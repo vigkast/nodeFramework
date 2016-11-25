@@ -116,6 +116,13 @@ var models = {
         var writestream = gfs.createWriteStream({
             filename: newFilename
         });
+        writestream.on('finish', function () {
+            callback(null, {
+                name: newFilename
+            });
+            fs.unlink(filename);
+        });
+
         var imageStream = fs.createReadStream(filename);
 
         function writer2(metaValue) {
@@ -132,138 +139,34 @@ var models = {
             fs.createReadStream(filename).pipe(writestream2);
         }
 
+
+
         if (extension == "png" || extension == "jpg" || extension == "gif") {
-            lwip.open(filename, extension, function (err, image) {
+            Jimp.read(filename, function (err, image) {
                 if (err) {
-                    console.log(err);
                     callback(err, null);
                 } else {
-                    var upImage = {
-                        width: image.width(),
-                        height: image.height(),
-                        ratio: image.width() / image.height()
-                    };
-
-                    if (upImage.width > upImage.height) {
-                        if (upImage.width > MaxImageSize) {
-                            image.resize(MaxImageSize, MaxImageSize / (upImage.width / upImage.height), function (err, image2) {
-                                if (err) {
-                                    console.log(err);
-                                    callback(err, null);
-                                } else {
-                                    upImage = {
-                                        width: image2.width(),
-                                        height: image2.height(),
-                                        ratio: image2.width() / image2.height()
-                                    };
-                                    image2.writeFile(filename, function (err) {
-                                        writer2(upImage);
-                                    });
-                                }
-                            });
-                        } else {
-                            writer2(upImage);
-                        }
+                    if (image.bitmap.width > MaxImageSize || image.bitmap.height > MaxImageSize) {
+                        image.scaleToFit(MaxImageSize, MaxImageSize).getBuffer(Jimp.AUTO, function (err, imageBuf) {
+                            var bufferStream = new stream.PassThrough();
+                            bufferStream.end(imageBuf);
+                            bufferStream.pipe(writestream);
+                        });
                     } else {
-                        if (upImage.height > MaxImageSize) {
-                            image.resize((upImage.width / upImage.height) * MaxImageSize, MaxImageSize, function (err, image2) {
-                                if (err) {
-                                    console.log(err);
-                                    callback(err, null);
-                                } else {
-                                    upImage = {
-                                        width: image2.width(),
-                                        height: image2.height(),
-                                        ratio: image2.width() / image2.height()
-                                    };
-                                    image2.writeFile(filename, function (err) {
-                                        writer2(upImage);
-                                    });
-                                }
-                            });
-                        } else {
-                            writer2(upImage);
-                        }
+                        image.getBuffer(Jimp.AUTO, function (err, imageBuf) {
+                            var bufferStream = new stream.PassThrough();
+                            bufferStream.end(imageBuf);
+                            bufferStream.pipe(writestream);
+                        });
                     }
+
                 }
+
             });
         } else {
             imageStream.pipe(writestream);
         }
 
-        writestream.on('finish', function () {
-            callback(null, {
-                name: newFilename
-            });
-            fs.unlink(filename);
-        });
-    },
-
-    import: function (name) {
-        var jsonExcel = xlsx.parse(name);
-        var retVal = [];
-        var firstRow = _.slice(jsonExcel[0].data, 0, 1)[0];
-        var excelDataToExport = _.slice(jsonExcel[0].data, 1);
-        var dataObj = [];
-        _.each(excelDataToExport, function (val, key) {
-            dataObj.push({});
-            _.each(val, function (value, key2) {
-                dataObj[key][firstRow[key2]] = value;
-            });
-        });
-        return dataObj;
-    },
-    importGS: function (filename, callback) {
-        var readstream = gfs.createReadStream({
-            filename: filename
-        });
-        readstream.on('error', function (err) {
-            res.json({
-                value: false,
-                error: err
-            });
-        });
-        var buffers = [];
-        readstream.on('data', function (buffer) {
-            buffers.push(buffer);
-        });
-        readstream.on('end', function () {
-            var buffer = Buffer.concat(buffers);
-            callback(null, Config.import(buffer));
-        });
-    },
-    generateExcel: function (name, found, res) {
-        // name = _.kebabCase(name);
-        var excelData = [];
-        _.each(found, function (singleData) {
-            var singleExcel = {};
-            _.each(singleData, function (n, key) {
-                if (key != "__v" && key != "createdAt" && key != "updatedAt") {
-                    singleExcel[key] = n;
-                }
-            });
-            excelData.push(singleExcel);
-        });
-        var xls = json2xls(excelData);
-        var folder = "./.tmp/";
-        var path = name + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
-        var finalPath = folder + path;
-        fs.writeFile(finalPath, xls, 'binary', function (err) {
-            if (err) {
-                res.callback(err, null);
-            } else {
-                fs.readFile(finalPath, function (err, excel) {
-                    if (err) {
-                        res.callback(err, null);
-                    } else {
-                        res.set('Content-Type', "application/octet-stream");
-                        res.set('Content-Disposition', "attachment;filename=" + path);
-                        res.send(excel);
-                        fs.unlink(finalPath);
-                    }
-                });
-            }
-        });
 
     },
     readUploaded: function (filename, width, height, style, res) {
@@ -396,6 +299,75 @@ var models = {
         }
         //error handling, e.g. file does not exist
     },
+
+    import: function (name) {
+        var jsonExcel = xlsx.parse(name);
+        var retVal = [];
+        var firstRow = _.slice(jsonExcel[0].data, 0, 1)[0];
+        var excelDataToExport = _.slice(jsonExcel[0].data, 1);
+        var dataObj = [];
+        _.each(excelDataToExport, function (val, key) {
+            dataObj.push({});
+            _.each(val, function (value, key2) {
+                dataObj[key][firstRow[key2]] = value;
+            });
+        });
+        return dataObj;
+    },
+    importGS: function (filename, callback) {
+        var readstream = gfs.createReadStream({
+            filename: filename
+        });
+        readstream.on('error', function (err) {
+            res.json({
+                value: false,
+                error: err
+            });
+        });
+        var buffers = [];
+        readstream.on('data', function (buffer) {
+            buffers.push(buffer);
+        });
+        readstream.on('end', function () {
+            var buffer = Buffer.concat(buffers);
+            callback(null, Config.import(buffer));
+        });
+    },
+    generateExcel: function (name, found, res) {
+        // name = _.kebabCase(name);
+        var excelData = [];
+        _.each(found, function (singleData) {
+            var singleExcel = {};
+            _.each(singleData, function (n, key) {
+                if (key != "__v" && key != "createdAt" && key != "updatedAt") {
+                    singleExcel[key] = n;
+                }
+            });
+            excelData.push(singleExcel);
+        });
+        var xls = json2xls(excelData);
+        var folder = "./.tmp/";
+        var path = name + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
+        var finalPath = folder + path;
+        fs.writeFile(finalPath, xls, 'binary', function (err) {
+            if (err) {
+                res.callback(err, null);
+            } else {
+                fs.readFile(finalPath, function (err, excel) {
+                    if (err) {
+                        res.callback(err, null);
+                    } else {
+                        res.set('Content-Type', "application/octet-stream");
+                        res.set('Content-Disposition', "attachment;filename=" + path);
+                        res.send(excel);
+                        fs.unlink(finalPath);
+                    }
+                });
+            }
+        });
+
+    },
+
     excelDateToDate: function isDate(value) {
         value = (value - (25567 + 1)) * 86400 * 1000;
         var mom = moment(value);
