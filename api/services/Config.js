@@ -125,22 +125,6 @@ var models = {
 
         var imageStream = fs.createReadStream(filename);
 
-        function writer2(metaValue) {
-            var writestream2 = gfs.createWriteStream({
-                filename: newFilename,
-                metadata: metaValue
-            });
-            writestream2.on('finish', function () {
-                callback(null, {
-                    name: newFilename
-                });
-                fs.unlink(filename);
-            });
-            fs.createReadStream(filename).pipe(writestream2);
-        }
-
-
-
         if (extension == "png" || extension == "jpg" || extension == "gif") {
             Jimp.read(filename, function (err, image) {
                 if (err) {
@@ -172,7 +156,8 @@ var models = {
     readUploaded: function (filename, width, height, style, res) {
         res.set({
             'Cache-Control': 'public, max-age=31557600',
-            'Expires': new Date(Date.now() + 345600000).toUTCString()
+            'Expires': new Date(Date.now() + 345600000).toUTCString(),
+            'Content-Type': 'image/jpeg'
         });
         var readstream = gfs.createReadStream({
             filename: filename
@@ -183,17 +168,52 @@ var models = {
                 error: err
             });
         });
+        var buf;
+        var newNameExtire;
+        var bufs = [];
+        var proceedI = 0;
+        var wi;
+        var he;
+        readstream.on('data', function (d) {
+            bufs.push(d);
+        });
+        readstream.on('end', function () {
+            buf = Buffer.concat(bufs);
+            proceed();
+        });
 
-        function writer2(filename, gridFSFilename, metaValue) {
+
+        function proceed() {
+            proceedI++;
+            if (proceedI === 2) {
+                Jimp.read(buf, function (err, image) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (style === "contain" && width && height) {
+                            image.contain(width, height).getBuffer(Jimp.AUTO, writer2);
+                        } else if (style === "cover" && (width && width > 0) && (height && height > 0)) {
+                            image.cover(width, height).getBuffer(Jimp.AUTO, writer2);
+                        } else if ((width && width > 0) && (height && height > 0)) {
+                            image.resize(width, height).getBuffer(Jimp.AUTO, writer2);
+                        } else if ((width && width > 0) && !(height && height > 0)) {
+                            image.resize(width, Jimp.AUTO).getBuffer(Jimp.AUTO, writer2);
+                        } else {
+                            image.resize(Jimp.AUTO, height).getBuffer(Jimp.AUTO, writer2);
+                        }
+                    }
+                });
+            }
+        }
+
+        function writer2(err, imageBuf) {
             var writestream2 = gfs.createWriteStream({
-                filename: gridFSFilename,
-                metadata: metaValue
+                filename: newNameExtire,
             });
-            writestream2.on('finish', function () {
-                fs.unlink(filename);
-            });
-            fs.createReadStream(filename).pipe(res);
-            fs.createReadStream(filename).pipe(writestream2);
+            var bufferStream = new stream.PassThrough();
+            bufferStream.end(imageBuf);
+            bufferStream.pipe(writestream2);
+            res.send(imageBuf);
         }
 
         function read2(filename2) {
@@ -223,12 +243,12 @@ var models = {
             } else {
                 newName += "-" + 0;
             }
-            if (style && (style == "fill" || style == "cover")) {
+            if (style && (style == "contain" || style == "cover")) {
                 newName += "-" + style;
             } else {
                 newName += "-" + 0;
             }
-            var newNameExtire = newName + "." + extension;
+            newNameExtire = newName + "." + extension;
             gfs.exist({
                 filename: newNameExtire
             }, function (err, found) {
@@ -241,56 +261,7 @@ var models = {
                 if (found) {
                     read2(newNameExtire);
                 } else {
-                    var imageStream = fs.createWriteStream('./.tmp/uploads/' + filename);
-                    readstream.pipe(imageStream);
-                    imageStream.on("finish", function () {
-                        lwip.open('./.tmp/uploads/' + filename, function (err, image) {
-                            ImageWidth = image.width();
-                            ImageHeight = image.height();
-                            var newWidth = 0;
-                            var newHeight = 0;
-                            var pRatio = width / height;
-                            var iRatio = ImageWidth / ImageHeight;
-                            if (width && height) {
-                                newWidth = width;
-                                newHeight = height;
-                                switch (style) {
-                                    case "fill":
-                                        if (pRatio > iRatio) {
-                                            newHeight = height;
-                                            newWidth = height * (ImageWidth / ImageHeight);
-                                        } else {
-                                            newWidth = width;
-                                            newHeight = width / (ImageWidth / ImageHeight);
-                                        }
-                                        break;
-                                    case "cover":
-                                        if (pRatio < iRatio) {
-                                            newHeight = height;
-                                            newWidth = height * (ImageWidth / ImageHeight);
-                                        } else {
-                                            newWidth = width;
-                                            newHeight = width / (ImageWidth / ImageHeight);
-                                        }
-                                        break;
-                                }
-                            } else if (width) {
-                                newWidth = width;
-                                newHeight = width / (ImageWidth / ImageHeight);
-                            } else if (height) {
-                                newWidth = height * (ImageWidth / ImageHeight);
-                                newHeight = height;
-                            }
-                            image.resize(parseInt(newWidth), parseInt(newHeight), function (err, image2) {
-                                image2.writeFile('./.tmp/uploads/' + filename, function (err) {
-                                    writer2('./.tmp/uploads/' + filename, newNameExtire, {
-                                        width: newWidth,
-                                        height: newHeight
-                                    });
-                                });
-                            });
-                        });
-                    });
+                    proceed();
                 }
             });
             //else create a resized image and serve
