@@ -3,7 +3,6 @@ module.exports = {
         res.metaView();
     },
     download: function (req, res) {
-
         Config.readUploaded(req.param("filename"), null, null, null, res);
     },
     backend: function (req, res) {
@@ -30,7 +29,6 @@ module.exports = {
         }
 
         function decryptData(text) {
-
             if (text) {
                 if (moment.unix(text).isBetween(moment().add(-1, "minute"), moment().add(1, "minute"))) {
                     gitPull();
@@ -56,8 +54,5 @@ module.exports = {
 
             res.send(view);
         });
-
     }
-
-
 };
