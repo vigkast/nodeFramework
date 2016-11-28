@@ -74,6 +74,6 @@ var controller = {
         } else {
             res.callback("Access Denied for Database Backup");
         }
-    }
+    },
 };
 module.exports = _.assign(module.exports, controller);
