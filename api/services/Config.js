@@ -97,7 +97,7 @@ var models = {
                         break;
                 }
             } else {
-                callback("No Data Found for the ID", null);
+                callback(null, null);
             }
         });
 
