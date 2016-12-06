@@ -7,12 +7,14 @@
                 <div class="form-group" ng-class="{'form-invalid': formName.name.$invalid && formName.name.$touched}">
                     <label>Name*</label>
                     <input type="text" name="name" class="form-control" ng-model="formData.name" required>
+                    <span ng-show="formName.name.$touched && formName.name.$invalid">The name is required.</span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group" ng-class="{'form-invalid': formName.email.$invalid && formName.email.$touched}">
                     <label>Email*</label>
                     <input type="email" name="email" class="form-control" ng-model="formData.email" required>
+                    <span ng-show="formName.email.$touched && formName.email.$invalid">Please enter vaild email.</span>
                 </div>
             </div>
         </div>
@@ -21,6 +23,7 @@
                 <div class="form-group" ng-class="{'form-invalid': formName.query.$invalid && formName.query.$touched}">
                     <label>Query*</label>
                     <textarea name="query" class="form-control" ng-model="formData.query" required></textarea>
+                     <span ng-show="formName.query.$touched && formName.query.$invalid">Enter your Query.</span>
                 </div>
             </div>
         </div>
