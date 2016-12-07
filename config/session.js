@@ -64,7 +64,7 @@ module.exports.session = {
 
 
   url: 'mongodb://localhost:27017/' + global.database,
-  collection: 'sessions',
+  collection: 'sessionsForServer',
   auto_reconnect: false,
   ssl: false,
   stringify: true
