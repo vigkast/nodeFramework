@@ -125,7 +125,6 @@ var model = {
                         delete data3.password;
                         delete data3.forgotPassword;
                         delete data3.otp;
-                        console.log(data3);
                         callback(err, data3);
                     }
                 });
@@ -136,7 +135,6 @@ var model = {
                 delete data.otp;
                 data.googleAccessToken = user.googleAccessToken;
                 data.save(function () {});
-                console.log(data);
                 callback(err, data);
             }
         });
