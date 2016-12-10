@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
+    "angular": "1.5.8",
     "ace-builds": "https://github.com/ajaxorg/ace-builds.git#~1.2.2",
     "angular-aria": "~1.4.8",
     "angular-backtop": "*",
@@ -61,8 +62,5 @@
     "ui-router": "~0.2.15",
     "tinymce": "4.3.12",
     "angular-ui-swiper": "^2.3.6"
-  },
-  "resolutions": {
-    "angular": "1.5.8"
   }
 }
