@@ -346,6 +346,19 @@ var models = {
         } else {
             return undefined;
         }
+    },
+    downloadFromUrl: function (url, callback) {
+        var dest = "./.tmp/" + moment().valueOf() + "-" + _.last(url.split("/"));
+        var file = fs.createWriteStream(dest);
+        var request = http.get(url, function (response) {
+            response.pipe(file);
+            file.on('finish', function () {
+                Config.uploadFile(dest, callback);
+            });
+        }).on('error', function (err) {
+            fs.unlink(dest);
+            callback(err);
+        });
     }
 };
 module.exports = _.assign(module.exports, models);
