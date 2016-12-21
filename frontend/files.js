@@ -7,8 +7,8 @@ module.exports = [
   'bower_components/smart-app-banner/smart-app-banner.js',
 
   //Angular Libs
-  'bower_components/angular/angular.min.js',
-  'bower_components/angular-sanitize/angular-sanitize.min.js',
+  'bower_components/angular/angular.js',
+  'bower_components/angular-sanitize/angular-sanitize.js',
   'bower_components/angular-animate/angular-animate.min.js',
   'bower_components/angular-bootstrap/ui-bootstrap.min.js',
   'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
