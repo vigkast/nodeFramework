@@ -9,7 +9,7 @@ var navigationservice = angular.module('navigationservice', [])
     var navigation = [{
         name: "Users",
         classis: "active",
-        sref: "#/page/viewUser//",
+        sref: "#!/page/viewUser//",
         icon: "phone"
     }];
 
