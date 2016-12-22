@@ -31,7 +31,8 @@ var navigationservice = angular.module('navigationservice', [])
             var data = {
                 accessToken: $.jStorage.get("accessToken")
             };
-            $http.post(adminurl + 'user/profile', data).success(function (data) {
+            $http.post(adminurl + 'user/profile', data).then(function (data) {
+                data = data.data;
                 if (data.value === true) {
                     $.jStorage.set("profile", data.data);
                     callback();
@@ -52,24 +53,35 @@ var navigationservice = angular.module('navigationservice', [])
         },
 
         search: function (url, formData, i, callback) {
-            $http.post(adminurl + url, formData).success(function (data) {
+            $http.post(adminurl + url, formData).then(function (data) {
+                data = data.data;
                 callback(data, i);
             });
         },
         delete: function (url, formData, callback) {
-            $http.post(adminurl + url, formData).success(function (data) {
+            $http.post(adminurl + url, formData).then(function (data) {
+                data = data.data;
                 callback(data);
             });
         },
         countrySave: function (formData, callback) {
-            $http.post(adminurl + 'country/save', formData).success(callback);
+            $http.post(adminurl + 'country/save', formData).then(function (data) {
+                data = data.data;
+                callback(data);
+
+            });
         },
 
         apiCall: function (url, formData, callback) {
-            $http.post(adminurl + url, formData).success(callback);
+            $http.post(adminurl + url, formData).then(function (data) {
+                data = data.data;
+                callback(data);
+
+            });
         },
         searchCall: function (url, formData, i, callback) {
-            $http.post(adminurl + url, formData).success(function (data) {
+            $http.post(adminurl + url, formData).then(function (data) {
+                data = data.data;
                 callback(data, i);
             });
         },
@@ -77,21 +89,30 @@ var navigationservice = angular.module('navigationservice', [])
         getOneCountry: function (id, callback) {
             $http.post(adminurl + 'country/getOne', {
                 _id: id
-            }).success(callback);
+            }).then(function (data) {
+                data = data.data;
+                callback(data);
+
+            });
         },
         getLatLng: function (address, i, callback) {
             $http({
                 url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyC62zlixVsjaq4zDaL4cefNCubjCgxkte4",
                 method: 'GET',
                 withCredentials: false,
-            }).success(function (data) {
+            }).then(function (data) {
+                data = data.data;
                 callback(data, i);
             });
         },
         uploadExcel: function (form, callback) {
             $http.post(adminurl + form.model + '/import', {
                 file: form.file
-            }).success(callback);
+            }).then(function (data) {
+                data = data.data;
+                callback(data);
+
+            });
 
         },
 
