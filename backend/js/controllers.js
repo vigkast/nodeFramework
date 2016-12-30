@@ -1122,8 +1122,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.data = data.data;
         });
     };
-
-
 })
 
 .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
