@@ -152,8 +152,8 @@ firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
             callback: "&ngCallback"
         },
         link: function ($scope, element, attrs) {
+            console.log($scope.model);
             $scope.showImage = function () {
-                console.log($scope.image);
             };
             $scope.check = true;
             if (!$scope.type) {
@@ -228,10 +228,9 @@ firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
                     },
                     transformRequest: angular.identity
                 }).then(function (data) {
-                    data=data.data;
+                    data = data.data;
                     $scope.uploadStatus = "uploaded";
                     if ($scope.isMultiple) {
-
                         if ($scope.inObject) {
                             $scope.model.push({
                                 "image": data[0]
@@ -243,12 +242,13 @@ firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
                             $scope.model.push(data[0]);
                         }
                     } else {
-                        if (_.endsWith(data, ".pdf")) {
+                        if (_.endsWith(data.data[0], ".pdf")) {
                             $scope.type = "pdf";
                         } else {
-                            $scope.type = "img";
+                            $scope.type = "image";
                         }
-                        $scope.model = data[0];
+                        $scope.model = data.data[0];
+                        console.log($scope.model,'model means blob')
 
                     }
                     $timeout(function () {
