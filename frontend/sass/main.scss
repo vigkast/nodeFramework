@@ -1,3 +1,4 @@
+$output-bourbon-deprecation-warnings: false;
 @import "../../bower_components/bourbon/app/assets/stylesheets/bourbon";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap-sprockets";
@@ -124,6 +125,14 @@ footer {
 .img-full {
     width: 100%;
     display: block;
+}
+
+header {
+    @include transition(all 300ms ease);
+}
+
+.nav-up {
+    @include transform(translateY(-100%));
 }
 
 @import "fancybox-override";
