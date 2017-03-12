@@ -12,7 +12,8 @@ module.exports = function (grunt) {
                 }
             },
             port: 8080,
-            notify: false
+            notify: false,
+            browser: "google chrome",
         }
     });
 
