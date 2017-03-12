@@ -1,1 +1,6 @@
-@media (max-width: $screen-md-max) {}
+ @media (max-width: $screen-md-max) {
+     // Desktop
+     body {
+         background: orange;
+     }
+ }
