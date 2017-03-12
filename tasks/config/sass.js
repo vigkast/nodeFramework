@@ -22,7 +22,7 @@ module.exports = function (grunt) {
                 sourceMap: false
             },
             files: {
-                ".tmp/public/frontend/css/main.css": "frontend/sass/main.scss"
+                ".tmp/public/frontend/css/import.css": "frontend/sass/import.scss"
             }
         }
     });
