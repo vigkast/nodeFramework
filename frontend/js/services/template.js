@@ -8,10 +8,10 @@ templateService.service('TemplateService', function () {
     this.year = d.getFullYear();
 
     this.init = function () {
-        this.header = "views/header.html";
-        this.menu = "views/menu.html";
+        this.header = "views/template/header.html";
+        this.menu = "views/template/menu.html";
         this.content = "views/content/content.html";
-        this.footer = "views/footer.html";
+        this.footer = "views/template/footer.html";
     };
 
     this.getHTML = function (page) {

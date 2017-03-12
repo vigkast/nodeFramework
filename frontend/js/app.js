@@ -16,17 +16,19 @@ var frontend = angular.module('frontend', [
 
 // Define all the routes below
 frontend.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+    var tempateURL = "views/template/template.html"; //Default Template URL
+
     // for http request with session
     $httpProvider.defaults.withCredentials = true;
     $stateProvider
         .state('home', {
             url: "/",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'HomeCtrl'
         })
         .state('form', {
             url: "/form",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'FormCtrl'
         });
     $urlRouterProvider.otherwise("/");
