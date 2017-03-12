@@ -1,4 +1,4 @@
-frontend.service('TemplateService', function () {
+myApp.service('TemplateService', function () {
     this.title = "Home";
     this.meta = "";
     this.metadesc = "";

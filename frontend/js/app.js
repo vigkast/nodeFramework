@@ -1,5 +1,5 @@
 // Link all the JS Docs here
-var frontend = angular.module('frontend', [
+var myApp = angular.module('myApp', [
     'ui.router',
     'pascalprecht.translate',
     'angulartics',
@@ -12,7 +12,7 @@ var frontend = angular.module('frontend', [
 ]);
 
 // Define all the routes below
-frontend.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
     var tempateURL = "views/template/template.html"; //Default Template URL
 
     // for http request with session
@@ -33,7 +33,7 @@ frontend.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
 });
 
 // For Language JS
-frontend.config(function ($translateProvider) {
+myApp.config(function ($translateProvider) {
     $translateProvider.translations('en', LanguageEnglish);
     $translateProvider.translations('hi', LanguageHindi);
     $translateProvider.preferredLanguage('en');

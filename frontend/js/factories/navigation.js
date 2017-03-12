@@ -1,4 +1,4 @@
-frontend.factory('NavigationService', function () {
+myApp.factory('NavigationService', function () {
     var navigation = [{
         name: "Home",
         classis: "active",

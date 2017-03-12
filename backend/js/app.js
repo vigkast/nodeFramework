@@ -1,5 +1,5 @@
 // JavaScript Document
-var firstapp = angular.module('firstapp', [
+var myApp = angular.module('myApp', [
     'ui.router',
     'phonecatControllers',
     'templateservicemod',
@@ -13,81 +13,81 @@ var firstapp = angular.module('firstapp', [
     "jsonservicemod"
 ]);
 
-firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
     // for http request with session
     $httpProvider.defaults.withCredentials = true;
     $stateProvider
 
         .state('dashboard', {
-        url: "/dashboard",
-        templateUrl: "views/template.html",
-        controller: 'DashboardCtrl',
-    })
+            url: "/dashboard",
+            templateUrl: "views/template.html",
+            controller: 'DashboardCtrl',
+        })
 
-    .state('login', {
-        url: "/login",
-        templateUrl: "views/login.html",
-        controller: 'LoginCtrl'
-    })
+        .state('login', {
+            url: "/login",
+            templateUrl: "views/login.html",
+            controller: 'LoginCtrl'
+        })
 
-    .state('page', {
-        url: "/page/:id/{page:.*}/{keyword:.*}",
-        templateUrl: "views/template.html",
-        controller: 'PageJsonCtrl'
-    })
+        .state('page', {
+            url: "/page/:id/{page:.*}/{keyword:.*}",
+            templateUrl: "views/template.html",
+            controller: 'PageJsonCtrl'
+        })
 
-    .state('loginapp', {
-        url: "/login/:id",
-        templateUrl: "views/login.html",
-        controller: 'LoginCtrl'
-    })
+        .state('loginapp', {
+            url: "/login/:id",
+            templateUrl: "views/login.html",
+            controller: 'LoginCtrl'
+        })
 
-    .state('country-list', {
-        url: "/country-list/{page:.*}/{keyword:.*}",
-        templateUrl: "views/template.html",
-        controller: 'CountryCtrl',
-        params: {
-            page: "1",
-            keyword: ""
-        }
-    })
+        .state('country-list', {
+            url: "/country-list/{page:.*}/{keyword:.*}",
+            templateUrl: "views/template.html",
+            controller: 'CountryCtrl',
+            params: {
+                page: "1",
+                keyword: ""
+            }
+        })
 
-    .state('createcountry', {
-        url: "/country-create",
-        templateUrl: "views/template.html",
-        controller: 'CreateCountryCtrl'
-    })
+        .state('createcountry', {
+            url: "/country-create",
+            templateUrl: "views/template.html",
+            controller: 'CreateCountryCtrl'
+        })
 
-    .state('editcountry', {
-        url: "/country-edit/:id",
-        templateUrl: "views/template.html",
-        controller: 'EditCountryCtrl'
-    })
+        .state('editcountry', {
+            url: "/country-edit/:id",
+            templateUrl: "views/template.html",
+            controller: 'EditCountryCtrl'
+        })
 
-    .state('schema-creator', {
-        url: "/schema-creator",
-        templateUrl: "views/template.html",
-        controller: 'SchemaCreatorCtrl'
-    })
+        .state('schema-creator', {
+            url: "/schema-creator",
+            templateUrl: "views/template.html",
+            controller: 'SchemaCreatorCtrl'
+        })
 
-    .state('excel-upload', {
-        url: "/excel-upload/:model",
-        templateUrl: "views/template.html",
-        controller: 'ExcelUploadCtrl'
-    })
+        .state('excel-upload', {
+            url: "/excel-upload/:model",
+            templateUrl: "views/template.html",
+            controller: 'ExcelUploadCtrl'
+        })
 
-    .state('jagz', {
-        url: "/jagz",
-        templateUrl: "views/jagz.html",
-        controller: 'JagzCtrl'
-    });
+        .state('jagz', {
+            url: "/jagz",
+            templateUrl: "views/jagz.html",
+            controller: 'JagzCtrl'
+        });
 
     $urlRouterProvider.otherwise("/dashboard");
     $locationProvider.html5Mode(isproduction);
 });
 
 
-firstapp.directive('dateModel', function ($filter, $timeout) {
+myApp.directive('dateModel', function ($filter, $timeout) {
     return {
         scope: {
             model: '=ngModel'
@@ -103,7 +103,7 @@ firstapp.directive('dateModel', function ($filter, $timeout) {
     };
 });
 
-firstapp.filter('uploadpath', function () {
+myApp.filter('uploadpath', function () {
     return function (input, width, height, style) {
         var other = "";
         if (width && width !== "") {
@@ -125,13 +125,13 @@ firstapp.filter('uploadpath', function () {
     };
 });
 
-firstapp.filter('showdate', function () {
+myApp.filter('showdate', function () {
     return function (input) {
         return new Date(input);
     };
 });
 
-firstapp.directive('imageonload', function () {
+myApp.directive('imageonload', function () {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
@@ -143,7 +143,7 @@ firstapp.directive('imageonload', function () {
 });
 
 
-firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
+myApp.directive('uploadImage', function ($http, $filter, $timeout) {
     return {
         templateUrl: 'views/directive/uploadFile.html',
         scope: {
@@ -153,8 +153,7 @@ firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
         },
         link: function ($scope, element, attrs) {
             console.log($scope.model);
-            $scope.showImage = function () {
-            };
+            $scope.showImage = function () {};
             $scope.check = true;
             if (!$scope.type) {
                 $scope.type = "image";
@@ -248,7 +247,7 @@ firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
                             $scope.type = "image";
                         }
                         $scope.model = data.data[0];
-                        console.log($scope.model,'model means blob')
+                        console.log($scope.model, 'model means blob')
 
                     }
                     $timeout(function () {
@@ -263,7 +262,7 @@ firstapp.directive('uploadImage', function ($http, $filter, $timeout) {
 
 
 
-firstapp.directive('onlyDigits', function () {
+myApp.directive('onlyDigits', function () {
     return {
         require: 'ngModel',
         restrict: 'A',
@@ -293,7 +292,7 @@ firstapp.directive('onlyDigits', function () {
     };
 });
 
-firstapp.filter('propsFilter', function () {
+myApp.filter('propsFilter', function () {
     return function (items, props) {
         var out = [];
 
@@ -324,7 +323,7 @@ firstapp.filter('propsFilter', function () {
     };
 });
 
-firstapp.directive('img', function ($compile, $parse) {
+myApp.directive('img', function ($compile, $parse) {
     return {
         restrict: 'E',
         replace: false,
@@ -344,7 +343,7 @@ firstapp.directive('img', function ($compile, $parse) {
     };
 });
 
-firstapp.directive('fancyboxBox', function ($document) {
+myApp.directive('fancyboxBox', function ($document) {
     return {
         restrict: 'EA',
         replace: false,
@@ -369,7 +368,7 @@ firstapp.directive('fancyboxBox', function ($document) {
     };
 });
 
-firstapp.directive('menuOptions', function ($document) {
+myApp.directive('menuOptions', function ($document) {
     return {
         restrict: 'C',
         replace: false,
@@ -386,7 +385,7 @@ firstapp.directive('menuOptions', function ($document) {
     };
 });
 
-firstapp.filter('serverimage', function () {
+myApp.filter('serverimage', function () {
     return function (input, width, height, style) {
         if (input) {
             if (input.substr(0, 4) == "http") {
@@ -411,13 +410,13 @@ firstapp.filter('serverimage', function () {
     };
 });
 
-firstapp.filter('convDate', function () {
+myApp.filter('convDate', function () {
     return function (input) {
         return new Date(input);
     };
 });
 
-firstapp.filter('downloadImage', function () {
+myApp.filter('downloadImage', function () {
     return function (input) {
         if (input) {
             return adminurl + "download/" + input;
@@ -427,7 +426,7 @@ firstapp.filter('downloadImage', function () {
     };
 });
 
-firstapp.directive('oI', function ($document) {
+myApp.directive('oI', function ($document) {
     return {
         restrict: 'C',
         replace: false,
@@ -444,7 +443,7 @@ firstapp.directive('oI', function ($document) {
         }
     };
 });
-firstapp.directive('slimscroll', function ($document) {
+myApp.directive('slimscroll', function ($document) {
     return {
         restrict: 'EA',
         replace: false,
@@ -459,7 +458,7 @@ firstapp.directive('slimscroll', function ($document) {
     };
 });
 
-firstapp.directive('addressForm', function ($document) {
+myApp.directive('addressForm', function ($document) {
     return {
         templateUrl: 'views/directive/address-form.html',
         scope: {
@@ -510,7 +509,7 @@ firstapp.directive('addressForm', function ($document) {
     };
 });
 
-// firstapp.directive('box', function ($uibModal) {
+// myApp.directive('box', function ($uibModal) {
 //     return {
 //         templateUrl: 'views/directive/box.html',
 //         scope: {
@@ -542,7 +541,7 @@ firstapp.directive('addressForm', function ($document) {
 // });
 
 var aa = {};
-firstapp.directive('multipleSelect', function ($document, $timeout) {
+myApp.directive('multipleSelect', function ($document, $timeout) {
     return {
         templateUrl: 'views/directive/multiple-select.html',
         scope: {
@@ -613,7 +612,7 @@ firstapp.directive('multipleSelect', function ($document, $timeout) {
     };
 });
 
-firstapp.filter('ageFilter', function () {
+myApp.filter('ageFilter', function () {
     function calculateAge(birthday) { // birthday is a date
         var ageDifMs = Date.now() - birthday.getTime();
         var ageDate = new Date(ageDifMs); // miliseconds from epoch
@@ -624,7 +623,7 @@ firstapp.filter('ageFilter', function () {
         return calculateAge(birthdate);
     };
 });
-firstapp.filter('momentDate', function () {
+myApp.filter('momentDate', function () {
     return function (date, format) {
         if (!format) {
             format = "Do MMM YYYY, ddd";
@@ -632,7 +631,7 @@ firstapp.filter('momentDate', function () {
         return moment(date).format(format);
     };
 });
-firstapp.filter('capitalize', function () {
+myApp.filter('capitalize', function () {
     return function (input, all) {
         var reg = (all) ? /([^\W_]+[^\s-]*) */g : /([^\W_]+[^\s-]*)/;
         return (!!input) ? input.replace(reg, function (txt) {
@@ -641,13 +640,13 @@ firstapp.filter('capitalize', function () {
     };
 });
 
-firstapp.config(function ($translateProvider) {
+myApp.config(function ($translateProvider) {
     $translateProvider.translations('en', LanguageEnglish);
     $translateProvider.translations('hi', LanguageHindi);
     $translateProvider.preferredLanguage('en');
 });
 
-firstapp.directive('viewField', function ($http, $filter) {
+myApp.directive('viewField', function ($http, $filter) {
     return {
         templateUrl: 'views/directive/viewField.html',
         scope: {
@@ -683,7 +682,7 @@ firstapp.directive('viewField', function ($http, $filter) {
         }
     };
 });
-firstapp.directive('dateForm', function () {
+myApp.directive('dateForm', function () {
     return {
         scope: {
             ngModel: '=ngModel'
@@ -694,7 +693,7 @@ firstapp.directive('dateForm', function () {
     };
 });
 
-firstapp.directive('detailField', function ($http, $filter, JsonService) {
+myApp.directive('detailField', function ($http, $filter, JsonService) {
     return {
         templateUrl: 'views/directive/detailField.html',
         scope: {
@@ -711,7 +710,7 @@ firstapp.directive('detailField', function ($http, $filter, JsonService) {
     };
 });
 
-firstapp.filter('urlencoder', function () {
+myApp.filter('urlencoder', function () {
     return function (input) {
         return window.encodeURIComponent(input);
     };

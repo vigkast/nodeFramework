@@ -1,4 +1,4 @@
-frontend.factory('apiService', function ($http, $q, $timeout) {
+myApp.factory('apiService', function ($http, $q, $timeout) {
     return {
 
         // This is a demo Service for POST Method.

@@ -1,4 +1,4 @@
-frontend.directive('img', function ($compile, $parse) {
+myApp.directive('img', function ($compile, $parse) {
         return {
             restrict: 'E',
             replace: false,
