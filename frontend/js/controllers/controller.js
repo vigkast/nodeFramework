@@ -5,6 +5,9 @@ angular.module('mainController', ['templateService', 'navigationService', 'apiSe
         TemplateService.title = "Home"; //This is the Title of the Website
         $scope.navigation = NavigationService.getNavigation();
 
+        var a = _.times(100, function (n) {
+            return n;
+        });
         $scope.mySlides = [
             'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg',
             'http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg',
