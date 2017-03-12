@@ -5,6 +5,7 @@
   "description": "A Wohlig Application",
   "keywords": [],
   "dependencies": {
+    "autoprefixer": "^6.7.7",
     "chalk": "^1.1.3",
     "connect-mongo": "^1.1.0",
     "ejs": "2.3.4",
@@ -51,6 +52,7 @@
     "passport-google-auth": "^1.0.1",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
+    "postcss-cli": "^3.0.0-beta",
     "rand-token": "^0.2.1",
     "rc": "1.0.1",
     "request": "^2.74.0",
@@ -71,7 +73,9 @@
   "author": "wohlig",
   "license": "",
   "devDependencies": {
+    "grunt-browser-sync": "^2.2.0",
     "grunt-contrib-htmlmin": "^2.0.0",
-    "grunt-http": "^2.0.1"
+    "grunt-http": "^2.0.1",
+    "grunt-postcss": "^0.8.0"
   }
 }
