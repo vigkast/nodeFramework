@@ -21,10 +21,27 @@ module.exports = [
   'bower_components/angulartics-google-analytics/dist/angulartics-ga.min.js',
   'bower_components/angular-ui-swiper/dist/angular-ui-swiper.js',
 
-  //Work files
-  'frontend/js/app.js',
-  'frontend/js/language.js',
-  'frontend/js/controllers.js',
-  'frontend/js/templateservice.js',
-  'frontend/js/navigation.js',
+  //App.js
+  'js/app.js',
+
+  // Languages
+  'js/languages/language.js',
+
+  // Contorllers
+  'js/controllers/controller.js',
+  'js/controllers/header-controller.js',
+  'js/controllers/language-controller.js',
+
+  // Directives
+  'js/directives/directive.js',
+
+  // Filters
+  'js/filters/filter.js',
+
+  // Services
+  'js/services/template.js',
+
+  //Factories
+  'js/factories/navigation.js',
+  'js/factories/api.js',
 ];

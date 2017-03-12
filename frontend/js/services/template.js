@@ -1,8 +1,8 @@
-var templateservicemod = angular.module('templateservicemod', []);
-templateservicemod.service('TemplateService', function () {
+var templateService = angular.module('templateService', []);
+templateService.service('TemplateService', function () {
     this.title = "Home";
-    this.meta = "Google";
-    this.metadesc = "Home";
+    this.meta = "";
+    this.metadesc = "";
 
     var d = new Date();
     this.year = d.getFullYear();
@@ -14,10 +14,10 @@ templateservicemod.service('TemplateService', function () {
         this.footer = "frontend/views/footer.html";
     };
 
-    this.changecontent = function (page) {
+    this.getHTML = function (page) {
         this.init();
         var data = this;
-        data.content = "frontend/views/content/" + page + ".html";
+        data.content = "frontend/views/" + page;
         return data;
     };
 
