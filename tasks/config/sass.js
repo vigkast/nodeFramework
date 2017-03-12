@@ -6,8 +6,7 @@ module.exports = function (grunt) {
                 sourceMap: true
             },
             files: {
-                "frontend/css/main.css": "frontend/sass/main.scss",
-                // "frontend/css/import.css": "frontend/sass/import.scss"
+                "frontend/css/import.css": "frontend/sass/import.scss"
             }
         },
         backendDevelopment: {
