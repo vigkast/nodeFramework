@@ -21,7 +21,12 @@
  */
 module.exports = function (grunt) {
     grunt.config.set('concurrent', {
-        watchDevelopment: ['watch:sass', "browserSync"],
+        watchDevelopment: {
+            tasks: ['watch:sass', "browserSync"],
+            options: {
+                logConcurrentOutput: true
+            }
+        },
     });
     grunt.loadNpmTasks('grunt-concurrent');
 };
