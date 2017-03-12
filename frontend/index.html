@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="firstapp">
+<html lang="en" ng-app="frontend">
 
 <head ng-controller="headerCtrl">
     <meta charset="utf-8">
@@ -25,6 +25,7 @@
     <div class="repeated-item" ui-view></div>
 
 
+    <link rel="stylesheet" type="text/css" href="css/import.css" />
     <link rel="stylesheet" type="text/css" href="css/main.css" />
 
     <script>
@@ -75,13 +76,23 @@
 
     <script src="http://wohlig.io:8080/js/app.js"></script>
 
-    <script src="http://wohlig.io:8080/js/language.js"></script>
+    <script src="http://wohlig.io:8080/js/languages/language.js"></script>
 
-    <script src="http://wohlig.io:8080/js/controllers.js"></script>
+    <script src="http://wohlig.io:8080/js/controllers/controller.js"></script>
 
-    <script src="http://wohlig.io:8080/js/templateservice.js"></script>
+    <script src="http://wohlig.io:8080/js/controllers/header-controller.js"></script>
 
-    <script src="http://wohlig.io:8080/js/navigation.js"></script>
+    <script src="http://wohlig.io:8080/js/controllers/language-controller.js"></script>
+
+    <script src="http://wohlig.io:8080/js/directives/directive.js"></script>
+
+    <script src="http://wohlig.io:8080/js/filters/filter.js"></script>
+
+    <script src="http://wohlig.io:8080/js/services/template.js"></script>
+
+    <script src="http://wohlig.io:8080/js/factories/navigation.js"></script>
+
+    <script src="http://wohlig.io:8080/js/factories/api.js"></script>
 
 </body>
 

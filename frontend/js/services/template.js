@@ -8,16 +8,16 @@ templateService.service('TemplateService', function () {
     this.year = d.getFullYear();
 
     this.init = function () {
-        this.header = "frontend/views/header.html";
-        this.menu = "frontend/views/menu.html";
-        this.content = "frontend/views/content/content.html";
-        this.footer = "frontend/views/footer.html";
+        this.header = "views/header.html";
+        this.menu = "views/menu.html";
+        this.content = "views/content/content.html";
+        this.footer = "views/footer.html";
     };
 
     this.getHTML = function (page) {
         this.init();
         var data = this;
-        data.content = "frontend/views/" + page;
+        data.content = "views/" + page;
         return data;
     };
 

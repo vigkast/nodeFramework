@@ -21,12 +21,12 @@ frontend.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
     $stateProvider
         .state('home', {
             url: "/",
-            templateUrl: "frontend/views/template.html",
+            templateUrl: "views/template.html",
             controller: 'HomeCtrl'
         })
         .state('form', {
             url: "/form",
-            templateUrl: "frontend/views/template.html",
+            templateUrl: "views/template.html",
             controller: 'FormCtrl'
         });
     $urlRouterProvider.otherwise("/");
