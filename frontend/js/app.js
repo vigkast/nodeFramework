@@ -1,17 +1,14 @@
 // Link all the JS Docs here
 var frontend = angular.module('frontend', [
     'ui.router',
-    'mainController',
-    'headerController',
-    'languageController',
-    'templateService',
-    'apiService',
-    'navigationService',
-    'mainDirective',
-    'mainFilter',
     'pascalprecht.translate',
     'angulartics',
-    'angulartics.google.analytics'
+    'angulartics.google.analytics',
+    'ui.bootstrap',
+    'ngAnimate',
+    'ngSanitize',
+    'angular-flexslider',
+    'ui.swiper'
 ]);
 
 // Define all the routes below

@@ -1,6 +1,4 @@
-angular.module('mainController', ['templateService', 'navigationService', 'apiService', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ui.swiper'])
-
-    .controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
+frontend.controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
         $scope.template = TemplateService.getHTML("content/home.html");
         TemplateService.title = "Home"; //This is the Title of the Website
         $scope.navigation = NavigationService.getNavigation();

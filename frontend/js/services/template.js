@@ -1,5 +1,4 @@
-var templateService = angular.module('templateService', []);
-templateService.service('TemplateService', function () {
+frontend.service('TemplateService', function () {
     this.title = "Home";
     this.meta = "";
     this.metadesc = "";

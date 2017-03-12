@@ -1,7 +1,4 @@
-// JavaScript Document
-var mainDirective = angular.module('mainDirective', [])
-
-    .directive('img', function ($compile, $parse) {
+frontend.directive('img', function ($compile, $parse) {
         return {
             restrict: 'E',
             replace: false,
