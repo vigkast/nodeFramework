@@ -17,8 +17,5 @@
  *
  */
 module.exports = function (grunt) {
-    grunt.registerTask('default', ['copy:assets', 'sass:backendDevelopment', 'copy:backendDevelopment', 'copy:jsBackendDevelopment',
-        'sass:development', 'copy:jsDevelopment', 'copy:development', 'browserSync', 'concurrent:watch'
-    ]);
-    // grunt.registerTask('default', ['clean:development', 'sass:development', 'copy:jsDevelopment', 'copy:development', 'browserSync', 'concurrent:watch']);
+    grunt.registerTask('default', ['copy:assets', 'sass:backendDevelopment', 'copy:backendDevelopment', 'copy:jsBackendDevelopment']);
 };
