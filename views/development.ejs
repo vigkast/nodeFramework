@@ -11,11 +11,9 @@
     <meta name="author" content="">
     <meta name="robots" content="noindex">
     <meta name="googlebot" content="noindex">
-    <link rel="shortcut icon" href="frontend/img/favicon.ico" />
+    <link rel="shortcut icon" href="img/favicon.ico" />
 
-    <title ng-bind="'Node Framework | '+template.title">
-        <%= ((typeof title) == "undefined") ? "Node Framework" : title  %>
-    </title>
+    <title ng-bind="'Node Framework | '+template.title"></title>
 
     <!--[if IE]> <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script> <![endif]-->
     <!--[if IE]> <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script> <![endif]-->
@@ -25,7 +23,7 @@
     <div class="repeated-item" ui-view></div>
 
 
-    <link rel="stylesheet" type="text/css" href="frontend/css/import.css" />
+    <link rel="stylesheet" type="text/css" href="css/import.css" />
 
     <script>
         var adminurl = "<%= ((typeof adminurl) == "undefined") ? "" : adminurl  %>";
@@ -37,7 +35,7 @@
         };
     </script>
     <% _.each(jsFiles,function(file) {  %>
-        <script src="http://wohlig.io:8080/<%= file %>"></script>
+        <script src="<%= file %>"></script>
         <% }); %>
 </body>
 

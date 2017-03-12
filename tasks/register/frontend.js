@@ -1,3 +1,3 @@
 module.exports = function (grunt) {
-    grunt.registerTask('frontend', ["sass:development", "concurrent:watchDevelopment"]);
+    grunt.registerTask('frontend', ["ejs:frontend", "sass:development", "concurrent:watchDevelopment"]);
 };
