@@ -15,9 +15,7 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
         $scope.template = TemplateService.getHTML("content/form.html");
         TemplateService.title = "Form"; //This is the Title of the Website
         $scope.navigation = NavigationService.getNavigation();
-
         $scope.formSubmitted = false;
-
         $scope.submitForm = function (data) {
             console.log(data);
             $scope.formSubmitted = true;
@@ -29,7 +27,4 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
         apiService.getDemo($scope.formData, function (data) {
             console.log(data);
         });
-    })
-
-
-;
+    });
