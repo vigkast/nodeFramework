@@ -27,10 +27,6 @@ module.exports = [
   // Languages
   'js/languages/language.js',
 
-  // Contorllers
-  'js/controllers/controller.js',
-  'js/controllers/header-controller.js',
-  'js/controllers/language-controller.js',
 
   // Directives
   'js/directives/directive.js',
@@ -44,4 +40,9 @@ module.exports = [
   //Factories
   'js/factories/navigation.js',
   'js/factories/api.js',
+
+  // Contorllers
+  'js/controllers/controller.js',
+  'js/controllers/header-controller.js',
+  'js/controllers/language-controller.js',
 ];

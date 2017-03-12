@@ -1,17 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300italic,400italic,600,600italic,700,700italic);
-@import "../../bower_components/bourbon/app/assets/stylesheets/bourbon";
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap-sprockets";
-@import "../../bower_components/flexslider/flexslider";
-@import "../../bower_components/font-awesome/css/font-awesome.min";
-@import "../../bower_components/fancyBox/source/jquery.fancybox";
-@import "../../bower_components/angular-ui-select/dist/select.min";
-@import "../../bower_components/angular-toastr/dist/angular-toastr";
-@import "../../bower_components/angular-hotkeys/build/hotkeys";
-@import "../../bower_components/intl-tel-input/build/css/intlTelInput";
-@import "../../bower_components/textAngular/dist/textAngular";
-@import "icons";
-$blue: #1fc8ec;
+ $blue: #1fc8ec;
 $orange: #f29c2c;
 $red: #ea5249;
 $green: #35c565;
@@ -50,7 +37,7 @@ img.loading {
 
 img {
     opacity: 0;
-    @include transition(all 300ms ease);
+    transition: all 300ms ease;
 }
 
 img.doneLoading {
@@ -65,7 +52,7 @@ nav li:hover .dropdown-menu {
 a,
 [ui-sref] {
     cursor: pointer;
-    @include transition(all ease 300ms);
+    transition: all ease 300ms;
     &:focus {
         outline: none !important;
     }
@@ -79,7 +66,7 @@ a,
 .input-group-lg>.input-group-btn>.btn,
 .input-lg {
     border-radius: 0;
-    @include box-shadow(none);
+    box-shadow: none;
 }
 
 .form-control.un-disable {
@@ -89,7 +76,7 @@ a,
 .form-control:focus {
     border-color: $brand-primary;
     outline: 0;
-    @include box-shadow(none);
+    box-shadow: none;
 }
 
 .mt20 {
@@ -298,7 +285,7 @@ $trans-black: rgba( black,
     position: absolute;
     left: 50%;
     top: -7px;
-    @include transform(translateX(-50%));
+    transform: translateX(-50%);
     >span {
         display: inline-block;
         -webkit-border-radius: 100%;
@@ -530,7 +517,7 @@ $trans-black: rgba( black,
     width: 24px !important;
     border: 0 !important;
     padding: 0;
-    @include appearance(none);
+    appearance: none;
     margin: 0;
     position: relative;
     z-index: 9;
@@ -845,7 +832,7 @@ img.uploadingImage {
     tr {
         .btn-show {
             opacity: 0;
-            @include transition(all 300ms ease);
+            transition: all 300ms ease;
         }
         &:hover {
             .btn-show {
@@ -969,19 +956,19 @@ img.uploadingImage {
 }
 
 .row-item {
-    @include display(flex);
+    display: flex;
     .col-item {
-        @include flex(1);
+        flex: 1;
         width: 100%;
         +.col-item {
             border-left: 1px solid $body-color-font;
         }
         &.col-item-25 {
-            @include flex(0 0 25%);
+            flex: 0 0 25%;
             width: 25%;
         }
         &.col-item-35 {
-            @include flex(0 0 35%);
+            flex: 0 0 35%;
             width: 35%;
         }
     }
@@ -995,7 +982,7 @@ img.uploadingImage {
     width: 0px;
     height: 34px;
     line-height: 34px;
-    @include transition(all 300ms ease);
+    transition: all 300ms ease;
     overflow: hidden;
     i {
         cursor: pointer;
@@ -1042,8 +1029,8 @@ img.uploadingImage {
         bottom: -1px;
         top: -1px;
         background-color: rgba(0, 0, 0, 0.20);
-        @include display(flex);
-        @include align-items(center);
+        display: flex;
+        align-items: center;
         &:before {
             margin: 0 auto;
         }
@@ -1060,7 +1047,7 @@ img.uploadingImage {
     border-left: 5px solid transparent;
     position: relative;
     background: #fff none repeat scroll 0 0;
-    @include transition(all 300ms ease);
+    transition: all 300ms ease;
     >a {
         padding: 10px 35px;
         float: none;
@@ -1158,7 +1145,7 @@ body {
     position: absolute;
     width: 100px;
     height: 100px;
-    @include transition(all 5s ease-in-out);
+    transition: all 5s ease-in-out;
     border-radius: 100px;
 }
 
