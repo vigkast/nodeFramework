@@ -1,16 +1,24 @@
 // JavaScript Document
 var myApp = angular.module('myApp', [
     'ui.router',
-    'phonecatControllers',
-    'templateservicemod',
-    'navigationservice',
     'pascalprecht.translate',
     'angulartics',
     'angulartics.google.analytics',
     'imageupload',
     "ngMap",
     "internationalPhoneNumber",
-    "jsonservicemod"
+    'ui.bootstrap',
+    'ui.select',
+    'ngAnimate',
+    'toastr',
+    'ngSanitize',
+    'angular-flexslider',
+    'textAngular',
+    'imageupload',
+    'ngMap',
+    'toggle-switch',
+    'cfp.hotkeys',
+    'ui.sortable'
 ]);
 
 myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {

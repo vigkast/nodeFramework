@@ -1,5 +1,4 @@
-var jsonservicemod = angular.module('jsonservicemod', ["templateservicemod", "toastr", "ui.bootstrap"]);
-jsonservicemod.service('JsonService', function ($http, TemplateService, $state, toastr, $uibModal, NavigationService) {
+myApp.service('JsonService', function ($http, TemplateService, $state, toastr, $uibModal, NavigationService) {
   this.json = {};
   this.keyword = {};
   this.refreshView;

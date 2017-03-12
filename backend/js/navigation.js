@@ -3,9 +3,9 @@ var imgurl = adminurl + "upload/";
 var imgpath = imgurl + "readFile";
 var uploadurl = imgurl;
 
-var navigationservice = angular.module('navigationservice', [])
 
-.factory('NavigationService', function ($http) {
+
+myApp.factory('NavigationService', function ($http) {
     var navigation = [{
         name: "Users",
         classis: "active",
