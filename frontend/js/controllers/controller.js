@@ -9,6 +9,18 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
             'http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg',
             'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg'
         ];
+        var abc = _.times(100, function (n) {
+            return n;
+        });
+
+        var i = 0;
+        $scope.buttonClick = function () {
+            i++;
+            console.log("This is a button Click");
+        };
+
+
+
     })
 
     .controller('FormCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
