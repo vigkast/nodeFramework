@@ -155,8 +155,7 @@ var models = {
     readUploaded: function (filename, width, height, style, res) {
         res.set({
             'Cache-Control': 'public, max-age=31557600',
-            'Expires': new Date(Date.now() + 345600000).toUTCString(),
-            'Content-Type': 'image/jpeg'
+            'Expires': new Date(Date.now() + 345600000).toUTCString()
         });
         var readstream = gfs.createReadStream({
             filename: filename
