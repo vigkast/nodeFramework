@@ -4,7 +4,7 @@ module.exports = function (grunt) {
     var env = require("../../config/env/development.js");
     grunt.config.set('ejs', {
         ui: {
-            src: 'views/development.ejs',
+            src: 'views/' + folderName + '.ejs',
             dest: folderName + '/index.html',
             options: {
                 _: require("lodash"),
