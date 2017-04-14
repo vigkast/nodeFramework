@@ -1,10 +1,11 @@
 module.exports = function (grunt) {
+    var folderName = grunt.option('target');
     var jsFiles = require("../../frontend/files.js");
     var env = require("../../config/env/development.js");
     grunt.config.set('ejs', {
-        frontend: {
+        ui: {
             src: 'views/development.ejs',
-            dest: 'frontend/index.html',
+            dest: folderName + '/index.html',
             options: {
                 _: require("lodash"),
                 jsFiles: jsFiles,
