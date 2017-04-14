@@ -36,7 +36,6 @@ module.exports = [
     'bower_components/textAngular/dist/textAngular-sanitize.min.js',
     'bower_components/textAngular/dist/textAngular.min.js',
 
-
     //App.js
     'js/app.js',
 
