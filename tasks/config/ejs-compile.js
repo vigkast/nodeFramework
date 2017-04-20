@@ -1,6 +1,9 @@
 module.exports = function (grunt) {
     var folderName = grunt.option('target');
-    var jsFiles = require("../../" + folderName + "/files.js");
+    if (folderName) {
+        var jsFiles = require("../../" + folderName + "/files.js");
+    }
+
     var env = require("../../config/env/development.js");
     grunt.config.set('ejs', {
         ui: {
