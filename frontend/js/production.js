@@ -61494,3 +61494,303 @@ function Dom7Service () {
   })();
 	return Dom7;
 }
+// Link all the JS Docs here
+var myApp = angular.module('myApp', [
+    'ui.router',
+    'pascalprecht.translate',
+    'angulartics',
+    'angulartics.google.analytics',
+    'ui.bootstrap',
+    'ngAnimate',
+    'ngSanitize',
+    'angular-flexslider',
+    'ui.swiper'
+]);
+
+// Define all the routes below
+myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+    var tempateURL = "views/template/template.html"; //Default Template URL
+
+    // for http request with session
+    $httpProvider.defaults.withCredentials = true;
+    $stateProvider
+        .state('home', {
+            url: "/",
+            templateUrl: tempateURL,
+            controller: 'HomeCtrl'
+        })
+        .state('form', {
+            url: "/form",
+            templateUrl: tempateURL,
+            controller: 'FormCtrl'
+        });
+    $urlRouterProvider.otherwise("/");
+    $locationProvider.html5Mode(isproduction);
+});
+
+// For Language JS
+myApp.config(function ($translateProvider) {
+    $translateProvider.translations('en', LanguageEnglish);
+    $translateProvider.translations('hi', LanguageHindi);
+    $translateProvider.preferredLanguage('en');
+});
+var LanguageEnglish = {
+  "ABOUT": "About",
+};
+
+var LanguageHindi = {
+  "ABOUT": "बारे में",
+};
+
+myApp.directive('img', function ($compile, $parse) {
+        return {
+            restrict: 'E',
+            replace: false,
+            link: function ($scope, element, attrs) {
+                var $element = $(element);
+                if (!attrs.noloading) {
+                    $element.after("<img src='img/loading.gif' class='loading' />");
+                    var $loading = $element.next(".loading");
+                    $element.load(function () {
+                        $loading.remove();
+                        $(this).addClass("doneLoading");
+                    });
+                } else {
+                    $($element).addClass("doneLoading");
+                }
+            }
+        };
+    })
+
+    .directive('hideOnScroll', function ($document) {
+        return {
+            restrict: 'EA',
+            replace: false,
+            link: function (scope, element, attr) {
+                var $element = $(element);
+                var lastScrollTop = 0;
+                $(window).scroll(function (event) {
+                    var st = $(this).scrollTop();
+                    if (st > lastScrollTop) {
+                        $(element).addClass('nav-up');
+                    } else {
+                        $(element).removeClass('nav-up');
+                    }
+                    lastScrollTop = st;
+                });
+            }
+        };
+    })
+
+
+    .directive('fancybox', function ($document) {
+        return {
+            restrict: 'EA',
+            replace: false,
+            link: function (scope, element, attr) {
+                var $element = $(element);
+                var target;
+                if (attr.rel) {
+                    target = $("[rel='" + attr.rel + "']");
+                } else {
+                    target = element;
+                }
+
+                target.fancybox({
+                    openEffect: 'fade',
+                    closeEffect: 'fade',
+                    closeBtn: true,
+                    padding: 0,
+                    helpers: {
+                        media: {}
+                    }
+                });
+            }
+        };
+    })
+
+    .directive('autoHeight', function ($compile, $parse) {
+        return {
+            restrict: 'EA',
+            replace: false,
+            link: function ($scope, element, attrs) {
+                var $element = $(element);
+                var windowHeight = $(window).height();
+                $element.css("min-height", windowHeight);
+            }
+        };
+    })
+
+
+    .directive('replace', function () {
+        return {
+            require: 'ngModel',
+            scope: {
+                regex: '@replace',
+                with: '@with'
+            },
+            link: function (scope, element, attrs, model) {
+                model.$parsers.push(function (val) {
+                    if (!val) {
+                        return;
+                    }
+                    var regex = new RegExp(scope.regex);
+                    var replaced = val.replace(regex, scope.with);
+                    if (replaced !== val) {
+                        model.$setViewValue(replaced);
+                        model.$render();
+                    }
+                    return replaced;
+                });
+            }
+        };
+    })
+
+
+;
+// JavaScript Document
+myApp.filter('myFilter', function () {
+    // In the return function, we must pass in a single parameter which will be the data we will work on.
+    // We have the ability to support multiple other parameters that can be passed into the filter optionally
+    return function (input, optional1, optional2) {
+
+        var output;
+
+        // Do filter work here
+        return output;
+    };
+
+})
+
+;
+myApp.service('TemplateService', function () {
+    this.title = "Home";
+    this.meta = "";
+    this.metadesc = "";
+
+    var d = new Date();
+    this.year = d.getFullYear();
+
+    this.init = function () {
+        this.header = "views/template/header.html";
+        this.menu = "views/template/menu.html";
+        this.content = "views/content/content.html";
+        this.footer = "views/template/footer.html";
+    };
+
+    this.getHTML = function (page) {
+        this.init();
+        var data = this;
+        data.content = "views/" + page;
+        return data;
+    };
+
+    this.init();
+
+});
+myApp.factory('NavigationService', function () {
+    var navigation = [{
+        name: "Home",
+        classis: "active",
+        anchor: "home",
+        subnav: [{
+            name: "Subnav1",
+            classis: "active",
+            anchor: "home"
+        }]
+    }, {
+        name: "Form",
+        classis: "active",
+        anchor: "form",
+        subnav: []
+    }];
+
+    return {
+        getNavigation: function () {
+            return navigation;
+        },
+    };
+});
+myApp.factory('apiService', function ($http, $q, $timeout) {
+    return {
+
+        // This is a demo Service for POST Method.
+        getDemo: function (formData, callback) {
+            $http({
+                url: adminurl + 'demo/demoService',
+                method: 'POST',
+                data: formData
+            }).success(callback);
+        },
+        // This is a demo Service for POST Method.
+
+
+    };
+});
+myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
+        $scope.template = TemplateService.getHTML("content/home.html");
+        TemplateService.title = "Home"; //This is the Title of the Website
+        $scope.navigation = NavigationService.getNavigation();
+
+        $scope.mySlides = [
+            'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg',
+            'http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg',
+            'http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg',
+            'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg'
+        ];
+        var abc = _.times(100, function (n) {
+            return n;
+        });
+
+        var i = 0;
+        $scope.buttonClick = function () {
+            i++;
+            console.log("This is a button Click");
+        };
+
+
+
+    })
+
+    .controller('FormCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
+        $scope.template = TemplateService.getHTML("content/form.html");
+        TemplateService.title = "Form"; //This is the Title of the Website
+        $scope.navigation = NavigationService.getNavigation();
+        $scope.formSubmitted = false;
+        $scope.submitForm = function (data) {
+            console.log(data);
+            $scope.formSubmitted = true;
+        };
+    })
+
+    //Example API Controller
+    .controller('DemoAPICtrl', function ($scope, TemplateService, apiService, NavigationService, $timeout) {
+        apiService.getDemo($scope.formData, function (data) {
+            console.log(data);
+        });
+    });
+myApp.controller('headerCtrl', function ($scope, TemplateService) {
+    $scope.template = TemplateService;
+    $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+        $(window).scrollTop(0);
+    });
+    $.fancybox.close(true);
+});
+myApp.controller('languageCtrl', function ($scope, TemplateService, $translate, $rootScope) {
+    $scope.changeLanguage = function () {
+        console.log("Language CLicked");
+        if (!$.jStorage.get("language")) {
+            $translate.use("hi");
+            $.jStorage.set("language", "hi");
+        } else {
+            if ($.jStorage.get("language") == "en") {
+                $translate.use("hi");
+                $.jStorage.set("language", "hi");
+            } else {
+                $translate.use("en");
+                $.jStorage.set("language", "en");
+            }
+        }
+        //  $rootScope.$apply();
+    };
+});

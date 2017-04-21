@@ -22,27 +22,27 @@ module.exports = [
   'bower_components/angular-ui-swiper/dist/angular-ui-swiper.js',
 
   //App.js
-  'js/app.js',
+  'frontend/js/app.js',
 
   // Languages
-  'js/languages/language.js',
+  'frontend/js/languages/language.js',
 
 
   // Directives
-  'js/directives/directive.js',
+  'frontend/js/directives/directive.js',
 
   // Filters
-  'js/filters/filter.js',
+  'frontend/js/filters/filter.js',
 
   // Services
-  'js/services/template.js',
+  'frontend/js/services/template.js',
 
   //Factories
-  'js/factories/navigation.js',
-  'js/factories/api.js',
+  'frontend/js/factories/navigation.js',
+  'frontend/js/factories/api.js',
 
   // Contorllers
-  'js/controllers/controller.js',
-  'js/controllers/header-controller.js',
-  'js/controllers/language-controller.js',
+  'frontend/js/controllers/controller.js',
+  'frontend/js/controllers/header-controller.js',
+  'frontend/js/controllers/language-controller.js',
 ];
