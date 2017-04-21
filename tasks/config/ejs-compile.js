@@ -1,5 +1,6 @@
 module.exports = function (grunt) {
     var folderName = grunt.option('target');
+    var productionString = "";
     if (folderName) {
         var jsFiles = require("../../" + folderName + "/files.js");
     }
@@ -7,13 +8,15 @@ module.exports = function (grunt) {
     var isProduction = grunt.option('production');
     if (isProduction) {
         env = require("../../config/env/production.js");
+        productionString = "production";
     } else {
         env = require("../../config/env/development.js");
+        productionString = "development";
     }
 
     grunt.config.set('ejs', {
         ui: {
-            src: 'views/' + folderName + '.ejs',
+            src: 'views/' + productionString + "/" + folderName + '.ejs',
             dest: folderName + '/index.html',
             options: {
                 _: require("lodash"),
