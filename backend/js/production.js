@@ -50540,3 +50540,2130 @@ d._lastToolDefinition&&!c&&(b=angular.extend({},d._lastToolDefinition,b)),null==
 null===b.buttontext&&delete b.buttontext,null===b.iconclass&&delete b.iconclass,null===b.display&&delete b.display;var e=j(b,d);d.$element.replaceWith(e),d.$element=e}},
 // we assume here that all values passed are valid and correct
 g.addTool=function(a,b,c,e){g.tools[a]=angular.extend(g.$new(!0),d[a],k,{name:a}),g.tools[a].$element=j(d[a],g.tools[a]);var f;void 0===c&&(c=g.toolbar.length-1),f=angular.element(h.children()[c]),void 0===e?(f.append(g.tools[a].$element),g.toolbar[c][g.toolbar[c].length-1]=a):(f.children().eq(e).after(g.tools[a].$element),g.toolbar[c][e]=a)},b.registerToolbar(g),g.$on("$destroy",function(){b.unregisterToolbar(g.name)})}}}]),u.directive("textAngularVersion",["textAngularManager",function(a){var b=a.getVersion();return{restrict:"EA",link:function(a,c,d){c.html(b)}}}]),u.name});
+// JavaScript Document
+var myApp = angular.module('myApp', [
+    'ui.router',
+    'pascalprecht.translate',
+    'angulartics',
+    'angulartics.google.analytics',
+    'imageupload',
+    "ngMap",
+    "internationalPhoneNumber",
+    'ui.bootstrap',
+    'ui.select',
+    'ngAnimate',
+    'toastr',
+    'textAngular',
+    'ngSanitize',
+    'angular-flexslider',
+    'imageupload',
+    'ngMap',
+    'toggle-switch',
+    'cfp.hotkeys',
+    'ui.sortable'
+]);
+
+myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+    // for http request with session
+    $httpProvider.defaults.withCredentials = true;
+    $stateProvider
+
+        .state('dashboard', {
+            url: "/dashboard",
+            templateUrl: "views/template.html",
+            controller: 'DashboardCtrl',
+        })
+
+        .state('login', {
+            url: "/login",
+            templateUrl: "views/login.html",
+            controller: 'LoginCtrl'
+        })
+
+        .state('page', {
+            url: "/page/:id/{page:.*}/{keyword:.*}",
+            templateUrl: "views/template.html",
+            controller: 'PageJsonCtrl'
+        })
+
+        .state('loginapp', {
+            url: "/login/:id",
+            templateUrl: "views/login.html",
+            controller: 'LoginCtrl'
+        })
+
+        .state('country-list', {
+            url: "/country-list/{page:.*}/{keyword:.*}",
+            templateUrl: "views/template.html",
+            controller: 'CountryCtrl',
+            params: {
+                page: "1",
+                keyword: ""
+            }
+        })
+
+        .state('createcountry', {
+            url: "/country-create",
+            templateUrl: "views/template.html",
+            controller: 'CreateCountryCtrl'
+        })
+
+        .state('editcountry', {
+            url: "/country-edit/:id",
+            templateUrl: "views/template.html",
+            controller: 'EditCountryCtrl'
+        })
+
+        .state('schema-creator', {
+            url: "/schema-creator",
+            templateUrl: "views/template.html",
+            controller: 'SchemaCreatorCtrl'
+        })
+
+        .state('excel-upload', {
+            url: "/excel-upload/:model",
+            templateUrl: "views/template.html",
+            controller: 'ExcelUploadCtrl'
+        })
+
+        .state('jagz', {
+            url: "/jagz",
+            templateUrl: "views/jagz.html",
+            controller: 'JagzCtrl'
+        });
+
+    $urlRouterProvider.otherwise("/dashboard");
+    $locationProvider.html5Mode(isproduction);
+});
+
+myApp.config(function ($translateProvider) {
+    $translateProvider.translations('en', LanguageEnglish);
+    $translateProvider.translations('hi', LanguageHindi);
+    $translateProvider.preferredLanguage('en');
+});
+var LanguageEnglish = {
+  "ABOUT": "About",
+};
+
+var LanguageHindi = {
+  "ABOUT": "बारे में",
+};
+
+myApp.directive('dateModel', function ($filter, $timeout) {
+    return {
+        scope: {
+            model: '=ngModel'
+        },
+        link: function ($scope, element, attrs) {
+            console.log("in date model");
+            $timeout(function () {
+                console.log($filter('date')(new Date($scope.model), 'dd/MM/yyyy'));
+                $scope.model = new Date($scope.model);
+            }, 100)
+
+        }
+    };
+});
+
+
+myApp.directive('imageonload', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            element.bind('load', function () {
+                scope.$apply(attrs.imageonload);
+            });
+        }
+    };
+});
+
+
+myApp.directive('uploadImage', function ($http, $filter, $timeout) {
+    return {
+        templateUrl: 'views/directive/uploadFile.html',
+        scope: {
+            model: '=ngModel',
+            type: "@type",
+            callback: "&ngCallback"
+        },
+        link: function ($scope, element, attrs) {
+            console.log($scope.model);
+            $scope.showImage = function () {};
+            $scope.check = true;
+            if (!$scope.type) {
+                $scope.type = "image";
+            }
+            $scope.isMultiple = false;
+            $scope.inObject = false;
+            if (attrs.multiple || attrs.multiple === "") {
+                $scope.isMultiple = true;
+                $("#inputImage").attr("multiple", "ADD");
+            }
+            if (attrs.noView || attrs.noView === "") {
+                $scope.noShow = true;
+            }
+            // if (attrs.required) {
+            //     $scope.required = true;
+            // } else {
+            //     $scope.required = false;
+            // }
+
+            $scope.$watch("image", function (newVal, oldVal) {
+                console.log(newVal, oldVal);
+                isArr = _.isArray(newVal);
+                if (!isArr && newVal && newVal.file) {
+                    $scope.uploadNow(newVal);
+                } else if (isArr && newVal.length > 0 && newVal[0].file) {
+
+                    $timeout(function () {
+                        console.log(oldVal, newVal);
+                        console.log(newVal.length);
+                        _.each(newVal, function (newV, key) {
+                            if (newV && newV.file) {
+                                $scope.uploadNow(newV);
+                            }
+                        });
+                    }, 100);
+
+                }
+            });
+
+            if ($scope.model) {
+                if (_.isArray($scope.model)) {
+                    $scope.image = [];
+                    _.each($scope.model, function (n) {
+                        $scope.image.push({
+                            url: n
+                        });
+                    });
+                } else {
+                    if (_.endsWith($scope.model, ".pdf")) {
+                        $scope.type = "pdf";
+                    }
+                }
+
+            }
+            if (attrs.inobj || attrs.inobj === "") {
+                $scope.inObject = true;
+            }
+            $scope.clearOld = function () {
+                $scope.model = [];
+            };
+            $scope.uploadNow = function (image) {
+                $scope.uploadStatus = "uploading";
+
+                var Template = this;
+                image.hide = true;
+                var formData = new FormData();
+                formData.append('file', image.file, image.name);
+                $http.post(uploadurl, formData, {
+                    headers: {
+                        'Content-Type': undefined
+                    },
+                    transformRequest: angular.identity
+                }).then(function (data) {
+                    data = data.data;
+                    $scope.uploadStatus = "uploaded";
+                    if ($scope.isMultiple) {
+                        if ($scope.inObject) {
+                            $scope.model.push({
+                                "image": data[0]
+                            });
+                        } else {
+                            if (!$scope.model) {
+                                $scope.clearOld();
+                            }
+                            $scope.model.push(data[0]);
+                        }
+                    } else {
+                        if (_.endsWith(data.data[0], ".pdf")) {
+                            $scope.type = "pdf";
+                        } else {
+                            $scope.type = "image";
+                        }
+                        $scope.model = data.data[0];
+                        console.log($scope.model, 'model means blob')
+
+                    }
+                    $timeout(function () {
+                        $scope.callback();
+                    }, 100);
+
+                });
+            };
+        }
+    };
+});
+
+
+
+myApp.directive('onlyDigits', function () {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        link: function (scope, element, attr, ctrl) {
+            var digits;
+
+            function inputValue(val) {
+                if (val) {
+                    var otherVal = val + "";
+                    if (attr.type == "text") {
+                        digits = otherVal.replace(/[^0-9\-\.\\]/g, '');
+                    } else {
+                        digits = otherVal.replace(/[^0-9\-\.\\]/g, '');
+                    }
+
+
+                    if (digits !== val) {
+                        ctrl.$setViewValue(digits);
+                        ctrl.$render();
+                    }
+                    return parseInt(digits, 10);
+                }
+                return undefined;
+            }
+            ctrl.$parsers.push(inputValue);
+        }
+    };
+});
+
+myApp.directive('img', function ($compile, $parse) {
+    return {
+        restrict: 'E',
+        replace: false,
+        link: function ($scope, element, attrs) {
+            var $element = $(element);
+            if (!attrs.noloading) {
+                $element.after("<img src='img/loading.gif' class='loading' />");
+                var $loading = $element.next(".loading");
+                $element.load(function () {
+                    $loading.remove();
+                    $(this).addClass("doneLoading");
+                });
+            } else {
+                $($element).addClass("doneLoading");
+            }
+        }
+    };
+});
+
+myApp.directive('fancyboxBox', function ($document) {
+    return {
+        restrict: 'EA',
+        replace: false,
+        link: function (scope, element, attr) {
+            var $element = $(element);
+            var target;
+            if (attr.rel) {
+                target = $("[rel='" + attr.rel + "']");
+            } else {
+                target = element;
+            }
+
+            target.fancybox({
+                openEffect: 'fade',
+                closeEffect: 'fade',
+                closeBtn: true,
+                helpers: {
+                    media: {}
+                }
+            });
+        }
+    };
+});
+
+myApp.directive('menuOptions', function ($document) {
+    return {
+        restrict: 'C',
+        replace: false,
+        link: function (scope, element, attr) {
+            var $element = $(element);
+            $(element).on("click", function () {
+                $(".side-header.opened-menu").toggleClass('slide-menu');
+                $(".main-content").toggleClass('wide-content');
+                $("footer").toggleClass('wide-footer');
+                $(".menu-options").toggleClass('active');
+            });
+
+        }
+    };
+});
+
+myApp.directive('oI', function ($document) {
+    return {
+        restrict: 'C',
+        replace: false,
+        link: function (scope, element, attr) {
+            var $element = $(element);
+            $element.click(function () {
+                $element.parent().siblings().children("ul").slideUp();
+                $element.parent().siblings().removeClass("active");
+                $element.parent().children("ul").slideToggle();
+                $element.parent().toggleClass("active");
+                return false;
+            });
+
+        }
+    };
+});
+myApp.directive('slimscroll', function ($document) {
+    return {
+        restrict: 'EA',
+        replace: false,
+        link: function (scope, element, attr) {
+            var $element = $(element);
+            $element.slimScroll({
+                height: '400px',
+                wheelStep: 10,
+                size: '2px'
+            });
+        }
+    };
+});
+
+myApp.directive('addressForm', function ($document) {
+    return {
+        templateUrl: 'views/directive/address-form.html',
+        scope: {
+            formData: "=ngModel",
+            demoForm: "=ngValid"
+        },
+        restrict: 'EA',
+        replace: false,
+        controller: function ($scope, NgMap, NavigationService) {
+
+            $scope.map = {};
+            $scope.change = function () {
+                NgMap.getMap().then(function (map) {
+                    var latLng = {
+                        lat: map.markers[0].position.lat(),
+                        lng: map.markers[0].position.lng()
+                    };
+                    _.assign($scope.formData, latLng);
+                });
+            };
+            var LatLongi = 0;
+            $scope.getLatLng = function (address) {
+
+                NavigationService.getLatLng(address, ++LatLongi, function (data, i) {
+
+                    if (i == LatLongi) {
+                        $scope.formData = _.assign($scope.formData, data.results[0].geometry.location);
+                    }
+                });
+                // $http.get("http://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCn9ypqFNxdXt9Zu2YqLcdD1Xdt2wNul9s&address="+address);
+            };
+
+        },
+        // link: function($scope, element, attr, NgMap) {
+        //     var $element = $(element);
+        //     $scope.demoForm = {};
+        //     $scope.demoForm.lat = 19.0760;
+        //     $scope.demoForm.long = 72.8777;
+        //     $scope.map = {};
+        //     $scope.change = function() {
+        //       NgMap.getMap().then(function(map) {
+        //         console.log(map);
+        //       });
+        //
+        //     };
+        //
+        // }
+    };
+});
+
+// myApp.directive('box', function ($uibModal) {
+//     return {
+//         templateUrl: 'views/directive/box.html',
+//         scope: {
+//             type: '=type',
+//             model: '=ngModel'
+//         },
+//         link: function ($scope, element, attrs) {
+//             $scope.model = {};
+//             console.log($scope.model);
+//             $scope.data = {};
+//             $scope.eventModel = function (text) {
+//                 $scope.type.state = text;
+//                 var modalInstance = $uibModal.open({
+//                     animation: $scope.animationsEnabled,
+//                     templateUrl: '/backend/views/modal/modal.html',
+//                     size: 'lg',
+//                     scope: $scope
+//                 });
+//                 $scope.close = function (value) {
+//                     callback(value);
+//                     modalInstance.close("cancel");
+//                 };
+//             };
+//             $scope.submitModal = function (moddata) {
+//                 console.log(moddata);
+//             };
+//         }
+//     };
+// });
+
+var aa = {};
+myApp.directive('multipleSelect', function ($document, $timeout) {
+    return {
+        templateUrl: 'views/directive/multiple-select.html',
+        scope: {
+            model: '=ngModel',
+            api: "@api",
+            url: "@url",
+            name: "@name",
+            required: "@required",
+            filter: "@filter",
+            ngName: "=ngName",
+            create: "@ngCreate",
+            disabled: "=ngDisabled"
+
+        },
+        restrict: 'EA',
+        replace: false,
+        controller: 'MultipleSelectCtrl',
+        link: function (scope, element, attr, NavigationService) {
+            var $element = $(element);
+            scope.activeKey = 0;
+            scope.isRequired = true;
+            if (scope.required === undefined) {
+                scope.isRequired = false;
+            }
+            scope.typeselect = attr.typeselect;
+            // $scope.searchNew()
+            aa = $element;
+            var maxItemLength = 40;
+            var maxBoxLength = 200;
+            $timeout(function () {
+
+                $element.find(".typeText").keyup(function (event) {
+                    var scrollTop = $element.find("ul.allOptions").scrollTop();
+                    var optionLength = $element.find("ul.allOptions li").length;
+                    if (event.keyCode == 40) {
+                        scope.activeKey++;
+                    } else if (event.keyCode == 38) {
+                        scope.activeKey--;
+                    } else if (event.keyCode == 13) {
+                        $element.find("ul.allOptions li").eq(scope.activeKey).trigger("click");
+                    }
+                    if (scope.activeKey < 0) {
+                        scope.activeKey = optionLength - 1;
+                    }
+                    if (scope.activeKey >= optionLength) {
+                        scope.activeKey = 0;
+                    }
+                    var newScroll = -1;
+                    var scrollVisibility = (scrollTop + maxBoxLength) - maxItemLength;
+                    var currentItemPosition = scope.activeKey * maxItemLength;
+                    if (currentItemPosition < scrollTop) {
+                        newScroll = (maxItemLength * scope.activeKey);
+
+                    } else if (currentItemPosition > scrollVisibility) {
+                        newScroll = (maxItemLength * scope.activeKey);
+
+                    }
+                    if (newScroll != -1) {
+                        $element.find("ul.allOptions").scrollTop(newScroll);
+                    }
+
+                    scope.$apply();
+                });
+
+            }, 100);
+
+        }
+    };
+});
+
+
+
+myApp.directive('viewField', function ($http, $filter) {
+    return {
+        templateUrl: 'views/directive/viewField.html',
+        scope: {
+            type: '=type',
+            value: "=value"
+        },
+        link: function ($scope, element, attrs) {
+            if (!$scope.type.type) {
+                $scope.type.type = "text";
+            }
+            $scope.form = {};
+            $scope.objectDepth = function () {
+                if (_.isObjectLike($scope.storeObj)) {
+                    if ($scope.storeValue[$scope.storeObj.field]) {
+                        $scope.form.model = $scope.storeValue[$scope.storeObj.field][$scope.storeObj.tableRef];
+                        $scope.storeObj = $scope.storeObj.tableRef;
+                        if (_.isObjectLike($scope.storeObj)) {
+                            $scope.objectDepth();
+                        }
+                    }
+                }
+            };
+            if (_.isObjectLike($scope.type.tableRef)) {
+                $scope.storeObj = $scope.type.tableRef;
+                $scope.storeValue = $scope.value;
+                $scope.objectDepth();
+
+            } else {
+                $scope.form.model = $scope.value[$scope.type.tableRef];
+            }
+
+            $scope.template = "views/viewField/" + $scope.type.type + ".html";
+        }
+    };
+});
+myApp.directive('dateForm', function () {
+    return {
+        scope: {
+            ngModel: '=ngModel'
+        },
+        link: function ($scope, element, attrs) {
+            console.log($scope.ngModel);
+        }
+    };
+});
+
+myApp.directive('detailField', function ($http, $filter, JsonService) {
+    return {
+        templateUrl: 'views/directive/detailField.html',
+        scope: {
+            type: '=type',
+            value: "=value",
+            detailForm: "=form",
+            formData: "=data",
+
+        },
+        controller: 'DetailFieldCtrl',
+        link: function ($scope, element, attrs) {
+
+        }
+    };
+});
+myApp.filter('uploadpath', function () {
+    return function (input, width, height, style) {
+        var other = "";
+        if (width && width !== "") {
+            other += "&width=" + width;
+        }
+        if (height && height !== "") {
+            other += "&height=" + height;
+        }
+        if (style && style !== "") {
+            other += "&style=" + style;
+        }
+        if (input) {
+            if (input.indexOf('https://') == -1) {
+                return imgpath + "?file=" + input + other;
+            } else {
+                return input;
+            }
+        }
+    };
+});
+
+myApp.filter('showdate', function () {
+    return function (input) {
+        return new Date(input);
+    };
+});
+myApp.filter('urlencoder', function () {
+    return function (input) {
+        return window.encodeURIComponent(input);
+    };
+});
+
+myApp.filter('propsFilter', function () {
+    return function (items, props) {
+        var out = [];
+
+        if (angular.isArray(items)) {
+            items.forEach(function (item) {
+                var itemMatches = false;
+
+                var keys = Object.keys(props);
+                for (var i = 0; i < keys.length; i++) {
+                    var prop = keys[i];
+                    var text = props[prop].toLowerCase();
+                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                        itemMatches = true;
+                        break;
+                    }
+                }
+
+                if (itemMatches) {
+                    out.push(item);
+                }
+            });
+        } else {
+            // Let the output be the input untouched
+            out = items;
+        }
+
+        return out;
+    };
+});
+
+myApp.filter('serverimage', function () {
+    return function (input, width, height, style) {
+        if (input) {
+            if (input.substr(0, 4) == "http") {
+                return input;
+            } else {
+                image = imgpath + "?file=" + input;
+                if (width) {
+                    image += "&width=" + width;
+                }
+                if (height) {
+                    image += "&height=" + height;
+                }
+                if (style) {
+                    image += "&style=" + style;
+                }
+                return image;
+            }
+
+        } else {
+            return "img/logo.png";
+        }
+    };
+});
+
+myApp.filter('convDate', function () {
+    return function (input) {
+        return new Date(input);
+    };
+});
+
+myApp.filter('downloadImage', function () {
+    return function (input) {
+        if (input) {
+            return adminurl + "download/" + input;
+        } else {
+            return "img/logo.png";
+        }
+    };
+});
+
+myApp.filter('ageFilter', function () {
+    function calculateAge(birthday) { // birthday is a date
+        var ageDifMs = Date.now() - birthday.getTime();
+        var ageDate = new Date(ageDifMs); // miliseconds from epoch
+        return Math.abs(ageDate.getUTCFullYear() - 1970);
+    }
+
+    return function (birthdate) {
+        return calculateAge(birthdate);
+    };
+});
+myApp.filter('momentDate', function () {
+    return function (date, format) {
+        if (!format) {
+            format = "Do MMM YYYY, ddd";
+        }
+        return moment(date).format(format);
+    };
+});
+myApp.filter('capitalize', function () {
+    return function (input, all) {
+        var reg = (all) ? /([^\W_]+[^\s-]*) */g : /([^\W_]+[^\s-]*)/;
+        return (!!input) ? input.replace(reg, function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }) : '';
+    };
+});
+myApp.service('TemplateService', function () {
+  this.title = "Home";
+  this.meta = "Google";
+  this.metadesc = "Home";
+  this.pageMax = 10;
+  this.adminurl = adminurl;
+  this.accessTokenUrl = adminurl;
+  var d = new Date();
+  this.year = d.getFullYear();
+  this.profile = $.jStorage.get("profile");
+  this.init = function () {
+    this.header = "views/header.html";
+    this.menu = "views/menu.html";
+    this.content = "views/content/content.html";
+    this.footer = "views/footer.html";
+    this.profile = $.jStorage.get("profile");
+  };
+
+  this.changecontent = function (page) {
+    this.init();
+    var data = this;
+    data.content = "views/content/" + page + ".html";
+    return data;
+  };
+
+  this.init();
+
+});
+myApp.service('JsonService', function ($http, TemplateService, $state, toastr, $uibModal, NavigationService) {
+  this.json = {};
+  this.keyword = {};
+  this.refreshView;
+  var JsonService = this;
+  this.setKeyword = function (data) {
+    try {
+      this.keyword = JSON.parse(data);
+      console.log(this.keyword);
+    } catch (e) {
+      console.log("keyword is not is json format");
+    }
+  };
+  this.getJson = function (page, callback) {
+    $http.get("pageJson/" + page + ".json").then(function (data) {
+      data = data.data;
+      JsonService.json = data;
+      switch (data.pageType) {
+        case "view":
+          {
+            TemplateService.changecontent("view");
+          }
+          break;
+
+        case "create":
+          {
+            TemplateService.changecontent("detail");
+          }
+          break;
+
+        case "edit":
+          {
+            TemplateService.changecontent("detail");
+          }
+          break;
+      }
+      callback();
+    });
+
+  };
+  this.deleteFunction = function (callback) {
+
+    var modalInstance = $uibModal.open({
+      // animation: $scope.animationsEnabled,
+      templateUrl: '/backend/views/modal/conf-delete.html',
+      size: 'sm',
+      scope: this
+    });
+    // this.close = function (value) {
+    //   callback(value);
+    //   modalInstance.close("cancel");
+    // };
+  };
+
+  var openCustomModal = function (size, title, message) {
+    // var actionToPerformOnConfirm = action;
+    console.log("in model");
+    var modalInstance = $uibModal.open({
+      templateUrl: '/backend/views/modal/conf-delete.html',
+      size: "lg",
+      resolve: {
+        title: title,
+        message: message
+      }
+    });
+  };
+
+  this.eventModal = function (value) {
+    console.log(value);
+  };
+
+
+  this.eventAction = function (action, value) {
+    var sendTo = {
+      id: action.action
+    };
+    console.log(action);
+    if (action.type == "box") {
+      JsonService.modal = action;
+      globalfunction.openModal(function (data) {
+        console.log(data);
+      });
+    } else if (action.type == "redirect") {
+      if (action.linkType == "admin") {
+        window.location.href = adminurl + action.action;
+      } else if (action.linkType == "internal") {
+        window.location.href = "#/" + action.action;
+      } else {
+        window.location.href = action.action;
+      }
+    } else {
+      if (value && action && action.fieldsToSend) {
+        var keyword = {};
+        _.each(action.fieldsToSend, function (n, key) {
+          keyword[key] = value[n];
+        });
+        sendTo.keyword = JSON.stringify(keyword);
+      }
+      if (action && action.type == "page") {
+        $state.go("page", sendTo);
+      } else if (action && action.type == "apiCallConfirm") {
+        globalfunction.confDel(function (value2) {
+          if (value2) {
+            NavigationService.delete(action.api, value, function (data) {
+              if (data.value) {
+                toastr.success(JsonService.json.title + " deleted successfully.", JsonService.json.title + " deleted");
+                JsonService.refreshView();
+              } else {
+                toastr.error("There was an error while deleting " + JsonService.json.title, JsonService.json.title + " deleting error");
+              }
+            });
+          }
+        });
+      }
+    }
+  };
+
+
+
+
+
+});
+var imgurl = adminurl + "upload/";
+
+var imgpath = imgurl + "readFile";
+var uploadurl = imgurl;
+
+
+
+myApp.factory('NavigationService', function ($http) {
+    var navigation = [{
+        name: "Users",
+        classis: "active",
+        sref: "#!/page/viewUser//",
+        icon: "phone"
+    }];
+
+    return {
+        getnav: function () {
+            return navigation;
+        },
+
+        parseAccessToken: function (data, callback) {
+            if (data) {
+                $.jStorage.set("accessToken", data);
+                callback();
+            }
+        },
+        removeAccessToken: function (data, callback) {
+            $.jStorage.flush();
+        },
+        profile: function (callback, errorCallback) {
+            var data = {
+                accessToken: $.jStorage.get("accessToken")
+            };
+            $http.post(adminurl + 'user/profile', data).then(function (data) {
+                data = data.data;
+                if (data.value === true) {
+                    $.jStorage.set("profile", data.data);
+                    callback();
+                } else {
+                    errorCallback(data.error);
+                }
+            });
+        },
+        makeactive: function (menuname) {
+            for (var i = 0; i < navigation.length; i++) {
+                if (navigation[i].name == menuname) {
+                    navigation[i].classis = "active";
+                } else {
+                    navigation[i].classis = "";
+                }
+            }
+            return menuname;
+        },
+
+        search: function (url, formData, i, callback) {
+            $http.post(adminurl + url, formData).then(function (data) {
+                data = data.data;
+                callback(data, i);
+            });
+        },
+        delete: function (url, formData, callback) {
+            $http.post(adminurl + url, formData).then(function (data) {
+                data = data.data;
+                callback(data);
+            });
+        },
+        countrySave: function (formData, callback) {
+            $http.post(adminurl + 'country/save', formData).then(function (data) {
+                data = data.data;
+                callback(data);
+
+            });
+        },
+
+        apiCall: function (url, formData, callback) {
+            $http.post(adminurl + url, formData).then(function (data) {
+                data = data.data;
+                callback(data);
+
+            });
+        },
+        searchCall: function (url, formData, i, callback) {
+            $http.post(adminurl + url, formData).then(function (data) {
+                data = data.data;
+                callback(data, i);
+            });
+        },
+
+        getOneCountry: function (id, callback) {
+            $http.post(adminurl + 'country/getOne', {
+                _id: id
+            }).then(function (data) {
+                data = data.data;
+                callback(data);
+
+            });
+        },
+        getLatLng: function (address, i, callback) {
+            $http({
+                url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyC62zlixVsjaq4zDaL4cefNCubjCgxkte4",
+                method: 'GET',
+                withCredentials: false,
+            }).then(function (data) {
+                data = data.data;
+                callback(data, i);
+            });
+        },
+        uploadExcel: function (form, callback) {
+            $http.post(adminurl + form.model + '/import', {
+                file: form.file
+            }).then(function (data) {
+                data = data.data;
+                callback(data);
+
+            });
+
+        },
+
+    };
+});
+var globalfunction = {};
+myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("dashboard");
+        $scope.menutitle = NavigationService.makeactive("Dashboard");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+    })
+
+
+    .controller('AccessController', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+        if ($.jStorage.get("accessToken")) {
+
+        } else {
+            $state.go("login");
+        }
+    })
+
+    .controller('JagzCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $interval) {
+
+        function toColor(num, red) {
+            num >>>= 0;
+            var b = num & 0xFF,
+                g = (num & 0xFF00) >>> 8,
+                r = (num & 0xFF0000) >>> 16,
+                a = ((num & 0xFF000000) >>> 24) / 255;
+            if (red == "red") {
+                r = 255;
+                b = 0;
+                g = 0;
+            }
+            return "rgba(" + [r, g, b, a].join(",") + ")";
+        }
+
+        $scope.circles = _.times(360, function (n) {
+
+            var radius = _.random(0, 10);
+            return {
+                width: radius,
+                height: radius,
+                background: toColor(_.random(-12525360, 12525360)),
+                top: _.random(0, $(window).height()),
+                left: _.random(0, $(window).width())
+            };
+        });
+
+        function generateCircle() {
+            _.each($scope.circles, function (n, index) {
+                var radius = _.random(0, 10);
+                n.width = radius;
+                n.height = radius;
+                n.background = toColor(_.random(-12525360, 12525360));
+                if (count % 7 === 0 || count % 7 === 5 || count % 7 === 6) {
+                    if (count % 7 === 6) {
+                        n.background = toColor(_.random(-12525360, 12525360), "red");
+                        // n.width = 3;
+                        // n.height = 3;
+                    }
+                    var t = index * Math.PI / 180;
+                    var x = (4.0 * Math.pow(Math.sin(t), 3));
+                    var y = ((3.0 * Math.cos(t)) - (1.3 * Math.cos(2 * t)) - (0.6 * Math.cos(3 * t)) - (0.2 * Math.cos(4 * t)));
+                    n.top = -50 * y + 300;
+                    n.left = 50 * x + $(window).width() / 2;
+                } else {
+                    n.top = _.random(0, $(window).height());
+                    n.left = _.random(0, $(window).width());
+                }
+            });
+        }
+
+        var count = 0;
+
+        $interval(function () {
+            count++;
+            console.log("Version 1.1");
+            generateCircle();
+        }, 5000);
+
+    })
+
+    .controller('MultipleSelectCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $filter, toastr) {
+        var i = 0;
+        $scope.getValues = function (filter, insertFirst) {
+            var dataSend = {
+                keyword: $scope.search.modelData,
+                filter: filter,
+                page: 1
+            };
+            if (dataSend.keyword === null || dataSend.keyword === undefined) {
+                dataSend.keyword = "";
+            }
+            NavigationService[$scope.api]($scope.url, dataSend, ++i, function (data) {
+                if (data.value) {
+                    $scope.list = data.data.results;
+                    if ($scope.search.modelData) {
+                        $scope.showCreate = true;
+                        _.each($scope.list, function (n) {
+                            // if (n.name) {
+                            if (_.lowerCase(n.name) == _.lowerCase($scope.search.modelData)) {
+                                $scope.showCreate = false;
+                                return 0;
+                            }
+                            // }else{
+                            //     if (_.lowerCase(n.officeCode) == _.lowerCase($scope.search.modelData)) {
+                            //       $scope.showCreate = false;
+                            //       return 0;
+                            //   }
+                            // }
+
+                        });
+                    } else {
+                        $scope.showCreate = false;
+
+                    }
+                    if (insertFirst) {
+                        if ($scope.list[0] && $scope.list[0]._id) {
+                            // if ($scope.list[0].name) {
+                            $scope.sendData($scope.list[0]._id, $scope.list[0].name);
+                            // }else{
+                            //   $scope.sendData($scope.list[0]._id, $scope.list[0].officeCode);
+                            // }
+                        } else {
+                            console.log("Making this happen");
+                            // $scope.sendData(null, null);
+                        }
+                    }
+                } else {
+                    console.log("Making this happen2");
+                    $scope.sendData(null, null);
+                }
+
+
+            });
+        };
+
+        $scope.$watch('model', function (newVal, oldVal) {
+            if (newVal && oldVal === undefined) {
+                $scope.getValues({
+                    _id: $scope.model
+                }, true);
+            }
+        });
+
+
+        $scope.$watch('filter', function (newVal, oldVal) {
+            var filter = {};
+            if ($scope.filter) {
+                filter = JSON.parse($scope.filter);
+            }
+            var dataSend = {
+                keyword: $scope.search.modelData,
+                filter: filter,
+                page: 1
+            };
+
+            NavigationService[$scope.api]($scope.url, dataSend, ++i, function (data) {
+                if (data.value) {
+                    $scope.list = data.data.results;
+                    $scope.showCreate = false;
+
+                }
+            });
+        });
+
+
+        $scope.search = {
+            modelData: ""
+        };
+        if ($scope.model) {
+            $scope.getValues({
+                _id: $scope.model
+            }, true);
+        } else {
+            $scope.getValues();
+        }
+
+
+
+
+
+        $scope.listview = false;
+        $scope.showCreate = false;
+        $scope.typeselect = "";
+        $scope.showList = function () {
+            $scope.listview = true;
+            $scope.searchNew(true);
+        };
+        $scope.closeList = function () {
+            $scope.listview = false;
+        };
+        $scope.closeListSlow = function () {
+            $timeout(function () {
+                $scope.closeList();
+            }, 500);
+        };
+        $scope.searchNew = function (dontFlush) {
+            if (!dontFlush) {
+                $scope.model = "";
+            }
+            var filter = {};
+            if ($scope.filter) {
+                filter = JSON.parse($scope.filter);
+            }
+            $scope.getValues(filter);
+        };
+        $scope.createNew = function (create) {
+            var newCreate = $filter("capitalize")(create);
+            var data = {
+                name: newCreate
+            };
+            if ($scope.filter) {
+                data = _.assign(data, JSON.parse($scope.filter));
+            }
+            console.log(data);
+            NavigationService[$scope.create](data, function (data) {
+                if (data.value) {
+                    toastr.success($scope.name + " Created Successfully", "Creation Success");
+                    $scope.model = data.data._id;
+                    $scope.ngName = data.data.name;
+                } else {
+                    toastr.error("Error while creating " + $scope.name, "Error");
+                }
+            });
+            $scope.listview = false;
+        };
+        $scope.sendData = function (val, name) {
+            $scope.search.modelData = name;
+            $scope.ngName = name;
+            $scope.model = val;
+            $scope.listview = false;
+        };
+    })
+
+    .controller('PageJsonCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal) {
+        $scope.json = JsonService;
+        $scope.template = TemplateService.changecontent("none");
+        $scope.menutitle = NavigationService.makeactive("Country List");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        JsonService.getJson($stateParams.id, function () {});
+
+        globalfunction.confDel = function (callback) {
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: '/backend/views/modal/conf-delete.html',
+                size: 'sm',
+                scope: $scope
+            });
+            $scope.close = function (value) {
+                callback(value);
+                modalInstance.close("cancel");
+            };
+        };
+
+        globalfunction.openModal = function (callback) {
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: '/backend/views/modal/modal.html',
+                size: 'lg',
+                scope: $scope
+            });
+            $scope.close = function (value) {
+                callback(value);
+                modalInstance.close("cancel");
+            };
+        };
+
+        // globalfunction.confDel(function (value) {
+        //     console.log(value);
+        //     if (value) {
+        //         NavigationService.apiCall(id, function (data) {
+        //             if (data.value) {
+        //                 $scope.showAllCountries();
+        //                 toastr.success("Country deleted successfully.", "Country deleted");
+        //             } else {
+        //                 toastr.error("There was an error while deleting country", "Country deleting error");
+        //             }
+        //         });
+        //     }
+        // });
+
+    })
+
+    .controller('ViewCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
+        $scope.json = JsonService;
+        $scope.template = TemplateService;
+        var i = 0;
+        if ($stateParams.page && !isNaN(parseInt($stateParams.page))) {
+            $scope.currentPage = $stateParams.page;
+        } else {
+            $scope.currentPage = 1;
+        }
+
+        $scope.search = {
+            keyword: ""
+        };
+        if ($stateParams.keyword) {
+            $scope.search.keyword = $stateParams.keyword;
+        }
+        $scope.changePage = function (page) {
+            var goTo = "page";
+            if ($scope.search.keyword) {
+                goTo = "page";
+            }
+            $state.go(goTo, {
+                id: $stateParams.id,
+                page: page,
+                keyword: $scope.search.keyword
+            });
+        };
+
+        $scope.getAllItems = function (keywordChange) {
+            $scope.totalItems = undefined;
+            if (keywordChange) {
+                $scope.currentPage = 1;
+            }
+            NavigationService.search($scope.json.json.apiCall.url, {
+                    page: $scope.currentPage,
+                    keyword: $scope.search.keyword
+                }, ++i,
+                function (data, ini) {
+                    if (ini == i) {
+                        $scope.items = data.data.results;
+                        $scope.totalItems = data.data.total;
+                        $scope.maxRow = data.data.options.count;
+                    }
+                });
+        };
+        JsonService.refreshView = $scope.getAllItems;
+        $scope.getAllItems();
+
+    })
+
+    .controller('DetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, toastr) {
+        $scope.json = JsonService;
+        JsonService.setKeyword($stateParams.keyword);
+        $scope.template = TemplateService;
+        $scope.data = {};
+        console.log("detail controller");
+        console.log($scope.json);
+
+        //  START FOR EDIT
+        if ($scope.json.json.preApi) {
+            var obj = {};
+            obj[$scope.json.json.preApi.params] = $scope.json.keyword._id;
+            NavigationService.apiCall($scope.json.json.preApi.url, obj, function (data) {
+                $scope.data = data.data;
+                $scope.generateField = true;
+
+            });
+        } else {
+            $scope.generateField = true;
+        }
+        //  END FOR EDIT
+
+        $scope.onCancel = function (sendTo) {
+            $scope.json.json.action[1].stateName.json.keyword = "";
+            $scope.json.json.action[1].stateName.json.page = "";
+            $state.go($scope.json.json.action[1].stateName.page, $scope.json.json.action[1].stateName.json);
+        };
+
+        $scope.saveData = function (formData) {
+            NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
+                if (data.value === true) {
+                    $scope.json.json.action[0].stateName.json.keyword = "";
+                    $scope.json.json.action[0].stateName.json.page = "";
+                    $state.go($scope.json.json.action[0].stateName.page, $scope.json.json.action[0].stateName.json);
+                    var messText = "created";
+                    if ($scope.json.keyword._id) {
+                        messText = "edited";
+                    }
+                    toastr.success($scope.json.json.name + " " + formData.name + " " + messText + " successfully.");
+                } else {
+                    var messText = "creating";
+                    if ($scope.json.keyword._id) {
+                        messText = "editing";
+                    }
+                    toastr.error("Failed " + messText + " " + $scope.json.json.name);
+                }
+            });
+        };
+    })
+
+    .controller('DetailFieldCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
+        if (!$scope.type.type) {
+            $scope.type.type = "text";
+        }
+        $scope.json = JsonService;
+        $scope.tags = {};
+        $scope.model = [];
+        $scope.tagNgModel = {};
+        // $scope.boxModel
+        if ($scope.type.validation) {
+            var isRequired = _.findIndex($scope.type.validation, function (n) {
+                return n == "required";
+            });
+            if (isRequired >= 0) {
+                $scope.type.required = true;
+            }
+        }
+        $scope.form = {};
+        if ($scope.value && $scope.value[$scope.type.tableRef]) {
+            $scope.form.model = $scope.value[$scope.type.tableRef];
+        }
+
+        $scope.template = "views/field/" + $scope.type.type + ".html";
+
+        // BOX
+        if ($scope.type.type == "date") {
+            $scope.formData[$scope.type.tableRef] = moment($scope.formData[$scope.type.tableRef]).toDate();
+        }
+        if ($scope.type.type == "password") {
+            $scope.formData[$scope.type.tableRef] = "";
+        }
+        if ($scope.type.type == "youtube") {
+            $scope.youtube = {};
+
+            function getJsonFromUrl(string) {
+                var obj = _.split(string, '?');
+                var returnval = {};
+                if (obj.length >= 2) {
+                    obj = _.split(obj[1], '&');
+                    _.each(obj, function (n) {
+                        var newn = _.split(n, "=");
+                        returnval[newn[0]] = newn[1];
+                        return;
+                    });
+                    return returnval;
+                }
+
+            }
+            $scope.changeYoutubeUrl = function (string) {
+                if (string) {
+                    $scope.formData[$scope.type.tableRef] = "";
+                    var result = getJsonFromUrl(string);
+                    console.log(result);
+                    if (result && result.v) {
+                        $scope.formData[$scope.type.tableRef] = result.v;
+                    }
+                }
+
+            };
+        }
+        if ($scope.type.type == "box") {
+
+            if (!_.isArray($scope.formData[$scope.type.tableRef]) && $scope.formData[$scope.type.tableRef] === '') {
+                $scope.formData[$scope.type.tableRef] = [];
+                $scope.model = [];
+            } else {
+                if ($scope.formData[$scope.type.tableRef]) {
+                    $scope.model = $scope.formData[$scope.type.tableRef];
+                }
+            }
+            $scope.search = {
+                text: ""
+            };
+        }
+        $scope.state = "";
+        $scope.createBox = function (state) {
+            $scope.state = state;
+            $scope.model.push({});
+            $scope.editBox("Create", $scope.model[$scope.model.length - 1]);
+        };
+        $scope.editBox = function (state, data) {
+            $scope.state = state;
+            $scope.data = data;
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: '/backend/views/modal/modal.html',
+                size: 'lg',
+                scope: $scope
+            });
+            $scope.close = function (value) {
+                callback(value);
+                modalInstance.close("cancel");
+            };
+        };
+        $scope.deleteBox = function (index, data) {
+            console.log(data);
+            data.splice(index, 1);
+        };
+
+        //  TAGS STATIC AND FROM TABLE
+        $scope.refreshTags = function (search) {
+            if ($scope.type.url !== "") {
+                NavigationService.searchCall($scope.type.url, {
+                    keyword: search
+                }, 1, function (data1) {
+                    $scope.tags[$scope.type.tableRef] = data1.data.results;
+                });
+            } else {
+                $scope.tags[$scope.type.tableRef] = $scope.type.dropDown;
+            }
+        };
+        if ($scope.type.type == "tags") {
+            $scope.refreshTags();
+        }
+
+        $scope.tagClicked = function (select, index) {
+            if ($scope.type.fieldType === "array") {
+                $scope.formData[$scope.type.tableRef] = [];
+                _.each(select, function (n) {
+                    $scope.formData[$scope.type.tableRef].push(n._id);
+                });
+            } else {
+                $scope.formData[$scope.type.tableRef] = select;
+            }
+        };
+    })
+
+    .controller('LoginCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+        //Used to name the .html file
+        $scope.menutitle = NavigationService.makeactive("Login");
+        TemplateService.title = $scope.menutitle;
+        $scope.currentHost = window.location.origin;
+        if ($stateParams.id) {
+            if ($stateParams.id === "AccessNotAvailable") {
+                toastr.error("You do not have access for the Backend.");
+            } else {
+                NavigationService.parseAccessToken($stateParams.id, function () {
+                    NavigationService.profile(function () {
+                        $state.go("dashboard");
+                    }, function () {
+                        $state.go("login");
+                    });
+                });
+            }
+        } else {
+            NavigationService.removeAccessToken();
+        }
+
+    })
+
+    .controller('CountryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("country-list");
+        $scope.menutitle = NavigationService.makeactive("Country List");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        $scope.currentPage = $stateParams.page;
+        var i = 0;
+        $scope.search = {
+            keyword: ""
+        };
+        if ($stateParams.keyword) {
+            $scope.search.keyword = $stateParams.keyword;
+        }
+        $scope.showAllCountries = function (keywordChange) {
+            $scope.totalItems = undefined;
+            if (keywordChange) {
+                $scope.currentPage = 1;
+            }
+            NavigationService.searchCountry({
+                page: $scope.currentPage,
+                keyword: $scope.search.keyword
+            }, ++i, function (data, ini) {
+                if (ini == i) {
+                    $scope.countries = data.data.results;
+                    $scope.totalItems = data.data.total;
+                    $scope.maxRow = data.data.options.count;
+                }
+            });
+        };
+
+        $scope.changePage = function (page) {
+            var goTo = "country-list";
+            if ($scope.search.keyword) {
+                goTo = "country-list";
+            }
+            $state.go(goTo, {
+                page: page,
+                keyword: $scope.search.keyword
+            });
+        };
+        $scope.showAllCountries();
+        $scope.deleteCountry = function (id) {
+            globalfunction.confDel(function (value) {
+                console.log(value);
+                if (value) {
+                    NavigationService.deleteCountry(id, function (data) {
+                        if (data.value) {
+                            $scope.showAllCountries();
+                            toastr.success("Country deleted successfully.", "Country deleted");
+                        } else {
+                            toastr.error("There was an error while deleting country", "Country deleting error");
+                        }
+                    });
+                }
+            });
+        };
+    })
+
+    .controller('CreateCountryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, toastr) {
+        //Used to name the .html file
+
+        $scope.template = TemplateService.changecontent("country-detail");
+        $scope.menutitle = NavigationService.makeactive("Country");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+
+        $scope.header = {
+            "name": "Create Country"
+        };
+        $scope.formData = {};
+        $scope.saveCountry = function (formData) {
+            console.log($scope.formData);
+            NavigationService.countrySave($scope.formData, function (data) {
+                if (data.value === true) {
+                    $state.go('country-list');
+                    toastr.success("Country " + formData.name + " created successfully.", "Country Created");
+                } else {
+                    toastr.error("Country creation failed.", "Country creation error");
+                }
+            });
+        };
+
+    })
+
+    .controller('CreateAssignmentCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, toastr, $stateParams, $uibModal) {
+        //Used to name the .html file
+
+        $scope.template = TemplateService.changecontent("assignment-detail");
+        $scope.menutitle = NavigationService.makeactive("Assignment");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+
+        $scope.header = {
+            "name": "Create Assignment"
+        };
+        $scope.formData = {};
+        $scope.formData.status = true;
+        $scope.formData.invoice = [];
+        $scope.formData.products = [];
+        $scope.formData.LRs = [];
+        $scope.formData.vehicleNumber = [];
+        $scope.formData.others = [];
+        $scope.formData.shareWith = [];
+        $scope.modalData = {};
+        $scope.modalIndex = "";
+        $scope.wholeObj = [];
+        $scope.addModels = function (dataArray, data) {
+            dataArray.push(data);
+        };
+
+        // NavigationService.searchNatureLoss(function(data) {
+        //     $scope.natureLoss = data.data.results;
+        // });
+
+        $scope.refreshShareWith = function (data, office) {
+            var formdata = {};
+            formdata.search = data;
+            formdata.filter = {
+                "postedAt": office
+            };
+            NavigationService.searchEmployee(formdata, 1, function (data) {
+                $scope.shareWith = data.data.results;
+            });
+        };
+        $scope.refreshNature = function (data, causeloss) {
+            var formdata = {};
+            formdata.search = data;
+            formdata.filter = {
+                "_id": causeloss
+            };
+            NavigationService.getNatureLoss(formdata, 1, function (data) {
+                $scope.natureLoss = data.data.results;
+            });
+        };
+
+        $scope.addModal = function (filename, index, holdobj, data, current, wholeObj) {
+            if (index !== "") {
+                $scope.modalData = data;
+                $scope.modalIndex = index;
+            } else {
+                $scope.modalData = {};
+                $scope.modalIndex = "";
+            }
+            $scope.wholeObj = wholeObj;
+            $scope.current = current;
+            $scope.holdObject = holdobj;
+            var modalInstance = $uibModal.open({
+                scope: $scope,
+                templateUrl: 'views/modal/' + filename + '.html',
+                size: 'lg'
+            });
+        };
+
+        $scope.addElements = function (moddata) {
+            if ($scope.modalIndex !== "") {
+                $scope.wholeObj[$scope.modalIndex] = moddata;
+            } else {
+                $scope.newjson = moddata;
+                var a = moddata;
+                switch ($scope.holdObject) {
+                    case "invoice":
+                        {
+                            var newmod = a.invoiceNumber.split(',');
+                            _.each(newmod, function (n) {
+                                $scope.newjson.invoiceNumber = n;
+                                $scope.wholeObj.push($scope.newjson);
+                            });
+                        }
+                        break;
+                    case "products":
+                        {
+                            var newmod1 = a.item.split(',');
+                            _.each(newmod1, function (n) {
+                                $scope.newjson.item = n;
+                                $scope.wholeObj.push($scope.newjson);
+                            });
+                        }
+                        break;
+                    case "LRs":
+                        var newmod2 = a.lrNumber.split(',');
+                        _.each(newmod2, function (n) {
+                            $scope.newjson.lrNumber = n;
+                            $scope.wholeObj.push($scope.newjson);
+                        });
+                        break;
+                    case "Vehicle":
+                        var newmod3 = a.vehicleNumber.split(',');
+                        _.each(newmod3, function (n) {
+                            $scope.newjson.vehicleNumber = n;
+                            $scope.wholeObj.push($scope.newjson);
+                        });
+                        break;
+
+                    default:
+                        {
+                            $scope.wholeObj.push($scope.newjson);
+                        }
+
+                }
+
+            }
+        };
+
+        $scope.deleteElements = function (index, data) {
+            data.splice(index, 1);
+        };
+
+
+        $scope.submit = function (formData) {
+            console.log($scope.formData);
+            NavigationService.assignmentSave($scope.formData, function (data) {
+                if (data.value === true) {
+                    $state.go('assignment-list');
+                    toastr.success("Assignment " + formData.name + " created successfully.", "Assignment Created");
+                } else {
+                    toastr.error("Assignment creation failed.", "Assignment creation error");
+                }
+            });
+        };
+
+    })
+
+    .controller('EditAssignmentCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, toastr, $stateParams, $uibModal) {
+        //Used to name the .html file
+
+        $scope.template = TemplateService.changecontent("assignment-detail");
+        $scope.menutitle = NavigationService.makeactive("Assignment");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+
+        $scope.header = {
+            "name": "Edit Assignment"
+        };
+        $scope.formData = {};
+        $scope.formData.status = true;
+        $scope.formData.invoice = [];
+        $scope.formData.products = [];
+        $scope.formData.LRs = [];
+        $scope.formData.vehicleNumber = [];
+        $scope.formData.others = [];
+        $scope.formData.shareWith = [];
+        $scope.modalData = {};
+        $scope.modalIndex = "";
+        $scope.wholeObj = [];
+        $scope.addModels = function (dataArray, data) {
+            dataArray.push(data);
+        };
+
+        NavigationService.getOneModel("Assignment", $stateParams.id, function (data) {
+            $scope.formData = data.data;
+            $scope.formData.dateOfIntimation = new Date(data.data.dateOfIntimation);
+            $scope.formData.dateOfAppointment = new Date(data.data.dateOfAppointment);
+            $scope.formData.country = data.data.city.district.state.zone.country._id;
+            $scope.formData.zone = data.data.city.district.state.zone._id;
+            $scope.formData.state = data.data.city.district.state._id;
+            $scope.formData.district = data.data.city.district._id;
+            $scope.formData.city = data.data.city._id;
+            $scope.formData.insuredOfficer = data.data.insuredOfficer._id;
+            console.log($scope.formData.policyDoc);
+            console.log($scope.formData);
+        });
+
+
+        $scope.refreshShareWith = function (data, office) {
+            var formdata = {};
+            formdata.search = data;
+            formdata.filter = {
+                "postedAt": office
+            };
+            NavigationService.searchEmployee(formdata, 1, function (data) {
+                $scope.shareWith = data.data.results;
+            });
+        };
+        $scope.refreshNature = function (data, causeloss) {
+            var formdata = {};
+            formdata.search = data;
+            formdata.filter = {
+                "_id": causeloss
+            };
+            NavigationService.getNatureLoss(formdata, 1, function (data) {
+                $scope.natureLoss = data.data.results;
+            });
+        };
+
+        $scope.addModal = function (filename, index, holdobj, data, current, wholeObj) {
+            if (index !== "") {
+                $scope.modalData = data;
+                $scope.modalIndex = index;
+            } else {
+                $scope.modalData = {};
+                $scope.modalIndex = "";
+            }
+            $scope.wholeObj = wholeObj;
+            $scope.current = current;
+            $scope.holdObject = holdobj;
+            var modalInstance = $uibModal.open({
+                scope: $scope,
+                templateUrl: 'views/modal/' + filename + '.html',
+                size: 'lg'
+            });
+        };
+
+        $scope.addElements = function (moddata) {
+            if ($scope.modalIndex !== "") {
+                $scope.wholeObj[$scope.modalIndex] = moddata;
+            } else {
+                $scope.newjson = moddata;
+                var a = moddata;
+                switch ($scope.holdObject) {
+                    case "invoice":
+                        {
+                            var newmod = a.invoiceNumber.split(',');
+                            _.each(newmod, function (n) {
+                                $scope.newjson.invoiceNumber = n;
+                                $scope.wholeObj.push($scope.newjson);
+                            });
+                        }
+                        break;
+                    case "products":
+                        {
+                            var newmod1 = a.item.split(',');
+                            _.each(newmod1, function (n) {
+                                $scope.newjson.item = n;
+                                $scope.wholeObj.push($scope.newjson);
+                            });
+                        }
+                        break;
+                    case "LRs":
+                        var newmod2 = a.lrNumber.split(',');
+                        _.each(newmod2, function (n) {
+                            $scope.newjson.lrNumber = n;
+                            $scope.wholeObj.push($scope.newjson);
+                        });
+                        break;
+                    case "Vehicle":
+                        var newmod3 = a.vehicleNumber.split(',');
+                        _.each(newmod3, function (n) {
+                            $scope.newjson.vehicleNumber = n;
+                            $scope.wholeObj.push($scope.newjson);
+                        });
+                        break;
+
+                    default:
+                        {
+                            $scope.wholeObj.push($scope.newjson);
+                        }
+
+                }
+
+            }
+        };
+
+        $scope.deleteElements = function (index, data) {
+            data.splice(index, 1);
+        };
+
+
+        $scope.submit = function (formData) {
+            console.log($scope.formData);
+            NavigationService.assignmentSave($scope.formData, function (data) {
+                if (data.value === true) {
+                    $state.go('assignment-list');
+                    toastr.success("Assignment " + formData.name + " created successfully.", "Assignment Created");
+                } else {
+                    toastr.error("Assignment creation failed.", "Assignment creation error");
+                }
+            });
+        };
+
+    })
+
+    .controller('EditCountryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+        //Used to name the .html file
+
+        $scope.template = TemplateService.changecontent("country-detail");
+        $scope.menutitle = NavigationService.makeactive("Country");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+
+        $scope.header = {
+            "name": "Edit Country"
+        };
+
+        NavigationService.getOneCountry($stateParams.id, function (data) {
+            $scope.formData = data.data;
+            console.log('$scope.oneCountry', $scope.oneCountry);
+
+        });
+
+        $scope.saveCountry = function (formValid) {
+            NavigationService.countryEditSave($scope.formData, function (data) {
+                if (data.value === true) {
+                    $state.go('country-list');
+                    console.log("Check this one");
+                    toastr.success("Country " + $scope.formData.name + " edited successfully.", "Country Edited");
+                } else {
+                    toastr.error("Country edition failed.", "Country editing error");
+                }
+            });
+        };
+
+    })
+
+    .controller('SchemaCreatorCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("schema-creator");
+        $scope.menutitle = NavigationService.makeactive("Schema Creator");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        $scope.collectionTypes = ["Table View", "Table View Drag and Drop", "Grid View", "Grid View Drag and Drop"];
+        $scope.schema = [{
+            "schemaType": "Boolean",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "Color",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "Date",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "Email",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "File",
+            "Input1": "MB Limit",
+            "Input2": ""
+        }, {
+            "schemaType": "Image",
+            "Input1": "pixel x",
+            "Input2": "pixel y "
+        }, {
+            "schemaType": "Location",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "Mobile",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "Multiple Select",
+            "Input1": "Enum",
+            "Input2": ""
+        }, {
+            "schemaType": "Multiple Select From Table",
+            "Input1": "Collection",
+            "Input2": "Field"
+        }, {
+            "schemaType": "Number",
+            "Input1": "min ",
+            "Input2": "max"
+        }, {
+            "schemaType": "Single Select ",
+            "Input1": "Enum",
+            "Input2": ""
+        }, {
+            "schemaType": "Single Select From Table",
+            "Input1": "Collection",
+            "Input2": "Field"
+        }, {
+            "schemaType": "Telephone",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "Text",
+            "Input1": "min length",
+            "Input2": "max length"
+        }, {
+            "schemaType": "TextArea",
+            "Input1": "min length",
+            "Input2": "max length"
+        }, {
+            "schemaType": "URL",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "WYSIWYG",
+            "Input1": "",
+            "Input2": ""
+        }, {
+            "schemaType": "Youtube",
+            "Input1": "",
+            "Input2": ""
+        }];
+
+
+        $scope.inputTypes = [{
+            value: '',
+            name: 'Select type of input'
+        }, {
+            value: 'Text',
+            name: 'Text'
+        }, {
+            value: 'Date',
+            name: 'Date'
+        }, {
+            value: 'Textarea',
+            name: 'Textarea'
+        }];
+
+        $scope.formData = {};
+        $scope.formData.status = true;
+
+        $scope.formData.forms = [{
+            head: '',
+            items: [{}, {}]
+        }];
+
+        $scope.addHead = function () {
+            $scope.formData.forms.push({
+                head: $scope.formData.forms.length + 1,
+                items: [{}]
+            });
+        };
+        $scope.removeHead = function (index) {
+            if ($scope.formData.forms.length > 1) {
+                $scope.formData.forms.splice(index, 1);
+            } else {
+                $scope.formData.forms = [{
+                    head: '',
+                    items: [{}, {}]
+                }];
+            }
+        };
+
+        $scope.addItem = function (obj) {
+            var index = $scope.formData.forms.indexOf(obj);
+            $scope.formData.forms[index].items.push({});
+        };
+
+        $scope.removeItem = function (obj, indexItem) {
+            var indexHead = $scope.formData.forms.indexOf(obj);
+            if ($scope.formData.forms[indexHead].items.length > 1) {
+                $scope.formData.forms[indexHead].items.splice(indexItem, 1);
+            } else {
+                $scope.formData.forms[indexHead].items = [{}];
+            }
+        };
+
+    })
+
+    .controller('ExcelUploadCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("excel-upload");
+        $scope.menutitle = NavigationService.makeactive("Excel Upload");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        $scope.form = {
+            file: null,
+            model: $stateParams.model
+        };
+
+        $scope.excelUploaded = function () {
+            console.log("Excel is uploaded with name " + $scope.form.file);
+            NavigationService.uploadExcel($scope.form, function (data) {
+                $scope.data = data.data;
+            });
+        };
+    })
+
+    .controller('headerCtrl', function ($scope, TemplateService, $uibModal) {
+        $scope.template = TemplateService;
+        $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+            $(window).scrollTop(0);
+        });
+
+    })
+
+    .controller('languageCtrl', function ($scope, TemplateService, $translate, $rootScope) {
+
+        $scope.changeLanguage = function () {
+            console.log("Language CLicked");
+
+            if (!$.jStorage.get("language")) {
+                $translate.use("hi");
+                $.jStorage.set("language", "hi");
+            } else {
+                if ($.jStorage.get("language") == "en") {
+                    $translate.use("hi");
+                    $.jStorage.set("language", "hi");
+                } else {
+                    $translate.use("en");
+                    $.jStorage.set("language", "en");
+                }
+            }
+            //  $rootScope.$apply();
+        };
+    });
