@@ -19,7 +19,7 @@ module.exports = function (grunt) {
   var isProduction = grunt.option('production');
   grunt.config.set('cssmin', {
     production: {
-      src: [folderName + '/css/main.css'],
+      src: [folderName + '/css/import.css'],
       dest: folderName + '/css/production.css'
     }
   });
