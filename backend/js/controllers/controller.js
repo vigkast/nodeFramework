@@ -512,6 +512,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         //Used to name the .html file
         $scope.menutitle = NavigationService.makeactive("Login");
         TemplateService.title = $scope.menutitle;
+        $scope.template = TemplateService;
         $scope.currentHost = window.location.origin;
         if ($stateParams.id) {
             if ($stateParams.id === "AccessNotAvailable") {
