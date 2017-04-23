@@ -361,17 +361,17 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
 
         $scope.saveData = function (formData) {
             NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
+                var messText = "created";
                 if (data.value === true) {
                     $scope.json.json.action[0].stateName.json.keyword = "";
                     $scope.json.json.action[0].stateName.json.page = "";
                     $state.go($scope.json.json.action[0].stateName.page, $scope.json.json.action[0].stateName.json);
-                    var messText = "created";
                     if ($scope.json.keyword._id) {
                         messText = "edited";
                     }
                     toastr.success($scope.json.json.name + " " + formData.name + " " + messText + " successfully.");
                 } else {
-                    var messText = "creating";
+                    messText = "creating";
                     if ($scope.json.keyword._id) {
                         messText = "editing";
                     }
@@ -405,6 +405,20 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
 
         $scope.template = "views/field/" + $scope.type.type + ".html";
 
+        function getJsonFromUrl(string) {
+            var obj = _.split(string, '?');
+            var returnval = {};
+            if (obj.length >= 2) {
+                obj = _.split(obj[1], '&');
+                _.each(obj, function (n) {
+                    var newn = _.split(n, "=");
+                    returnval[newn[0]] = newn[1];
+                    return;
+                });
+                return returnval;
+            }
+
+        }
         // BOX
         if ($scope.type.type == "date") {
             $scope.formData[$scope.type.tableRef] = moment($scope.formData[$scope.type.tableRef]).toDate();
@@ -415,20 +429,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         if ($scope.type.type == "youtube") {
             $scope.youtube = {};
 
-            function getJsonFromUrl(string) {
-                var obj = _.split(string, '?');
-                var returnval = {};
-                if (obj.length >= 2) {
-                    obj = _.split(obj[1], '&');
-                    _.each(obj, function (n) {
-                        var newn = _.split(n, "=");
-                        returnval[newn[0]] = newn[1];
-                        return;
-                    });
-                    return returnval;
-                }
 
-            }
             $scope.changeYoutubeUrl = function (string) {
                 if (string) {
                     $scope.formData[$scope.type.tableRef] = "";
