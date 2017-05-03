@@ -1,11 +1,11 @@
 var globalfunction = {};
 myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
-    //Used to name the .html file
-    $scope.template = TemplateService.changecontent("dashboard");
-    $scope.menutitle = NavigationService.makeactive("Dashboard");
-    TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
-})
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("dashboard");
+        $scope.menutitle = NavigationService.makeactive("Dashboard");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+    })
 
 
     .controller('AccessController', function ($scope, TemplateService, NavigationService, $timeout, $state) {
@@ -237,7 +237,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         $scope.menutitle = NavigationService.makeactive("Country List");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
-        JsonService.getJson($stateParams.id, function () { });
+        JsonService.getJson($stateParams.id, function () {});
 
         globalfunction.confDel = function (callback) {
             var modalInstance = $uibModal.open({
@@ -315,9 +315,9 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
                 $scope.currentPage = 1;
             }
             NavigationService.search($scope.json.json.apiCall.url, {
-                page: $scope.currentPage,
-                keyword: $scope.search.keyword
-            }, ++i,
+                    page: $scope.currentPage,
+                    keyword: $scope.search.keyword
+                }, ++i,
                 function (data, ini) {
                     if (ini == i) {
                         $scope.items = data.data.results;
@@ -404,6 +404,45 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         }
 
         $scope.template = "views/field/" + $scope.type.type + ".html";
+
+        // Multiple checkbox selection
+        if ($scope.type.type == "multipleCheckbox") {
+            if ($scope.type.url !== "") {
+                NavigationService.searchCall($scope.type.url, {
+                    keyword: ""
+                }, 1, function (data1) {
+                    $scope.items[$scope.type.tableRef] = data1.data.results;
+                    if ($scope.json.keyword._id) {
+                        console.log("Edit multiCheckbox formData: ", $scope.formData[$scope.type.tableRef]);
+                        for (var idx = 0; idx < $scope.items[$scope.type.tableRef].length; idx++) {
+                            for (var formIdx = 0; formIdx < $scope.formData[$scope.type.tableRef].length; formIdx++) {
+                                if ($scope.items[$scope.type.tableRef][idx]._id == $scope.formData[$scope.type.tableRef][formIdx]._id) {
+                                    $scope.items[$scope.type.tableRef][idx].checked = true;
+                                }
+                            }
+                        }
+                    }
+                });
+            } else {
+                $scope.items[$scope.type.tableRef] = $scope.type.dropDown;
+            }
+        }
+
+        // Set multiple checkbox field
+        $scope.setSelectedItem = function (item) {
+            if (typeof $scope.formData[$scope.type.tableRef] === 'undefined')
+                $scope.formData[$scope.type.tableRef] = [];
+            var index = _.findIndex($scope.formData[$scope.type.tableRef], function (doc) {
+                return doc._id == item._id;
+            });
+            if (index < 0) {
+                $scope.formData[$scope.type.tableRef].push({
+                    _id: item._id
+                });
+            } else {
+                $scope.formData[$scope.type.tableRef].splice(index, 1);
+            }
+        }
 
         function getJsonFromUrl(string) {
             var obj = _.split(string, '?');
