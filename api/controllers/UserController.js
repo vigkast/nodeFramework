@@ -46,14 +46,27 @@ var controller = {
         });
     },
     backupDatabase: function (req, res) {
-        var q = req.ip.search("127.0.0.1");
+        res.connection.setTimeout(200000000);
+        req.connection.setTimeout(200000000);
+        var q = req.host.search("127.0.0.1");
         if (q >= 0) {
+            _.times(20, function (n) {
+                var name = moment().subtract(5 + n, "days").format("ddd-Do-MMM-YYYY");
+                exec("cd backup && rm -rf " + name + "*", function (err, stdout, stderr) {});
+            });
             var jagz = _.map(mongoose.models, function (Model, key) {
                 var name = Model.collection.collectionName;
                 return {
                     key: key,
                     name: name,
                 };
+            });
+            jagz.push({
+                "key": "fs.chunks",
+                "name": "fs.chunks"
+            }, {
+                "key": "fs.files",
+                "name": "fs.files"
             });
             var isBackup = fs.existsSync("./backup");
             if (!isBackup) {

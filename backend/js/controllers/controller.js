@@ -242,7 +242,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         globalfunction.confDel = function (callback) {
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: '/backend/views/modal/conf-delete.html',
+                templateUrl: '/views/modal/conf-delete.html',
                 size: 'sm',
                 scope: $scope
             });
@@ -255,7 +255,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         globalfunction.openModal = function (callback) {
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: '/backend/views/modal/modal.html',
+                templateUrl: '/views/modal/modal.html',
                 size: 'lg',
                 scope: $scope
             });
@@ -341,10 +341,9 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
 
         //  START FOR EDIT
         if ($scope.json.json.preApi) {
-
-            NavigationService.apiCall($scope.json.json.preApi.url, {
-                [$scope.json.json.preApi.params]: $scope.json.keyword._id
-            }, function (data) {
+            var obj = {};
+            obj[$scope.json.json.preApi.params] = $scope.json.keyword._id;
+            NavigationService.apiCall($scope.json.json.preApi.url, obj, function (data) {
                 $scope.data = data.data;
                 $scope.generateField = true;
 
@@ -362,17 +361,17 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
 
         $scope.saveData = function (formData) {
             NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
+                var messText = "created";
                 if (data.value === true) {
                     $scope.json.json.action[0].stateName.json.keyword = "";
                     $scope.json.json.action[0].stateName.json.page = "";
                     $state.go($scope.json.json.action[0].stateName.page, $scope.json.json.action[0].stateName.json);
-                    var messText = "created";
                     if ($scope.json.keyword._id) {
                         messText = "edited";
                     }
                     toastr.success($scope.json.json.name + " " + formData.name + " " + messText + " successfully.");
                 } else {
-                    var messText = "creating";
+                    messText = "creating";
                     if ($scope.json.keyword._id) {
                         messText = "editing";
                     }
@@ -406,6 +405,59 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
 
         $scope.template = "views/field/" + $scope.type.type + ".html";
 
+        // Multiple checkbox selection
+        if ($scope.type.type == "multipleCheckbox") {
+            if ($scope.type.url !== "") {
+                NavigationService.searchCall($scope.type.url, {
+                    keyword: ""
+                }, 1, function (data1) {
+                    $scope.items[$scope.type.tableRef] = data1.data.results;
+                    if ($scope.json.keyword._id) {
+                        console.log("Edit multiCheckbox formData: ", $scope.formData[$scope.type.tableRef]);
+                        for (var idx = 0; idx < $scope.items[$scope.type.tableRef].length; idx++) {
+                            for (var formIdx = 0; formIdx < $scope.formData[$scope.type.tableRef].length; formIdx++) {
+                                if ($scope.items[$scope.type.tableRef][idx]._id == $scope.formData[$scope.type.tableRef][formIdx]._id) {
+                                    $scope.items[$scope.type.tableRef][idx].checked = true;
+                                }
+                            }
+                        }
+                    }
+                });
+            } else {
+                $scope.items[$scope.type.tableRef] = $scope.type.dropDown;
+            }
+        }
+
+        // Set multiple checkbox field
+        $scope.setSelectedItem = function (item) {
+            if (typeof $scope.formData[$scope.type.tableRef] === 'undefined')
+                $scope.formData[$scope.type.tableRef] = [];
+            var index = _.findIndex($scope.formData[$scope.type.tableRef], function (doc) {
+                return doc._id == item._id;
+            });
+            if (index < 0) {
+                $scope.formData[$scope.type.tableRef].push({
+                    _id: item._id
+                });
+            } else {
+                $scope.formData[$scope.type.tableRef].splice(index, 1);
+            }
+        }
+
+        function getJsonFromUrl(string) {
+            var obj = _.split(string, '?');
+            var returnval = {};
+            if (obj.length >= 2) {
+                obj = _.split(obj[1], '&');
+                _.each(obj, function (n) {
+                    var newn = _.split(n, "=");
+                    returnval[newn[0]] = newn[1];
+                    return;
+                });
+                return returnval;
+            }
+
+        }
         // BOX
         if ($scope.type.type == "date") {
             $scope.formData[$scope.type.tableRef] = moment($scope.formData[$scope.type.tableRef]).toDate();
@@ -416,20 +468,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         if ($scope.type.type == "youtube") {
             $scope.youtube = {};
 
-            function getJsonFromUrl(string) {
-                var obj = _.split(string, '?');
-                var returnval = {};
-                if (obj.length >= 2) {
-                    obj = _.split(obj[1], '&');
-                    _.each(obj, function (n) {
-                        var newn = _.split(n, "=");
-                        returnval[newn[0]] = newn[1];
-                        return;
-                    });
-                    return returnval;
-                }
 
-            }
             $scope.changeYoutubeUrl = function (string) {
                 if (string) {
                     $scope.formData[$scope.type.tableRef] = "";
@@ -467,7 +506,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
             $scope.data = data;
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: '/backend/views/modal/modal.html',
+                templateUrl: '/views/modal/modal.html',
                 size: 'lg',
                 scope: $scope
             });
@@ -513,6 +552,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         //Used to name the .html file
         $scope.menutitle = NavigationService.makeactive("Login");
         TemplateService.title = $scope.menutitle;
+        $scope.template = TemplateService;
         $scope.currentHost = window.location.origin;
         if ($stateParams.id) {
             if ($stateParams.id === "AccessNotAvailable") {
@@ -1096,7 +1136,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         };
     })
 
-    .controller('headerCtrl', function ($scope, TemplateService, $uibModal) {
+    .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
         $scope.template = TemplateService;
         $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
             $(window).scrollTop(0);

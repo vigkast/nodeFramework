@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="myApp">
 
-<head ng-controller="headerCtrl">
+<head ng-controller="headerctrl">
     <meta charset="utf-8">
     <base href="/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,23 +11,19 @@
     <meta name="author" content="">
     <meta name="robots" content="noindex">
     <meta name="googlebot" content="noindex">
+    <title ng-bind="'Backend | '+template.title">Backend</title>
     <link rel="shortcut icon" href="img/favicon.ico" />
 
-    <title ng-bind="'Node Framework | '+template.title"></title>
-
-    <!--[if IE]> <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script> <![endif]-->
     <!--[if IE]> <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script> <![endif]-->
 </head>
 
 <body>
     <div class="repeated-item" ui-view></div>
-
-
     <link rel="stylesheet" type="text/css" href="css/import.css" />
 
     <script>
         var adminurl = "http://wohlig.io/api/";
-        var isproduction = true;
+        var isproduction = false;
         var chintan = function(content) {
             console.log("%c ---------------------------------------", 'background: #222; color: #bada55');
             console.log(content);
@@ -107,21 +103,21 @@
         
         <script src="bower_components/textAngular/dist/textAngular.min.js"></script>
         
-        <script src="js/app.js"></script>
+        <script src="backend/js/app.js"></script>
         
-        <script src="js/languages/language.js"></script>
+        <script src="backend/js/languages/language.js"></script>
         
-        <script src="js/directives/directive.js"></script>
+        <script src="backend/js/directives/directive.js"></script>
         
-        <script src="js/filters/filter.js"></script>
+        <script src="backend/js/filters/filter.js"></script>
         
-        <script src="js/services/template.js"></script>
+        <script src="backend/js/services/template.js"></script>
         
-        <script src="js/services/jsonService.js"></script>
+        <script src="backend/js/services/jsonService.js"></script>
         
-        <script src="js/factories/navigation.js"></script>
+        <script src="backend/js/factories/navigation.js"></script>
         
-        <script src="js/controllers/controller.js"></script>
+        <script src="backend/js/controllers/controller.js"></script>
         
 </body>
 

@@ -155,8 +155,7 @@ var models = {
     readUploaded: function (filename, width, height, style, res) {
         res.set({
             'Cache-Control': 'public, max-age=31557600',
-            'Expires': new Date(Date.now() + 345600000).toUTCString(),
-            'Content-Type': 'image/jpeg'
+            'Expires': new Date(Date.now() + 345600000).toUTCString()
         });
         var readstream = gfs.createReadStream({
             filename: filename
@@ -359,6 +358,27 @@ var models = {
             fs.unlink(dest);
             callback(err);
         });
+    },
+    sendEmail: function (fromEmail, toEmail, subject, filename, data) {
+        var helper = require('sendgrid').mail;
+        var from_email = new helper.Email(fromEmail);
+        var to_email = new helper.Email(toEmail);
+        sails.hooks.views.render("email/" + filename, data, function (err, html) {
+            var content = new helper.Content('text/html', html);
+            var mail = new helper.Mail(from_email, subject, to_email, content);
+            var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+            var request = sg.emptyRequest({
+                method: 'POST',
+                path: '/v3/mail/send',
+                body: mail.toJSON(),
+            });
+            sg.API(request, function (error, response) {
+                console.log(response.statusCode);
+                console.log(response.body);
+                console.log(response.headers);
+            });
+        });
+
     }
 };
 module.exports = _.assign(module.exports, models);

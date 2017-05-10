@@ -1,10 +1,23 @@
 module.exports = function (grunt) {
-    var jsFiles = require("../../frontend/files.js");
-    var env = require("../../config/env/development.js");
+    var folderName = grunt.option('target');
+    var productionString = "";
+    if (folderName) {
+        var jsFiles = require("../../" + folderName + "/files.js");
+    }
+    var env = false;
+    var isProduction = grunt.option('production');
+    if (isProduction) {
+        env = require("../../config/env/production.js");
+        productionString = "production";
+    } else {
+        env = require("../../config/env/development.js");
+        productionString = "development";
+    }
+
     grunt.config.set('ejs', {
-        frontend: {
-            src: 'views/development.ejs',
-            dest: 'frontend/index.html',
+        ui: {
+            src: 'views/' + productionString + "/" + folderName + '.ejs',
+            dest: folderName + '/index.html',
             options: {
                 _: require("lodash"),
                 jsFiles: jsFiles,
@@ -12,6 +25,5 @@ module.exports = function (grunt) {
             }
         }
     });
-
     grunt.loadNpmTasks('grunt-ejs-locals');
 };

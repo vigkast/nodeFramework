@@ -3,6 +3,7 @@
 
 <head ng-controller="headerCtrl">
     <meta charset="utf-8">
+    <base href="/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,8 +26,8 @@
     <link rel="stylesheet" type="text/css" href="css/production.css" />
 
     <script>
-        var adminurl = "http://tushar.io/api/";
-        var isproduction = false;
+        var adminurl = "<%= ((typeof adminurl) == "undefined") ? "" : adminurl  %>";
+        var isproduction = true;
         var chintan = function(content) {
             console.log("%c ---------------------------------------", 'background: #222; color: #bada55');
             console.log(content);

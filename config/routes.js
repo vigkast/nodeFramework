@@ -53,17 +53,7 @@ module.exports.routes = {
     "/api/download/:filename": {
         controller: "WebController",
         action: "download"
-    },
-    'GET /backend/*': {
-        controller: "WebController",
-        action: "backend",
-        skipAssets: true
-    },
-    'GET /backend': {
-        controller: "WebController",
-        action: "backend",
-        skipAssets: true
-    },
+    }
 
     /***************************************************************************
      *                                                                          *
