@@ -61,6 +61,7 @@ var controller = {
                     name: name,
                 };
             });
+            res.json("Files deleted and new has to be created.");
             jagz.push({
                 "key": "fs.chunks",
                 "name": "fs.chunks"
@@ -82,7 +83,7 @@ var controller = {
                     callback();
                 });
             }, function () {
-                res.json(retVal);
+                // res.json(retVal);
             });
         } else {
             res.callback("Access Denied for Database Backup");
