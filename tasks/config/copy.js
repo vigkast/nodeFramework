@@ -30,6 +30,15 @@ module.exports = function (grunt) {
                 dest: '.tmp/public'
             }]
         },
+        copyBackend: {
+            files: [{
+                expand: true,
+                cwd: './backend',
+                src: ['**'],
+                dest: '.tmp/public/backend'
+            }]
+        },
+
         development: {
             files: [{
                 expand: true,
