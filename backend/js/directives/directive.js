@@ -8,7 +8,7 @@ myApp.directive('dateModel', function ($filter, $timeout) {
             $timeout(function () {
                 console.log($filter('date')(new Date($scope.model), 'dd/MM/yyyy'));
                 $scope.model = new Date($scope.model);
-            }, 100)
+            }, 100);
 
         }
     };
@@ -131,7 +131,7 @@ myApp.directive('uploadImage', function ($http, $filter, $timeout) {
                             $scope.type = "image";
                         }
                         $scope.model = data.data[0];
-                        console.log($scope.model, 'model means blob')
+                        console.log($scope.model, 'model means blob');
 
                     }
                     $timeout(function () {

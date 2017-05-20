@@ -30,6 +30,13 @@ myApp.filter('urlencoder', function () {
         return window.encodeURIComponent(input);
     };
 });
+myApp.filter('getyoutubeimageurl', function () {
+    return function (input) {
+        return "https://img.youtube.com/vi/" + input + "/mqdefault.jpg";
+    };
+});
+
+
 
 myApp.filter('propsFilter', function () {
     return function (items, props) {

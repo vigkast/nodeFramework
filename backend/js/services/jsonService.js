@@ -1,7 +1,7 @@
 myApp.service('JsonService', function ($http, TemplateService, $state, toastr, $uibModal, NavigationService) {
   this.json = {};
   this.keyword = {};
-  this.refreshView;
+  // this.refreshView;
   var JsonService = this;
   this.setKeyword = function (data) {
     try {
