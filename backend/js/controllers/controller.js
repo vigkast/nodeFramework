@@ -466,13 +466,10 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         }
         if ($scope.type.type == "youtube") {
             $scope.youtube = {};
-
-
             $scope.changeYoutubeUrl = function (string) {
                 if (string) {
                     $scope.formData[$scope.type.tableRef] = "";
                     var result = getJsonFromUrl(string);
-                    console.log(result);
                     if (result && result.v) {
                         $scope.formData[$scope.type.tableRef] = result.v;
                     }
