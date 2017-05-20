@@ -7,7 +7,7 @@
     "urlFields": ["User"],
     "fields": [{
         "name": "Name",
-        "type": "youtube",
+        "type": "text",
         "tableRef": "name",
         "placeholder": "Enter Name",
         "id": "name",
