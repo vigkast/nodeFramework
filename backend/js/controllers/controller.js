@@ -472,6 +472,8 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
                     var result = getJsonFromUrl(string);
                     if (result && result.v) {
                         $scope.formData[$scope.type.tableRef] = result.v;
+                    } else {
+                        $scope.formData[$scope.type.tableRef] = string;
                     }
                 }
 
