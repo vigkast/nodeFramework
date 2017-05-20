@@ -50556,7 +50556,6 @@ var myApp = angular.module('myApp', [
     'textAngular',
     'ngSanitize',
     'angular-flexslider',
-    'imageupload',
     'ngMap',
     'toggle-switch',
     'cfp.hotkeys',
@@ -50767,13 +50766,13 @@ myApp.directive('uploadImage', function ($http, $filter, $timeout) {
                     if ($scope.isMultiple) {
                         if ($scope.inObject) {
                             $scope.model.push({
-                                "image": data[0]
+                                "image": data.data[0]
                             });
                         } else {
                             if (!$scope.model) {
                                 $scope.clearOld();
                             }
-                            $scope.model.push(data[0]);
+                            $scope.model.push(data.data[0]);
                         }
                     } else {
                         if (_.endsWith(data.data[0], ".pdf")) {
@@ -51786,7 +51785,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         globalfunction.confDel = function (callback) {
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: '/backend/views/modal/conf-delete.html',
+                templateUrl: '/views/modal/conf-delete.html',
                 size: 'sm',
                 scope: $scope
             });
@@ -51799,7 +51798,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         globalfunction.openModal = function (callback) {
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: '/backend/views/modal/modal.html',
+                templateUrl: '/views/modal/modal.html',
                 size: 'lg',
                 scope: $scope
             });
@@ -51905,17 +51904,17 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
 
         $scope.saveData = function (formData) {
             NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
+                var messText = "created";
                 if (data.value === true) {
                     $scope.json.json.action[0].stateName.json.keyword = "";
                     $scope.json.json.action[0].stateName.json.page = "";
                     $state.go($scope.json.json.action[0].stateName.page, $scope.json.json.action[0].stateName.json);
-                    var messText = "created";
                     if ($scope.json.keyword._id) {
                         messText = "edited";
                     }
                     toastr.success($scope.json.json.name + " " + formData.name + " " + messText + " successfully.");
                 } else {
-                    var messText = "creating";
+                    messText = "creating";
                     if ($scope.json.keyword._id) {
                         messText = "editing";
                     }
@@ -51949,6 +51948,59 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
 
         $scope.template = "views/field/" + $scope.type.type + ".html";
 
+        // Multiple checkbox selection
+        if ($scope.type.type == "multipleCheckbox") {
+            if ($scope.type.url !== "") {
+                NavigationService.searchCall($scope.type.url, {
+                    keyword: ""
+                }, 1, function (data1) {
+                    $scope.items[$scope.type.tableRef] = data1.data.results;
+                    if ($scope.json.keyword._id) {
+                        console.log("Edit multiCheckbox formData: ", $scope.formData[$scope.type.tableRef]);
+                        for (var idx = 0; idx < $scope.items[$scope.type.tableRef].length; idx++) {
+                            for (var formIdx = 0; formIdx < $scope.formData[$scope.type.tableRef].length; formIdx++) {
+                                if ($scope.items[$scope.type.tableRef][idx]._id == $scope.formData[$scope.type.tableRef][formIdx]._id) {
+                                    $scope.items[$scope.type.tableRef][idx].checked = true;
+                                }
+                            }
+                        }
+                    }
+                });
+            } else {
+                $scope.items[$scope.type.tableRef] = $scope.type.dropDown;
+            }
+        }
+
+        // Set multiple checkbox field
+        $scope.setSelectedItem = function (item) {
+            if (typeof $scope.formData[$scope.type.tableRef] === 'undefined')
+                $scope.formData[$scope.type.tableRef] = [];
+            var index = _.findIndex($scope.formData[$scope.type.tableRef], function (doc) {
+                return doc._id == item._id;
+            });
+            if (index < 0) {
+                $scope.formData[$scope.type.tableRef].push({
+                    _id: item._id
+                });
+            } else {
+                $scope.formData[$scope.type.tableRef].splice(index, 1);
+            }
+        }
+
+        function getJsonFromUrl(string) {
+            var obj = _.split(string, '?');
+            var returnval = {};
+            if (obj.length >= 2) {
+                obj = _.split(obj[1], '&');
+                _.each(obj, function (n) {
+                    var newn = _.split(n, "=");
+                    returnval[newn[0]] = newn[1];
+                    return;
+                });
+                return returnval;
+            }
+
+        }
         // BOX
         if ($scope.type.type == "date") {
             $scope.formData[$scope.type.tableRef] = moment($scope.formData[$scope.type.tableRef]).toDate();
@@ -51959,20 +52011,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         if ($scope.type.type == "youtube") {
             $scope.youtube = {};
 
-            function getJsonFromUrl(string) {
-                var obj = _.split(string, '?');
-                var returnval = {};
-                if (obj.length >= 2) {
-                    obj = _.split(obj[1], '&');
-                    _.each(obj, function (n) {
-                        var newn = _.split(n, "=");
-                        returnval[newn[0]] = newn[1];
-                        return;
-                    });
-                    return returnval;
-                }
 
-            }
             $scope.changeYoutubeUrl = function (string) {
                 if (string) {
                     $scope.formData[$scope.type.tableRef] = "";
@@ -52010,7 +52049,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
             $scope.data = data;
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: '/backend/views/modal/modal.html',
+                templateUrl: '/views/modal/modal.html',
                 size: 'lg',
                 scope: $scope
             });
@@ -52056,6 +52095,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         //Used to name the .html file
         $scope.menutitle = NavigationService.makeactive("Login");
         TemplateService.title = $scope.menutitle;
+        $scope.template = TemplateService;
         $scope.currentHost = window.location.origin;
         if ($stateParams.id) {
             if ($stateParams.id === "AccessNotAvailable") {

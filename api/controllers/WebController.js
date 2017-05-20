@@ -7,7 +7,7 @@ module.exports = {
     },
     backend: function (req, res) {
         var env = require("../../config/env/" + sails.config.environment + ".js");
-        res.view("backend", {
+        res.view("production/backend", {
             jsFiles: jsFilesBackend,
             title: "Backend",
             description: "Backend",
