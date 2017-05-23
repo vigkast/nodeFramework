@@ -3,3 +3,4 @@ apps:
     name: "NodeFramework - 80"
     watch: false
     args: "--prod"
+    exec_mode: "cluster"
