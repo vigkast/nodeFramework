@@ -63,7 +63,9 @@ module.exports.http = {
 
 
             if (req.body && req.body._accessToken) {
-                User.profile(req.body, function (err, data) {
+                User.findOne({
+                    accessToken: req.body._accessToken
+                }, function (err, data) {
                     if (err) {
                         res.json({
                             error: err,
