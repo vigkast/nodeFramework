@@ -186,7 +186,7 @@ var models = {
             if (proceedI === 2) {
                 Jimp.read(buf, function (err, image) {
                     if (err) {
-                        callback(err, null);
+                        res.callback(err, null);
                     } else {
                         if (style === "contain" && width && height) {
                             image.contain(width, height).getBuffer(Jimp.AUTO, writer2);
