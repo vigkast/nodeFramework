@@ -3,7 +3,12 @@ module.exports = {
         res.metaView();
     },
     download: function (req, res) {
-        Config.readUploaded(req.param("filename"), null, null, null, res);
+        if(req.query.filename) {
+            Config.readUploaded(req.query.filename, null, null, null, res);
+        } else {
+            Config.readUploaded(req.param("filename"), null, null, null, res);
+        }
+        
     },
     backend: function (req, res) {
         var env = require("../../config/env/" + sails.config.environment + ".js");
